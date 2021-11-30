@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse", "BricksWa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Domain", "BricksWarehouse.Domain\BricksWarehouse.Domain.csproj", "{3B93E21F-A499-4684-ACC9-69CC1A8953A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Dal", "BricksWarehouse.Dal\BricksWarehouse.Dal.csproj", "{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3B93E21F-A499-4684-ACC9-69CC1A8953A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B93E21F-A499-4684-ACC9-69CC1A8953A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B93E21F-A499-4684-ACC9-69CC1A8953A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

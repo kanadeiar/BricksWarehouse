@@ -7,55 +7,28 @@ namespace BricksWarehouse.Domain.Models
     /// <summary> Вид товаров </summary>
     public class ProductType : Entity
     {
-        private string _Name;
         /// <summary> Название </summary>
         [Required(ErrorMessage = "Название вида товаров обязательно")]
         [StringLength(200, MinimumLength = 3, ErrorMessage = "Название вида товаров должно быть длинной от 3 до 200 символов")]
-        public string Name
-        {
-            get => _Name;
-            set => Set(ref _Name, value);
-        }
-        private int _Order;
+        public string Name { get; set; }
+        /// <summary> Номер формата </summary>
+        [Range(0, int.MaxValue, ErrorMessage = "Номер формата должен быть положительным числом")]
+        public int FormatNumber { get; set; }
         /// <summary> Сортировка </summary>
-        public int Order
-        {
-            get => _Order;
-            set => Set(ref _Order, value);
-        }
-        private int _Units;
+        public int Order { get; set; }
         /// <summary> Количество едениц в пачке </summary>
         [Range(0, int.MaxValue, ErrorMessage = "Количество едениц в пачке товаров должно быть положительным числом")]
-        public int Units
-        {
-            get => _Units;
-            set => Set(ref _Units, value);
-        }
-        private double _Volume;
+        public int Units { get; set; }
         /// <summary> Объем, занимаемый одной пачкой </summary>
         [Range(0.0, double.MaxValue, ErrorMessage = "Объем одной пачки должен быть положительным числом")]
-        public double Volume
-        {
-            get => _Volume;
-            set => Set(ref _Volume, value);
-        }
-        private double _Weight;
+        public double Volume { get; set; }
         /// <summary> Вес одной пачки </summary>
         [Range(0.0, double.MaxValue, ErrorMessage = "Вес одной пачки должен быть положительным числом")]
-        public double Weight
-        {
-            get => _Weight;
-            set => Set(ref _Weight, value);
-        }
-        private bool _IsDelete;
+        public double Weight { get; set; }
         /// <summary> Метка удаления вида товаров </summary>
-        public bool IsDelete
-        {
-            get => _IsDelete;
-            set => Set(ref _IsDelete, value);
-        }
+        public bool IsDelete { get; set; }
 
         /// <summary> Места размещения этого вида товаров </summary>
-        public ICollection<Place> Places { get; set; }
+        public ICollection<Place> Places { get; set; } = new List<Place>();
     }
 }
