@@ -1,0 +1,59 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Организация - онлайн</PageTitle>
+
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-danger border-bottom mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="favicon.png" alt="Бренд" width="30" height="30" class="d-inline-block align-text-top">
+                Склад кирпичей Онлайн
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="online">
+                            Онлайн
+                        </NavLink>
+                    </li>
+@*                    <li class="nav-item">
+                        <a href="/home" class="nav-link">Управление</a>
+                    </li>*@
+                </ul>
+                <div class="d-flex">
+                    <a class="btn btn-warning me-1" href="/">Выход</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+    <div class="container-fluid">
+        <div class="row m-0">
+            <div class="col-md-3 p-0">
+                <nav class="flex-column">
+                    <div class="row m-1">
+                        <NavLink class="btn btn-outline-danger" href="online" Match="NavLinkMatch.All" ActiveClass="btn-danger text-white">
+                            <span class="oi oi-home" aria-hidden="true"></span> Онлайн
+                        </NavLink>
+                    </div>
+
+                </nav>
+            </div>
+            <div class="col-md-9 p-0">
+                @Body
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="border-top footer text-white bg-danger">
+    <div class="container-flyid">
+        &copy; 2021 - kanadeiar <a class="text-white" href="https://github.com/kanadeiar/core">github</a>
+    </div>
+</footer>

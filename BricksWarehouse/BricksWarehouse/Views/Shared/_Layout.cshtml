@@ -8,7 +8,6 @@
     <title>@ViewBag.Title - Склад кирпичей</title>
 
     <partial name="Partial/_StylesPartial" />
-    <link href="~/css/ConnectionErrors.css" rel="stylesheet" asp-append-version="true" />
 
     @await RenderSectionAsync("Styles", false)
 
@@ -26,39 +25,8 @@
 
     <partial name="Partial/_FooterPartial" />
 
-    <div id="components-reconnect-modal"
-         class="h4 bg-dark text-center my-2 p-2 components-reconnect-hide">
-        <div class="message">
-            Соединение с сервером blazor потеряно
-        </div>
-        <div class="reconnect">
-            Попытка восстановить соединение с сервером...
-        </div>
-        <div class="failed">
-            Попытка восстановить содениение провалилась.
-            <button class="btn btn-success" onclick="window.Blazor.reconnect()">
-                Переподключиться к серверу
-            </button>
-        </div>
-        <div class="rejected">
-            Сервер отклонил подключение.
-            <button class="btn btn-success" onclick="location.reload()">
-                Перезагрузить приложение
-            </button>
-        </div>
-    </div>
-
-    <div id="blazor-error-ui">
-        Обнаружена ошибка приложения. Приложение недоступно пока не будет перезагружено.
-        <button class="btn btn-success" onclick="location.reload()">
-            Перезагрузить приложение
-        </button>
-        <a class="dismiss">🗙</a>
-    </div>
-
     <partial name="Partial/_ScriptsPartial" />
 
     @await RenderSectionAsync("Scripts", false)
-    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse", "BricksWarehouse\BricksWarehouse.csproj", "{12375003-00C1-4A4C-B6C9-F276A0A362BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Domain", "BricksWarehouse.Domain\BricksWarehouse.Domain.csproj", "{3B93E21F-A499-4684-ACC9-69CC1A8953A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse.Domain", "BricksWarehouse.Domain\BricksWarehouse.Domain.csproj", "{3B93E21F-A499-4684-ACC9-69CC1A8953A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Dal", "BricksWarehouse.Dal\BricksWarehouse.Dal.csproj", "{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse.Dal", "BricksWarehouse.Dal\BricksWarehouse.Dal.csproj", "{EC36E23B-1B0B-49F5-960D-425D1F6E98EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

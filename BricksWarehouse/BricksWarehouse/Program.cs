@@ -7,13 +7,11 @@ builder.Host.ConfigureServices(services =>
 {
     services.AddDbContext<WarehouseContext>(options => options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection") ));
 
-    services.AddScoped<IMapper<ProductTypeEditWebModel>, WebMapperService>();
-    services.AddScoped<IMapper<ProductType>, WebMapperService>();
-
     services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
     services.AddScoped<IPlaceData, DatabasePlaceData>();
 
     services.AddControllersWithViews().AddRazorRuntimeCompilation();
+    services.AddRazorPages().AddRazorRuntimeCompilation();
 });
 builder.Services.AddServerSideBlazor();
 
@@ -44,7 +42,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.MapControllerRoute("controllers", "controllers/{controller=Home}/{action=Index}/{id?}");
 app.MapDefaultControllerRoute();
+app.MapRazorPages();
 app.MapBlazorHub();
+app.MapFallbackToPage("online/{param?}", "/_Host");
 
 app.Run();
