@@ -10,6 +10,6 @@ namespace BricksWarehouse.Domain.Models.Base
         [Key]
         public int Id { get; set; }
         [Timestamp]
-        public byte[] Timestamp { get; set; }
+        public byte[]? Timestamp { get; set; }
     }
 }

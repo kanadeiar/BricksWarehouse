@@ -21,7 +21,7 @@ namespace BricksWarehouse.Domain.Models
         public int? ProductTypeId { get; set; }
         /// <summary> Вид товаров </summary>
         [ForeignKey(nameof(ProductTypeId))]
-        public ProductType ProductType { get; set; }
+        public ProductType? ProductType { get; set; }
         /// <summary> Количество </summary>
         [Range(0, int.MaxValue, ErrorMessage = "Количество товара на этом месте должно быть положительным числом")]
         public int Count { get; set; }
@@ -35,7 +35,7 @@ namespace BricksWarehouse.Domain.Models
         public PlaceStatus PlaceStatus { get; set; }
         /// <summary> Комментарий </summary>
         [StringLength(200, ErrorMessage = "Комментарий должен быть короче 200 символов")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         /// <summary> Метка удаления вида товаров </summary>
         public bool IsDelete { get; set; }
     }

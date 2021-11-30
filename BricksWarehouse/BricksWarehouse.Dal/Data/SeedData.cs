@@ -45,7 +45,7 @@ namespace BricksWarehouse.Dal.Data
                 context.ProductTypes.AddRange(pt1, pt2, pt3, pt4, pt5, pt6);
                 await context.SaveChangesAsync();
 
-                Place p1 = new Place { Name = "Главный стеллаж", Order = 1, Number = 1, ProductType = pt1, Count = 1, Size = 30, LastDateTime = DateTime.Today.AddHours(4), PlaceStatus = PlaceStatus.Default };
+                Place p1 = new Place { Name = "Главный стеллаж", Order = 1, Number = 1, ProductType = null, Count = 1, Size = 30, LastDateTime = DateTime.Today.AddHours(4), PlaceStatus = PlaceStatus.Default };
                 Place p2 = new Place { Name = "Заполняемый стеллаж", Order = 10, Number = 2, ProductType = pt1, Count = 5, Size = 60, LastDateTime = DateTime.Today.AddHours(2), PlaceStatus = PlaceStatus.Collect };
                 Place p3 = new Place { Name = "Заполняемый стеллаж", Order = 20, Number = 3, ProductType = pt2, Count = 20, Size = 60, LastDateTime = DateTime.Today.AddHours(8), PlaceStatus = PlaceStatus.Collect };
                 Place p4 = new Place { Name = "Запасной стеллаж 1", Order = 40, Number = 4, ProductType = pt4, Count = 10, Size = 20, LastDateTime = DateTime.Today.AddHours(2), PlaceStatus = PlaceStatus.Wait };

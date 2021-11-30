@@ -14,6 +14,12 @@ namespace BricksWarehouse.Dal.Data
         public DbSet<Place> Places { get; set; }
 
         public WarehouseContext(DbContextOptions<WarehouseContext> options) : base( options )
-        { }
+        { 
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }
