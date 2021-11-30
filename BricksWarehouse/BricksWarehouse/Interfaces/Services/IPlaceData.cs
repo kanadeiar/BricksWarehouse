@@ -4,7 +4,7 @@
 public interface IPlaceData
 {
     /// <summary> Получить все </summary>
-    Task<IEnumerable<Place>> GetAllAsync(bool includes = false, bool withTrashed = false);
+    Task<IEnumerable<Place>> GetAllAsync(bool includes = false, bool trashed = false);
     /// <summary> Данные одного </summary>
     Task<Place> GetAsync(int id);
     /// <summary> Добавить </summary>

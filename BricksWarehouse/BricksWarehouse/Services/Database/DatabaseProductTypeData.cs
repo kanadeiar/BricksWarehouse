@@ -10,13 +10,14 @@ public class DatabaseProductTypeData : IProductTypeData
         _logger = logger;
     }
 
-    public async Task<IEnumerable<ProductType>> GetAllAsync(bool includes = false, bool withTrashed = false)
+    public async Task<IEnumerable<ProductType>> GetAllAsync(bool includes = false, bool trashed = false)
     {
         IQueryable<ProductType> query = (includes) 
             ? _context.ProductTypes.Include(pt => pt.Places).AsQueryable() 
             : _context.ProductTypes.AsQueryable();
-        if (!withTrashed)
-            query.Where(pt => !pt.IsDelete);
+        query = !trashed 
+            ? query.Where(pt => !pt.IsDelete) 
+            : query.Where(pt => pt.IsDelete);
         return await query.ToArrayAsync().ConfigureAwait(false);
     }
 

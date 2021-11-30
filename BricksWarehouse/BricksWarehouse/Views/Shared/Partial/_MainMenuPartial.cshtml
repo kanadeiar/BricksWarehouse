@@ -2,7 +2,20 @@
     <li class="nav-item">
         <a class="nav-link active" asp-controller="Home" asp-action="Index">Главная</a>
     </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Редактирование
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+                <a asp-controller="ProductTypeEdit" asp-action="Index" class="dropdown-item">
+                    Редактировать виды товаров
+                </a>
+            </li>
+
+        </ul>
+    </li>
     <li class="nav-item">
-        <a class="nav-link active" asp-controller="Home" asp-action="About">О приложении</a>
+        <a class="nav-link" asp-controller="Home" asp-action="About">О приложении</a>
     </li>
 </ul>

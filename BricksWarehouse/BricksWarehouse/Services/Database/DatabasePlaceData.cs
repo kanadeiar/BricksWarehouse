@@ -10,13 +10,14 @@ public class DatabasePlaceData : IPlaceData
         _logger = logger;
     }
 
-    public async Task<IEnumerable<Place>> GetAllAsync(bool includes = false, bool withTrashed = false)
+    public async Task<IEnumerable<Place>> GetAllAsync(bool includes = false, bool trashed = false)
     {
         IQueryable<Place> query = (includes) 
             ? _context.Places.Include(p => p.ProductType).AsQueryable() 
             : _context.Places.AsQueryable();
-        if (!withTrashed)
-            query.Where(pt => !pt.IsDelete);
+        query = !trashed
+            ? query.Where(pt => !pt.IsDelete)
+            : query.Where(pt => pt.IsDelete);
         return await query.ToArrayAsync().ConfigureAwait(false);
     }
 
