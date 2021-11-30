@@ -7,4 +7,6 @@ global using System.Threading.Tasks;
 global using Microsoft.AspNetCore.Mvc;
 global using BricksWarehouse.Dal.Data;
 global using Microsoft.EntityFrameworkCore;
+global using BricksWarehouse.Interfaces.Services;
 global using BricksWarehouse.Domain.Models;
+global using BricksWarehouse.Services.Database;

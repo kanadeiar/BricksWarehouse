@@ -1,5 +1,3 @@
-using BricksWarehouse.Interfaces.Services;
-using BricksWarehouse.Services.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
