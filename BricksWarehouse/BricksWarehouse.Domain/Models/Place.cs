@@ -1,5 +1,7 @@
 ﻿using BricksWarehouse.Domain.Models.Base;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,6 +40,18 @@ namespace BricksWarehouse.Domain.Models
         public string? Comment { get; set; }
         /// <summary> Метка удаления вида товаров </summary>
         public bool IsDelete { get; set; }
+
+        public static string GetNamePlaceStatus(PlaceStatus status)
+        {
+            return (status) switch
+            {
+                PlaceStatus.Default => "По умолчанию",
+                PlaceStatus.Collect => "Набор товаров",
+                PlaceStatus.Wait => "Отстой товаров",
+                PlaceStatus.Delivery => "Выдача товаров",
+                _ => throw new ArgumentOutOfRangeException(nameof(status)),
+            };
+        }
     }
 
     /// <summary> Статус места размещения товаров </summary>
@@ -47,7 +61,7 @@ namespace BricksWarehouse.Domain.Models
         Default,
         /// <summary> Набор товара </summary>
         Collect,
-        /// <summary> Выжидание </summary>
+        /// <summary> Отстой </summary>
         Wait,
         /// <summary> Выдача </summary>
         Delivery

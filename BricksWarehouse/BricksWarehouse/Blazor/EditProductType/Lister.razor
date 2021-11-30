@@ -82,7 +82,7 @@
 
 @code {
     WarehouseContext Context => Service;
-    private IQueryable<ProductType> query => Context.ProductTypes.Include(pt => pt.Places);
+    private IQueryable<ProductType> query => Context.ProductTypes;
     public IEnumerable<ProductType> ProductTypes { get; set; }
     [Parameter]
     public bool Trash { get; set; }
@@ -91,7 +91,6 @@
     {
         await UpdateDataAsync();
     }
-
     private async Task UpdateDataAsync()
     {
         ProductTypes = (!Trash)

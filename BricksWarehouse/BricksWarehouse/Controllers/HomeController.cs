@@ -13,7 +13,7 @@ public class HomeController : Controller
     }
 
     public IActionResult Error(string id)
-    {
+    {        
         switch (id)
         {
             default: return Content($"Status --- {id}");

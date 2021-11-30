@@ -1,0 +1,123 @@
+﻿@page "/online/place/{trash:bool}"
+@page "/online/place"
+@inherits OwningComponentBase<WarehouseContext>
+
+<h3 class="bg-danger text-center text-white p-2">@Mode</h3>
+
+<div>
+    @if (!Trash)
+    {
+        <NavLink class="btn btn-success mb-1" href="online/place/create"> Создать</NavLink>
+        <NavLink class="btn btn-secondary mb-1" href="@($"online/place/{true}")"> Корзина</NavLink>
+    }
+    else
+    {
+        <NavLink class="btn btn-secondary mb-1" href="online/place">Назад</NavLink>
+    }
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Номер</th>
+                <th>Вид товара</th>
+                <th>Количество</th>
+                <th>Дата и время</th>
+                <th>Статус</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Places is null)
+            {
+                <tr><th colspan="8" class="p-4 text-center">Загрузка ...</th></tr>
+            }
+            else if (Places.Count() == 0)
+            {
+                <tr><th colspan="8" class="p-4 text-center">Места отсутствуют</th></tr>
+            }
+            else
+            {
+                @foreach (var p in Places)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.Number</td>
+                        <td>@p.ProductType?.Name</td>
+                        <td>@p.Count / @p.Size</td>
+                        <td>@p.LastDateTime.ToString( "dd MMMM yyyy" )</td>
+                        <td>@Place.GetNamePlaceStatus( p.PlaceStatus )</td>
+                        <td class="text-center">
+                            @if (!Trash)
+                            {
+                                <NavLink class="btn btn-sm btn-info mb-1" href="@($"online/place/edit/{p.Id}")">
+                                    <i class="fas fa-edit"></i>
+                                    Редактировать
+                                </NavLink>
+                                <button class="btn btn-sm btn-warning mb-1" @onclick="@( () => HandleTrash(p) )">
+                                    <i class="fas fa-trash"></i>
+                                    В корзину
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-success mb-1" @onclick="@( () => HandleUndoTrash(p) )">
+                                    <i class="fas fa-undo"></i>
+                                    Вернуть из корзины
+                                </button>
+                                <button class="btn btn-sm btn-danger mb-1" @onclick="@( () => HandleDelete(p) )">
+                                    <i class="fas fa-times"></i>
+                                    Удалить совсем
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    WarehouseContext Context => Service;
+    private IQueryable<Place> query => Context.Places.Include(p => p.ProductType);
+    public IEnumerable<Place> Places { get; set; }
+    [Parameter]
+    public bool Trash { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await UpdateDataAsync();
+    }
+    private async Task UpdateDataAsync()
+    {
+        Places = (!Trash)
+            ? await query.Where(p => !p.IsDelete).ToArrayAsync<Place>()
+            : await query.Where(p => p.IsDelete).ToArrayAsync<Place>();
+    }
+
+    public async Task HandleTrash(Place p)
+    {
+        p.IsDelete = true;
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+    }
+    public async Task HandleUndoTrash(Place p)
+    {
+        p.IsDelete = false;
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+    }
+    public async Task HandleDelete(Place p)
+    {
+        Context.Remove<Place>(p);
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+    }
+
+    public string Mode => Trash ? "Корзина удаленных мест хранений товаров" : "Редактирование мест хранений товаров";
+}

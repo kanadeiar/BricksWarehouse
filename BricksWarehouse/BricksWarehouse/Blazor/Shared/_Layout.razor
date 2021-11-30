@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>Организация - онлайн</PageTitle>
+<PageTitle>Склад кирпичей - онлайн</PageTitle>
 
 <header class="sticky-top">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-danger border-bottom mb-4">
@@ -20,9 +20,6 @@
                             Онлайн
                         </NavLink>
                     </li>
-                    @*                    <li class="nav-item">
-                        <a href="/home" class="nav-link">Управление</a>
-                        </li>*@
                 </ul>
                 <div class="d-flex">
                     <a class="btn btn-warning me-1" href="/">Выход</a>
@@ -39,12 +36,17 @@
                 <nav class="flex-column">
                     <div class="row m-0">
                         <NavLink class="btn btn-outline-danger my-1" href="online" Match="NavLinkMatch.All" ActiveClass="btn-danger text-white">
-                            <span class="fas fa-home" aria-hidden="true"></span> Главная Онлайн
+                            <i class="fas fa-home"></i> Главная Онлайн
                         </NavLink>
                     </div>
                     <div class="row m-0">
                         <NavLink class="btn btn-outline-danger my-1" href="online/producttype" ActiveClass="btn-danger text-white">
-                            <span class="fas fa-edit" aria-hidden="true"></span> Редактирование видов товаров
+                            <i class="fas fa-edit"></i> Редактирование видов товаров
+                        </NavLink>
+                    </div>
+                    <div class="row m-0">
+                        <NavLink class="btn btn-outline-danger my-1" href="online/place" ActiveClass="btn-danger text-white">
+                            <i class="fas fa-edit"></i> Редактирование мест хранений товаров
                         </NavLink>
                     </div>
                 </nav>
