@@ -1,0 +1,122 @@
+﻿@page "/online/producttype/{trash:bool}"
+@page "/online/producttype"
+@inherits OwningComponentBase<WarehouseContext>
+
+<h3 class="bg-danger text-center text-white p-2">@Mode</h3>
+
+<div>
+    @if (!Trash)
+    {
+        <NavLink class="btn btn-success mb-1" href="online/producttype/create"> Создать</NavLink>
+        <NavLink class="btn btn-secondary mb-1" href="@($"online/producttype/{true}")"> Корзина</NavLink>
+    }
+    else
+    {
+        <NavLink class="btn btn-secondary mb-1" href="online/producttype">Назад</NavLink>
+    }
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Номер формата</th>
+                <th>Количество в пачке</th>
+                <th>Объем пачки</th>
+                <th>Вес пачки</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ProductTypes is null)
+            {
+                <tr><th colspan="7" class="p-4 text-center">Загрузка ...</th></tr>
+            }
+            else if (ProductTypes.Count() == 0)
+            {
+                <tr><th colspan="7" class="p-4 text-center">Виды товаров отсутствуют</th></tr>
+            }
+            else
+            {
+                @foreach (var pt in ProductTypes)
+                {
+                    <tr>
+                        <td>@pt.Id</td>
+                        <td>@pt.Name</td>
+                        <td>@pt.FormatNumber</td>
+                        <td>@pt.Units</td>
+                        <td>@pt.Volume</td>
+                        <td>@pt.Weight</td>
+                        <td class="text-center">
+                            @if (!Trash)
+                            {
+                                <NavLink class="btn btn-sm btn-info mb-1" href="@($"online/producttype/edit/{pt.Id}")">
+                                    <i class="fas fa-edit"></i>
+                                    Редактировать
+                                </NavLink>
+                                <button class="btn btn-sm btn-warning mb-1" @onclick="@( () => HandleTrash(pt) )">
+                                    <i class="fas fa-trash"></i>
+                                    В корзину
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-success mb-1" @onclick="@( () => HandleUndoTrash(pt) )">
+                                    <i class="fas fa-undo"></i>
+                                    Вернуть из корзины
+                                </button>
+                                <button class="btn btn-sm btn-danger mb-1" @onclick="@( () => HandleDelete(pt) )">
+                                    <i class="fas fa-times"></i>
+                                    Удалить совсем
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    WarehouseContext Context => Service;
+    private IQueryable<ProductType> query => Context.ProductTypes.Include(pt => pt.Places);
+    public IEnumerable<ProductType> ProductTypes { get; set; }
+    [Parameter]
+    public bool Trash { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await UpdateDataAsync();
+    }
+
+    private async Task UpdateDataAsync()
+    {
+        ProductTypes = (!Trash)
+            ? await query.Where(pt => !pt.IsDelete).ToArrayAsync<ProductType>()
+            : await query.Where(pt => pt.IsDelete).ToArrayAsync<ProductType>();
+    }
+
+    public async Task HandleTrash(ProductType pt)
+    {
+        pt.IsDelete = true;
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+    }
+    public async Task HandleUndoTrash(ProductType pt)
+    {
+        pt.IsDelete = false;
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+    }
+    public async Task HandleDelete(ProductType pt)
+    {
+        Context.Remove<ProductType>(pt);
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+    }
+
+    public string Mode => Trash ? "Корзина удаленных видов товаров" : "Редактирование видов товаров";
+}
