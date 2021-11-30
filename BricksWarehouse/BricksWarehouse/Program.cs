@@ -1,11 +1,15 @@
-using BricksWarehouse.Dal.Data;
-using Microsoft.EntityFrameworkCore;
+using BricksWarehouse.Interfaces.Services;
+using BricksWarehouse.Services.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureServices(services =>
 {
     services.AddDbContext<WarehouseContext>(options => options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection") ));
+
+    services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
+    services.AddScoped<IPlaceData, DatabasePlaceData>();
+
     services.AddControllersWithViews().AddRazorRuntimeCompilation();
 });
 builder.Services.AddServerSideBlazor();

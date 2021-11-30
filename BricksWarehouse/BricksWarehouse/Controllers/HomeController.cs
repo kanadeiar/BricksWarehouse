@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿namespace BricksWarehouse.Controllers;
 
-namespace BricksWarehouse.Controllers
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
+    }
 
-        public IActionResult About()
-        {
-            return View();
-        }
+    public IActionResult About()
+    {
+        return View();
+    }
 
-        public IActionResult Error(string id)
+    public IActionResult Error(string id)
+    {
+        switch (id)
         {
-            switch (id)
-            {
-                default: return Content($"Status --- {id}");
-                case "404": return View("Error404");
-            }
+            default: return Content($"Status --- {id}");
+            case "404": return View("Error404");
         }
     }
 }
+
