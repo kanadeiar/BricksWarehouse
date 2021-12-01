@@ -1,11 +1,12 @@
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureServices(services =>
 {
     services.AddDbContext<WarehouseContext>(options => options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection") ));
+
+    services.AddScoped<IMapper<ProductType, ProductTypeDto>, DtoMapperService>();
+    services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
 
     services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
     services.AddScoped<IPlaceData, DatabasePlaceData>();

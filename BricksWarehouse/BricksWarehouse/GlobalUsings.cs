@@ -12,3 +12,6 @@ global using BricksWarehouse.Interfaces.Services;
 global using BricksWarehouse.Domain.Models;
 global using BricksWarehouse.Services.Database;
 global using System.ComponentModel.DataAnnotations;
+global using BricksWarehouse.Domain.Dto;
+global using BricksWarehouse.Domain.Interfaces;
+global using BricksWarehouse.Domain.Mappers;
