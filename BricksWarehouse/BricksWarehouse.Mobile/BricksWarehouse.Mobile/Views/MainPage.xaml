@@ -2,26 +2,38 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BricksWarehouse.Mobile.ViewModels"
+             xmlns:m="clr-namespace:BricksWarehouse.Domain.Models;assembly=BricksWarehouse.Domain"
              x:Class="BricksWarehouse.Mobile.Views.MainPage"
-             Title="{Binding Title}"
+             Title="Обзор склада"
              x:DataType="vm:MainPageViewModel"
              BindingContext="{Binding MainPageViewModel, Source={StaticResource Locator}}">
 
-    <StackLayout>
-        <Frame BackgroundColor="#dc3545" Padding="24" CornerRadius="0">
-            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-        </Frame>
-        <StackLayout Padding="10">
-            <Label Text="Мобильное приложение" FontSize="Title" />
-            <Label Text="Обзор общей итоговой информации по складу в обобщенном виде. Управление складом осуществляется этим мобильным приложением." FontSize="Default" />
-            <Label Text="Количество товаров на складе" FontSize="Title" />
-            <Label Text="Количество товаров каждого отдельного вида на складе в обобщенном виде" FontSize="Default" />
-
+        <StackLayout>
+            <Frame BackgroundColor="#dc3545" Padding="10" CornerRadius="0">
+                <Label Text="{Binding Title}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+            </Frame>
+            <StackLayout>
+                <Label Text="Мобильное приложение" FontSize="Title" Padding="10, 0" />
+                <Label Text="Обзор общей итоговой информации по складу в обобщенном виде. Управление складом осуществляется этим мобильным приложением." FontSize="Default" Padding="10, 0" />
+                <ListView HasUnevenRows="True" IsPullToRefreshEnabled="True" SelectionMode="None"
+                      ItemsSource="{Binding ProductTypes}"
+                      RefreshCommand="{Binding UpdateProductTypesCommand}"
+                      IsRefreshing="{Binding RefreshingProductTypes}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ProductTypeView">
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Padding="10,0,10,10">
+                                        <Label Text="{Binding Name}" FontSize="Subtitle" FontAttributes="Bold" />
+                                        <Label Text="{Binding PlacesCount, StringFormat='Количество пачек: {0} шт.'}" FontSize="Body" />
+                                        <Label Text="{Binding CountUnits, StringFormat='Количество кирпичей: {0} шт.'}" FontSize="Body" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
         </StackLayout>
-
-        
-
-
-    </StackLayout>
 
 </ContentPage>
