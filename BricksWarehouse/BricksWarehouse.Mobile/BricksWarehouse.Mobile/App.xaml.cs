@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BricksWarehouse.Domain.Dto;
+using BricksWarehouse.Domain.Interfaces;
+using BricksWarehouse.Domain.Mappers;
+using BricksWarehouse.Domain.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using Xamarin.Forms;
@@ -20,7 +24,10 @@ namespace BricksWarehouse.Mobile
         {
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://brickswarehouse.azurewebsites.net") });
 
-
+            services.AddScoped<IMapper<ProductType, ProductTypeDto>, DtoMapperService>();
+            services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
+            services.AddScoped<IMapper<Place, PlaceDto>, DtoMapperService>();
+            services.AddScoped<IMapper<PlaceDto, Place>, DtoMapperService>();
 
         }
         public App()
