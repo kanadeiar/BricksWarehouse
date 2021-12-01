@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="clr-namespace:BricksWarehouse.Mobile.Views"
+             x:Class="BricksWarehouse.Mobile.Views.FlyoutPage"
+             FlyoutWidth="300"
+             Shell.BackgroundColor="#dc3545">
+    
+    <Shell.FlyoutHeader>
+        <v:HeaderContentView/>
+    </Shell.FlyoutHeader>
+    
+    <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent Title="Обзор склада" IsTabStop="True" ContentTemplate="{DataTemplate v:MainPage}" />
+
+    </FlyoutItem>
+    
+</Shell>
