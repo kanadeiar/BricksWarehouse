@@ -2,6 +2,7 @@
 using BricksWarehouse.Domain.Interfaces;
 using BricksWarehouse.Domain.Mappers;
 using BricksWarehouse.Domain.Models;
+using BricksWarehouse.Mobile.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
@@ -33,8 +34,7 @@ namespace BricksWarehouse.Mobile
         public App()
         {
             InitializeComponent();
-
-            MainPage = new FlyoutPage();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()
