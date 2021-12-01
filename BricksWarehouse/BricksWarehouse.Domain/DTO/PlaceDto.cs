@@ -12,12 +12,12 @@ namespace BricksWarehouse.Domain.Dto
         public int Order { get; set; }
         public int Number { get; set; }
         public int ProductTypeId { get; set; }
-        public ProductTypeDto ProductType { get; set; }
+        public ProductTypeDto? ProductType { get; set; }
         public int Count { get; set; }
         public int Size { get; set; }
         public DateTime LastDateTime { get; set; }
         public PlaceStatus PlaceStatus { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public bool IsDelete { get; set; }
     }
 }

@@ -3,12 +3,12 @@
 namespace BricksWarehouse.Controllers
 {
     [Route("api/[controller]"), ApiController]
-    public class MobileApiProductTypeController : ControllerBase
+    public class MobileProductTypeController : ControllerBase
     {
         private readonly IProductTypeData _productTypeData;
         private readonly IMapper<ProductType, ProductTypeDto> _mapperTo;
         private readonly IMapper<ProductTypeDto, ProductType> _mapperFrom;
-        public MobileApiProductTypeController(IProductTypeData productTypeData, IMapper<ProductType, ProductTypeDto> mapperTo, IMapper<ProductTypeDto, ProductType> mapperFrom)
+        public MobileProductTypeController(IProductTypeData productTypeData, IMapper<ProductType, ProductTypeDto> mapperTo, IMapper<ProductTypeDto, ProductType> mapperFrom)
         {
             _productTypeData = productTypeData;
             _mapperTo = mapperTo;

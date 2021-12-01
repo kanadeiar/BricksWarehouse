@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BricksWarehouse.Domain.Mappers
 {
-    public class DtoMapperService : IMapper<ProductType, ProductTypeDto>, IMapper<ProductTypeDto, ProductType>
+    public class DtoMapperService : IMapper<ProductType, ProductTypeDto>, IMapper<ProductTypeDto, ProductType>, IMapper<Place, PlaceDto>, IMapper<PlaceDto, Place>
     {
         ProductTypeDto IMapper<ProductType, ProductTypeDto>.Map(ProductType source)
         {
@@ -43,6 +43,52 @@ namespace BricksWarehouse.Domain.Mappers
                 Places = dto.PlacesIds.Select(p => new Place { Id = p }).ToArray(),
             };
             return data;
+        }
+
+        PlaceDto IMapper<Place, PlaceDto>.Map(Place source)
+        {
+            var data = source;
+            IMapper<ProductType, ProductTypeDto> mapperTo = new DtoMapperService();
+            var dto = new PlaceDto
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Order = data.Order,
+                Number = data.Number,
+                ProductTypeId = data.ProductTypeId ?? 0,
+                ProductType = (data.ProductType is { }) ? mapperTo.Map(data.ProductType) : null,
+                Count = data.Count,
+                Size = data.Size,
+                LastDateTime = data.LastDateTime,
+                PlaceStatus = data.PlaceStatus,
+                Comment = data.Comment,
+                IsDelete = data.IsDelete,
+            };
+            return dto;
+        }
+
+        Place IMapper<PlaceDto, Place>.Map(PlaceDto source)
+        {
+            var dto = source;
+            IMapper<ProductTypeDto, ProductType> mapperFrom = new DtoMapperService();
+            int? productTypeId = dto.ProductTypeId;
+            if (productTypeId == 0) productTypeId = null;
+            var place = new Place
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Order = dto.Order,
+                Number = dto.Number,
+                ProductTypeId = productTypeId,
+                ProductType = (dto.ProductType is { }) ? mapperFrom.Map(dto.ProductType) : null,
+                Count = dto.Count,
+                Size = dto.Size,
+                LastDateTime = dto.LastDateTime,
+                PlaceStatus = dto.PlaceStatus,
+                Comment = dto.Comment,
+                IsDelete = dto.IsDelete,
+            };
+            return place;
         }
     }
 }

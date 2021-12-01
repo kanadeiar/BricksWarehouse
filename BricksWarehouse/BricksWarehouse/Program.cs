@@ -7,6 +7,8 @@ builder.Host.ConfigureServices(services =>
 
     services.AddScoped<IMapper<ProductType, ProductTypeDto>, DtoMapperService>();
     services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
+    services.AddScoped<IMapper<Place, PlaceDto>, DtoMapperService>();
+    services.AddScoped<IMapper<PlaceDto, Place>, DtoMapperService>();
 
     services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
     services.AddScoped<IPlaceData, DatabasePlaceData>();
