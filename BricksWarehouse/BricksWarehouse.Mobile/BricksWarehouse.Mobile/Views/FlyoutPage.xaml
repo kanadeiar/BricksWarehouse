@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:v="clr-namespace:BricksWarehouse.Mobile.Views"
+             xmlns:ve="clr-namespace:BricksWarehouse.Mobile.Views.Edit"
              x:Class="BricksWarehouse.Mobile.Views.FlyoutPage"
              FlyoutWidth="300"
              Shell.BackgroundColor="#dc3545">
@@ -14,5 +15,16 @@
         <ShellContent Title="Обзор склада" Icon="ic_action_home.png" IsTabStop="True" ContentTemplate="{DataTemplate v:MainPage}" />
 
     </FlyoutItem>
-    
+
+    <FlyoutItem Title="Редактирование" FlyoutDisplayOptions="AsSingleItem" FlyoutIcon="ic_action_edit.png">
+        <Tab Title="Редактирование" Icon="ic_action_edit.png">
+            <ShellContent Title="Виды товаров" ContentTemplate="{DataTemplate ve:ProductTypePage}" />
+            <ShellContent Title="Места хранений товаров" ContentTemplate="{DataTemplate ve:PlacePage}" />
+        </Tab>
+        <Tab Title="Корзина" Icon="ic_trash.png">
+            <ShellContent Title="Виды товаров" ContentTemplate="{DataTemplate ve:TrashProductTypePage}" />
+            <ShellContent Title="Места хранений товаров" ContentTemplate="{DataTemplate ve:TrashPlacePage}" />
+        </Tab>
+    </FlyoutItem>
+
 </Shell>
