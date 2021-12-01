@@ -1,0 +1,98 @@
+﻿@page "/online/producttype/edit/{id:int}"
+@page "/online/producttype/create"
+@inherits OwningComponentBase<WarehouseContext>
+@inject NavigationManager NavManager
+
+<link href="~/css/BlazorValidation.css" rel="stylesheet" />
+
+<h3 class="bg-@Theme text-center text-@TextColor p-2">@Mode</h3>
+
+<div>
+    <NavLink class="btn btn-secondary" href="online/producttype">Назад</NavLink>
+</div>
+
+@if (ProductTypeData is null)
+{
+    <div class="row">
+        <div colspan="6" class="p-5 text-center">Загрузка ...</div>
+    </div>
+}
+else
+{
+    <EditForm Model="ProductTypeData" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        @if (!IsModeCreate)
+        {
+            <div class="form-group">
+                <label>ID</label>
+                <InputNumber class="form-control" @bind-Value="ProductTypeData.Id" disabled />
+            </div>
+        }
+        <div class="form-group">
+            <label>Название</label>
+            <ValidationMessage For="@(() => ProductTypeData.Name)" />
+            <InputText class="form-control" @bind-Value="ProductTypeData.Name" />
+        </div>
+        <div class="form-group">
+            <label>Номер формата</label>
+            <ValidationMessage For="@(() => ProductTypeData.FormatNumber)" />
+            <InputNumber class="form-control" @bind-Value="ProductTypeData.FormatNumber" />
+        </div>
+        <div class="form-group">
+            <label>Сортировка</label>
+            <ValidationMessage For="@(() => ProductTypeData.Order)" />
+            <InputNumber class="form-control" @bind-Value="ProductTypeData.Order" />
+        </div>
+        <div class="form-group">
+            <label>Количество едениц в пачке</label>
+            <ValidationMessage For="@(() => ProductTypeData.Units)" />
+            <InputNumber class="form-control" @bind-Value="ProductTypeData.Units" />
+        </div>
+        <div class="form-group">
+            <label>Объем, занимаемый одной пачки</label>
+            <ValidationMessage For="@(() => ProductTypeData.Volume)" />
+            <InputNumber class="form-control" @bind-Value="ProductTypeData.Volume" />
+        </div>
+        <div class="form-group">
+            <label>Вес одной пачки</label>
+            <ValidationMessage For="@(() => ProductTypeData.Weight)" />
+            <InputNumber class="form-control" @bind-Value="ProductTypeData.Weight" />
+        </div>
+        <div class="form-group">
+            <label>Метка удаления вида товаров</label>
+            <InputCheckbox class="form-check-input" @bind-Value="ProductTypeData.IsDelete" />
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-@Theme">Сохранить</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+    WarehouseContext Context => Service;
+    [Parameter]
+    public int Id { get; set; }
+    public bool IsModeCreate => Id == 0;
+
+    public ProductType? ProductTypeData { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        if (IsModeCreate)
+            ProductTypeData = new ProductType();
+        else
+            ProductTypeData = await Context.ProductTypes.FindAsync(Id);
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        if (IsModeCreate)
+            Context.Add(ProductTypeData!);
+        await Context.SaveChangesAsync();
+        NavManager.NavigateTo("online/producttype");
+    }
+
+    public string Mode => IsModeCreate ? "Создание нового вида товаров" : "Редактирование выбранного вида товаров";
+    public string Theme => IsModeCreate ? "success" : "info";
+    public string TextColor => IsModeCreate ? "white" : "dark";
+}
