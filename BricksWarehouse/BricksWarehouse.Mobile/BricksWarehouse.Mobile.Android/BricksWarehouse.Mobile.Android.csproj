@@ -84,13 +84,22 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
+    <AndroidResource Include="Resources\drawable\ic_action_home.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BricksWarehouse.Mobile\BricksWarehouse.Mobile.csproj">
       <Project>{B613ACE2-3B40-4C8C-8942-D19A9CF493EB}</Project>
       <Name>BricksWarehouse.Mobile</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\favicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_action_device_unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_action_edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

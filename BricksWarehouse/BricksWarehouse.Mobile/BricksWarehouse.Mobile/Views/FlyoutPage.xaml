@@ -11,7 +11,7 @@
     </Shell.FlyoutHeader>
     
     <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Обзор склада" IsTabStop="True" ContentTemplate="{DataTemplate v:MainPage}" />
+        <ShellContent Title="Обзор склада" Icon="ic_action_home.png" IsTabStop="True" ContentTemplate="{DataTemplate v:MainPage}" />
 
     </FlyoutItem>
     
