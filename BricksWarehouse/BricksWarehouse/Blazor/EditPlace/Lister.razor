@@ -9,11 +9,14 @@
     {
         <NavLink class="btn btn-success mb-1" href="online/place/create"> Создать</NavLink>
         <NavLink class="btn btn-secondary mb-1" href="@($"online/place/{true}")"> Корзина</NavLink>
+        <button class="btn btn-info mb-1" @onclick="@( () => UpdateDataAsync() )">Обновить</button>
     }
     else
     {
         <NavLink class="btn btn-secondary mb-1" href="online/place">Назад</NavLink>
+        <button class="btn btn-info mb-1" @onclick="@( () => UpdateDataAsync() )">Обновить</button>
     }
+
 </div>
 
 <div class="table-responsive">
