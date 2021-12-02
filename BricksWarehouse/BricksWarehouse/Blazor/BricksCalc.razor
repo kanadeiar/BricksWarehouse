@@ -1,0 +1,84 @@
+﻿@page "/online/calc"
+
+<h1 class="bg-danger text-center text-white p-2">Калькулятор кирпичей</h1>
+
+<p>Расчет количества кирпичей на строительство.</p>
+
+<h6>Параметры кирпича:</h6>
+
+<div class="form-group my-2">
+    <label>Вид кирпича:</label>
+    <select class="form-select" @bind="BrickType">
+        <option value="0" selected disabled>Не выбран</option>
+        <option value="1">Одинарный 250 x 120 x 56</option>
+        <option value="2">Полуторный 250 x 120 x 88</option>
+        <option value="3">Двойной 250 x 120 x 138</option>
+        <option value="4">Евро – 250 х 88 х 65</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Длинна, мм:</label>
+    <input class="form-control" @bind-value="@BrickLength" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@BrickLength" @bind-value:event="oninput" min="50" max="500">
+    <label>Ширина, мм:</label>
+    <input class="form-control" @bind-value="@BrickWidth" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@BrickWidth" @bind-value:event="oninput" min="50" max="500">
+    <label>Высота, мм:</label>
+    <input class="form-control" @bind-value="@BrickHeight" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@BrickHeight" @bind-value:event="oninput" min="50" max="500">
+</div>
+
+<h6>Параметры стен:</h6>
+
+<div>
+    <label>Средняя высота стены, см:</label>
+    <input class="form-control" @bind-value="@WallHeight" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@WallHeight" @bind-value:event="oninput" min="100" max="1000">
+    <label>Длинна всех стен (периметр), см:</label>
+    <input class="form-control" @bind-value="@WallLength" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@WallLength" @bind-value:event="oninput" min="100" max="10000">
+    <label>Толщина стен, см:</label>
+    <input class="form-control" @bind-value="@WallWidth" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@WallWidth" @bind-value:event="oninput" min="50" max="300">
+    <label>Площадь проемов, см2:</label>
+    <input class="form-control" @bind-value="@OpeningSpace" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@OpeningSpace" @bind-value:event="oninput" min="0" max="10000">
+</div>
+
+<button>
+    Рассчитать
+</button>
+
+@code {
+    private int _brickType;
+    public int BrickType 
+    { 
+        get => _brickType; 
+        set
+        {
+            switch (value)
+            {
+                case 1: BrickLength = 250; BrickWidth = 120; BrickHeight = 65;
+                    break;
+                case 2: BrickLength = 250; BrickWidth = 120; BrickHeight = 88;
+                    break;
+                case 3: BrickLength = 250; BrickWidth = 120; BrickHeight = 138;
+                    break;
+                case 4: BrickLength = 250; BrickWidth = 88; BrickHeight = 65;
+                    break;
+            }
+            _brickType = value;
+        }
+    }
+    public int BrickLength { get; set; } = 250;
+    public int BrickWidth { get; set; } = 120;
+    public int BrickHeight { get; set; } = 65;
+
+    public int WallHeight { get; set; } = 200;
+    public int WallLength { get; set; } = 500;
+    public int WallWidth { get; set; } = 120;
+    public int OpeningSpace { get; set; }
+
+
+}
