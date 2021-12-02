@@ -2,9 +2,9 @@
 
 <h1 class="bg-danger text-center text-white p-2">Калькулятор кирпичей</h1>
 
-<p>Расчет количества кирпичей на строительство.</p>
+<p>Расчет количества необходимы кирпичей на строительство чего-нибудь.</p>
 
-<h6>Параметры кирпича:</h6>
+<h6 class="text-center m-2">Параметры кирпича:</h6>
 
 <div class="form-group my-2">
     <label>Вид кирпича:</label>
@@ -17,21 +17,21 @@
     </select>
 </div>
 
-<div class="form-group">
-    <label>Длинна, мм:</label>
+<div class="form-group my-2">
+    <label>Длинна кирпича, мм:</label>
     <input class="form-control" @bind-value="@BrickLength" @bind-value:event="oninput" />
     <input type="range" class="form-range" @bind-value="@BrickLength" @bind-value:event="oninput" min="50" max="500">
-    <label>Ширина, мм:</label>
+    <label>Ширина кирпича, мм:</label>
     <input class="form-control" @bind-value="@BrickWidth" @bind-value:event="oninput" />
     <input type="range" class="form-range" @bind-value="@BrickWidth" @bind-value:event="oninput" min="50" max="500">
-    <label>Высота, мм:</label>
+    <label>Высота кирпича, мм:</label>
     <input class="form-control" @bind-value="@BrickHeight" @bind-value:event="oninput" />
     <input type="range" class="form-range" @bind-value="@BrickHeight" @bind-value:event="oninput" min="50" max="500">
 </div>
 
-<h6>Параметры стен:</h6>
+<h6 class="text-center m-2">Параметры стен:</h6>
 
-<div>
+<div class="form-group my-2">
     <label>Средняя высота стены, см:</label>
     <input class="form-control" @bind-value="@WallHeight" @bind-value:event="oninput" />
     <input type="range" class="form-range" @bind-value="@WallHeight" @bind-value:event="oninput" min="100" max="1000">
@@ -46,9 +46,25 @@
     <input type="range" class="form-range" @bind-value="@OpeningSpace" @bind-value:event="oninput" min="0" max="10000">
 </div>
 
-<button>
-    Рассчитать
+<div class="form-check form-switch my-2">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @bind="@IsPlusFivePerc">
+  <label class="form-check-label" for="flexSwitchCheckDefault">Учитывать запас 5%</label>
+</div>
+
+<button class="btn btn-success" @onclick="@( () => CalculateBricks() )">
+    Рассчитать количество кирпичей
 </button>
+
+<h6 class="text-center m-2">Результаты расчетов:</h6>
+
+<div class="form-group my-2">
+    <label>Необходимый объем кирпичей, см2:</label>
+    <input class="form-control" @bind="@VolumeBricks" disabled/>
+    <label>Количество кирпичей, шт:</label>
+    <input class="form-control" @bind="@CountBricks" disabled/>
+</div>
+
+
 
 @code {
     private int _brickType;
@@ -79,6 +95,26 @@
     public int WallLength { get; set; } = 500;
     public int WallWidth { get; set; } = 120;
     public int OpeningSpace { get; set; }
+    public bool IsPlusFivePerc { get; set; }
 
+    public void CalculateBricks()
+    {
+        double wallVolume = WallHeight * WallLength * WallWidth; //sm
+        double brickVolume = (BrickLength * BrickHeight * BrickWidth) / 1000; //sm
+        double openingVolume = OpeningSpace * WallWidth; //sm
 
+        double resultVolume = wallVolume - openingVolume;
+        double resultCount = (wallVolume - openingVolume) / brickVolume;
+
+        if (IsPlusFivePerc)
+        {
+            resultVolume *= 1.05;
+            resultCount *= 1.05;
+        }
+        VolumeBricks = Convert.ToInt32(resultVolume);
+        CountBricks = Convert.ToInt32(resultCount);
+    }
+
+    public int VolumeBricks { get; set; }
+    public int CountBricks { get; set; }
 }
