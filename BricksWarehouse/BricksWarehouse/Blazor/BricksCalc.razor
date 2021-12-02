@@ -58,7 +58,7 @@
 <h6 class="text-center m-2">Результаты расчетов:</h6>
 
 <div class="form-group my-2">
-    <label>Необходимый объем кирпичей, см2:</label>
+    <label>Необходимый объем кирпичей, м3:</label>
     <input class="form-control" @bind="@VolumeBricks" disabled/>
     <label>Количество кирпичей, шт:</label>
     <input class="form-control" @bind="@CountBricks" disabled/>
@@ -111,8 +111,8 @@
             resultVolume *= 1.05;
             resultCount *= 1.05;
         }
-        VolumeBricks = Convert.ToInt32(resultVolume);
-        CountBricks = Convert.ToInt32(resultCount);
+        VolumeBricks = Convert.ToInt32(resultVolume / 1000000.0); //m3
+        CountBricks = Convert.ToInt32(resultCount); //count
     }
 
     public int VolumeBricks { get; set; }
