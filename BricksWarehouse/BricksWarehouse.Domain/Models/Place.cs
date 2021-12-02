@@ -55,7 +55,7 @@ namespace BricksWarehouse.Domain.Models
 
         public override string ToString()
         {
-            return $"{Name} номер: {Number}";
+            return $"[{Number}] {Name}";
         }
     }
 

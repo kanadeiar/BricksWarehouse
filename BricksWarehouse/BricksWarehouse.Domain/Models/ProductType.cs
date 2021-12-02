@@ -33,7 +33,7 @@ namespace BricksWarehouse.Domain.Models
 
         public override string ToString()
         {
-            return $"{Name} формат: {FormatNumber}";
+            return $"[{FormatNumber}] {Name}";
         }
     }
 }

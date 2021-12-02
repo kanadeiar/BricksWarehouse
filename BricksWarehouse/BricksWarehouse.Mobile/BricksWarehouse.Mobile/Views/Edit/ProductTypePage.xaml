@@ -29,7 +29,7 @@
                 <DataTemplate x:DataType="m:ProductType">
                     <ViewCell>
                         <ViewCell.View>
-                            <StackLayout Padding="10, 0, 10, 10">
+                            <StackLayout Padding="10">
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
                                 </StackLayout>

@@ -39,7 +39,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Trash
             set => Set(ref _refreshingProductTypes, value);
         }
 
-        private string _Title = "Редактирование видов";
+        private string _Title = "Корзина удаленных";
         /// <summary> Название приложения </summary>
         public string Title
         {

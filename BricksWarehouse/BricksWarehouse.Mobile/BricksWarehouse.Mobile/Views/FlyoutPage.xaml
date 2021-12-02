@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:v="clr-namespace:BricksWarehouse.Mobile.Views"
              xmlns:ve="clr-namespace:BricksWarehouse.Mobile.Views.Edit"
+             xmlns:vt="clr-namespace:BricksWarehouse.Mobile.Views.Trash"
              x:Class="BricksWarehouse.Mobile.Views.FlyoutPage"
              FlyoutWidth="300"
              Shell.BackgroundColor="#dc3545">
@@ -25,8 +26,8 @@
 
     <FlyoutItem Shell.TabBarIsVisible="False" Title="Корзина удаленных" FlyoutDisplayOptions="AsSingleItem" FlyoutIcon="ic_trash.png">
         <Tab Title="Корзина удаленных" Icon="ic_trash.png">
-            <ShellContent Title="Виды товаров" IsTabStop="True" ContentTemplate="{DataTemplate ve:TrashProductTypePage}" />
-            <ShellContent Title="Места хранений товаров" IsTabStop="True" ContentTemplate="{DataTemplate ve:TrashPlacePage}" />
+            <ShellContent Title="Виды товаров" IsTabStop="True" ContentTemplate="{DataTemplate vt:TrashProductTypePage}" />
+            <ShellContent Title="Места хранений товаров" IsTabStop="True" ContentTemplate="{DataTemplate vt:TrashPlacePage}" />
         </Tab>
     </FlyoutItem>
 
