@@ -37,10 +37,10 @@
     <EmbeddedResource Update="Views\Edit\ProductTypePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Edit\TrashPlacePage.xaml">
+    <EmbeddedResource Update="Views\Trash\TrashPlacePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Edit\TrashProductTypePage.xaml">
+    <EmbeddedResource Update="Views\Trash\TrashProductTypePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FlyoutPage.xaml">

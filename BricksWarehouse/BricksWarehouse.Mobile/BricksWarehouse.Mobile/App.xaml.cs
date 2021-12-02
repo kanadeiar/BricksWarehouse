@@ -9,6 +9,7 @@ using BricksWarehouse.Domain.Interfaces;
 using BricksWarehouse.Domain.Mappers;
 using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Edit;
+using BricksWarehouse.Mobile.ViewModels.Trash;
 
 namespace BricksWarehouse.Mobile
 {

@@ -1,4 +1,5 @@
 ﻿using BricksWarehouse.Mobile.ViewModels.Edit;
+using BricksWarehouse.Mobile.ViewModels.Trash;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BricksWarehouse.Mobile.ViewModels

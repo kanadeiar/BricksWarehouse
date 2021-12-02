@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace BricksWarehouse.Mobile.Views.Edit
+namespace BricksWarehouse.Mobile.Views.Trash
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TrashPlacePage : ContentPage
     {
         public TrashPlacePage()
