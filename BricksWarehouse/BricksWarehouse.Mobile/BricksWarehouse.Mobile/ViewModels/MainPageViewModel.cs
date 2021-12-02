@@ -88,10 +88,14 @@ namespace BricksWarehouse.Mobile.ViewModels
         #endregion
     }
 
+    #region Вспомогательные вьюмодели
+
     public class ProductTypeView
     {
         public string Name { get; set; }
         public int PlacesCount { get; set; }
         public int CountUnits { get; set; }
     }
+
+    #endregion
 }

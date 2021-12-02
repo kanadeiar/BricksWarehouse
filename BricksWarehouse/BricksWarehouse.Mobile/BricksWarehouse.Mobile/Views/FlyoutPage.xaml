@@ -27,4 +27,10 @@
         </Tab>
     </FlyoutItem>
 
+    <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
+
+
+        <ShellContent Title="О приложении" Icon="ic_action_device_unknown.png" IsTabStop="True" ContentTemplate="{DataTemplate v:AboutPage}" />
+    </FlyoutItem>
+
 </Shell>

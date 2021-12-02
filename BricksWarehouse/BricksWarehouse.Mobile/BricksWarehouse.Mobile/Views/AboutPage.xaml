@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BricksWarehouse.Mobile.Views.AboutPage"
+             Title="О приложении">
+
+    <StackLayout>
+        <Frame BackgroundColor="#f31731" Padding="20" CornerRadius="0">
+            <Label Text="Склад кирпичей" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        </Frame>
+        <StackLayout>
+            <Label Text="Склад кирпичей" FontSize="Default" Margin="10" />
+            <Label Text="Ранняя версия (MVP) мобильного приложения." FontSize="Default" Margin="10" />
+            <Label Text="Данная часть мобильного приложения предназначена для оперативного управления работой склада в полевых условиях. Веб-часть мобильного приложения вместе с базой данных находиться в облаке, ссылка на этот сайт ниже в этой странице." FontSize="Default" Margin="10" />
+
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
