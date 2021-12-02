@@ -1,12 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BricksWarehouse.Mobile.Views.Edit.EditPlacePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+             x:Class="BricksWarehouse.Mobile.Views.Edit.EditPlacePage"
+             Title="{Binding Title}"
+             BindingContext="{Binding EditPlaceViewModel, Source={StaticResource Locator}}">
+
+    <ScrollView>
+        <StackLayout Padding="10">
+            <Label Text="Имя" />
+            <Entry Text="{Binding Name}" />
+            <Label Text="Сортировка" />
+            <Entry Text="{Binding Order}" Keyboard="Numeric" />
+            <Label Text="Номер" />
+            <Entry Text="{Binding Number}" Keyboard="Numeric" />
+            <Label Text="Вид товаров на этом месте" />
+            <Picker x:Name="PickerProductType" Title="Выберите"
+                    ItemsSource="{Binding ProductTypes}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedProductType}">
+            </Picker>
+            <Label Text="Количество" />
+            <Entry Text="{Binding Count}" Keyboard="Numeric" />
+            <Label Text="Вместимость" />
+            <Entry Text="{Binding Size}" Keyboard="Numeric" />
+            <Label Text="Дата и время" />
+            <Entry Text="{Binding LastDateTime}" Keyboard="Numeric" />
+            <Label Text="Статус места" />
+            <Picker x:Name="PickerPlaceStatus" Title="Выберите"
+                    ItemsSource="{Binding PlaceStatuses}"
+                    SelectedItem="{Binding PlaceStatus}">                
+            </Picker>
+            <Label Text="Комментарий" />
+            <Entry Text="{Binding Comment}" />
+            <Label Text="Метка удаления вида товаров" />
+            <Switch IsToggled="{Binding IsDelete}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="OK" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    Command="{Binding OKPlaceCommand}"/>
+                <Button Grid.Column="1" Text="Отмена" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    Clicked="ButtonCancel_Clicked"/>
+            </Grid>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

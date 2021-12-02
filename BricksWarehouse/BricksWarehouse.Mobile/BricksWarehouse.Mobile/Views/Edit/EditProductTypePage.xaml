@@ -1,12 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BricksWarehouse.Mobile.Views.Edit.EditProductTypePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+             xmlns:c="clr-namespace:BricksWarehouse.Mobile.Converters"
+             x:Class="BricksWarehouse.Mobile.Views.Edit.EditProductTypePage"
+             Title="{Binding Title}"
+             BindingContext="{Binding EditProductTypeViewModel, Source={StaticResource Locator}}">
+    <ContentPage.Resources>
+        <c:DoubleConverter x:Key="DoubleConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <StackLayout Padding="10">
+            <Label Text="Имя" />
+            <Entry Text="{Binding Name}" Keyboard="Text" />
+            <Label Text="Номер формата" />
+            <Entry Text="{Binding FormatNumber}" Keyboard="Numeric" />
+            <Label Text="Сортировка" />
+            <Entry Text="{Binding Order}" Keyboard="Numeric" />
+            <Label Text="Количество едениц в пачке" />
+            <Entry Text="{Binding Units}" Keyboard="Numeric" />
+            <Label Text="Объем, занимаемый одной пачкой" />
+            <Entry Text="{Binding Volume, Converter={StaticResource DoubleConverter}}" Keyboard="Numeric" />
+            <Label Text="Вес одной пачки" />
+            <Entry Text="{Binding Weight, Converter={StaticResource DoubleConverter}}" Keyboard="Numeric" />
+            <Label Text="Метка удаления вида товаров" />
+            <Switch IsToggled="{Binding IsDelete}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="OK" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    Command="{Binding OKProductTypeCommand}"/>
+                <Button Grid.Column="1" Text="Отмена" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    Clicked="ButtonCancel_Clicked"/>
+            </Grid>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

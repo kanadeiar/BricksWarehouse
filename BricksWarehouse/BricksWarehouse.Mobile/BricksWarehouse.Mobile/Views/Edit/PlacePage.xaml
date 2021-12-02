@@ -14,11 +14,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Text="Создать" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
-                    />
+                    Command="{Binding AddPlaceCommand}"/>
             <Button Grid.Column="1" Text="Изменить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
-                    />
+                    Command="{Binding EditPlaceCommand}" CommandParameter="{Binding SelectedPlace}"/>
             <Button Grid.Column="2" Text="Удалить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
-                    />
+                    Command="{Binding DeletePlaceCommand}" CommandParameter="{Binding SelectedPlace}"/>
         </Grid>
         <ListView x:Name="ListViewEditPlaces" HasUnevenRows="True" IsPullToRefreshEnabled="True"
                   ItemsSource="{Binding Places}"
