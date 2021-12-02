@@ -8,6 +8,7 @@ using BricksWarehouse.Domain.Dto;
 using BricksWarehouse.Domain.Interfaces;
 using BricksWarehouse.Domain.Mappers;
 using BricksWarehouse.Mobile.Services;
+using BricksWarehouse.Mobile.ViewModels.Edit;
 
 namespace BricksWarehouse.Mobile
 {
@@ -34,6 +35,13 @@ namespace BricksWarehouse.Mobile
             services.AddScoped<IMapper<PlaceDto, Place>, DtoMapperService>();
 
             services.AddSingleton<MainPageViewModel>();
+
+            services.AddSingleton<ProductTypeViewModel>();
+            services.AddSingleton<PlaceViewModel>();
+            services.AddSingleton<EditProductTypeViewModel>();
+            services.AddSingleton<EditPlaceViewModel>();
+            services.AddSingleton<TrashProductTypeViewModel>();
+            services.AddSingleton<TrashPlaceViewModel>();
 
         }
 

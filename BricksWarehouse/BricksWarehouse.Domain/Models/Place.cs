@@ -52,6 +52,11 @@ namespace BricksWarehouse.Domain.Models
                 _ => throw new ArgumentOutOfRangeException(nameof(status)),
             };
         }
+
+        public override string ToString()
+        {
+            return $"{Name} номер: {Number}";
+        }
     }
 
     /// <summary> Статус места размещения товаров </summary>

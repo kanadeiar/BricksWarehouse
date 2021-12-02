@@ -9,7 +9,6 @@ using Xamarin.Forms.Xaml;
 
 namespace BricksWarehouse.Mobile.Views.Edit
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlacePage : ContentPage
     {
         public PlacePage()

@@ -1,10 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:BricksWarehouse.Domain.Models;assembly=BricksWarehouse.Domain"
              x:Class="BricksWarehouse.Mobile.Views.Edit.PlacePage"
-             Title="Места хранений товаров">
+             Title="{Binding Title}"
+             BindingContext="{Binding PlaceViewModel, Source={StaticResource Locator}}">
 
     <StackLayout>
-        <Label Text="Редактирование мест хранений товаров" VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" />
+        <Grid Margin="10,10,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Создать" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    />
+            <Button Grid.Column="1" Text="Изменить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    />
+            <Button Grid.Column="2" Text="Удалить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    />
+        </Grid>
+        <ListView x:Name="ListViewEditPlaces" HasUnevenRows="True" IsPullToRefreshEnabled="True"
+                  ItemsSource="{Binding Places}"
+                  SelectedItem="{Binding SelectedPlace}"
+                  RefreshCommand="{Binding UpdatePlacesCommand}"
+                  IsRefreshing="{Binding RefreshingPlaces}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="m:Place">
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Padding="10, 0, 10, 10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}" FontSize="Body" />
+                                    <Label Text="{Binding Number, StringFormat='Номер: {0}'}" FontSize="Body" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding ProductType}" FontSize="Body" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Количество: " />
+                                    <Label Text="{Binding Count}" FontSize="Body" />
+                                    <Label Text="/" />
+                                    <Label Text="{Binding Size}" FontSize="Body" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Дата и время помещения товара: "/>
+                                    <Label Text="{Binding LastDateTime}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>      
     </StackLayout>
 </ContentPage>
