@@ -12,7 +12,8 @@
             <Label Text="Склад кирпичей" FontSize="Default" Margin="10" />
             <Label Text="Ранняя версия (MVP) мобильного приложения." FontSize="Default" Margin="10" />
             <Label Text="Данная часть мобильного приложения предназначена для оперативного управления работой склада в полевых условиях. Веб-часть мобильного приложения вместе с базой данных находиться в облаке, ссылка на этот сайт ниже в этой странице." FontSize="Default" Margin="10" />
-
+            <Button Text="Открыть веб-сайт в облаке" BackgroundColor="#f31731" FontSize="Subtitle" HeightRequest="60" TextColor="White" Margin="10"
+                Clicked="ButtonToSite_Clicked" />
         </StackLayout>
     </StackLayout>
 
