@@ -62,10 +62,33 @@ namespace BricksWarehouse.Mobile.ViewModels.Trash
 
         #region Команды
 
+        private ICommand _RevertProductTypeCommand;
+        /// <summary> Восстановить вид товаров </summary>
+        public ICommand RevertProductTypeCommand => _RevertProductTypeCommand ??= new Command(OnRevertProductTypeCommandExecuted, CanRevertProductTypeCommandExecuted);
+        private bool CanRevertProductTypeCommandExecuted(object p) => p is ProductType;
+        private async void OnRevertProductTypeCommandExecuted(object p)
+        {
+            if (p is ProductType productType)
+            {
+                await _productTypeClient.FromTrash(productType.Id);
+                ProductTypes.Remove(productType);
+                SelectedProductType = null;
+            }
+        }
 
-
-
-
+        private ICommand _DeleteProductTypeCommand;
+        /// <summary> Удалить окончательно вид товаров </summary>
+        public ICommand DeleteProductTypeCommand => _DeleteProductTypeCommand ??= new Command(OnDeleteProductTypeCommandExecuted, CanDeleteProductTypeCommandExecuted);
+        private bool CanDeleteProductTypeCommandExecuted(object p) => p is ProductType;
+        private async void OnDeleteProductTypeCommandExecuted(object p)
+        {
+            if (p is ProductType productType)
+            {
+                await _productTypeClient.Delete(productType.Id);
+                ProductTypes.Remove(productType);
+                SelectedProductType = null;
+            }
+        }
 
         private ICommand _UpdateProductTypesCommand;
         /// <summary> Обновить </summary>

@@ -62,10 +62,33 @@ namespace BricksWarehouse.Mobile.ViewModels.Trash
 
         #region Команды
 
+        private ICommand _RevertPlaceCommand;
+        /// <summary> Восстановить место </summary>
+        public ICommand RevertPlaceCommand => _RevertPlaceCommand ??= new Command(OnRevertPlaceCommandExecuted, CanRevertPlaceCommandExecuted);
+        private bool CanRevertPlaceCommandExecuted(object p) => p is Place;
+        private async void OnRevertPlaceCommandExecuted(object p)
+        {
+            if (p is Place place)
+            {
+                await _placeClient.FromTrash(place.Id);
+                Places.Remove(place);
+                SelectedPlace = null;
+            }
+        }
 
-
-
-
+        private ICommand _DeletePlaceCommand;
+        /// <summary> Удалить окончательно место </summary>
+        public ICommand DeletePlaceCommand => _DeletePlaceCommand ??= new Command(OnDeletePlaceCommandExecuted, CanDeletePlaceCommandExecuted);
+        private bool CanDeletePlaceCommandExecuted(object p) => p is Place;
+        private async void OnDeletePlaceCommandExecuted(object p)
+        {
+            if (p is Place place)
+            {
+                await _placeClient.Delete(place.Id);
+                Places.Remove(place);
+                SelectedPlace = null;
+            }
+        }
 
         private ICommand _UpdatePlacesCommand;
         /// <summary> Обновить </summary>
