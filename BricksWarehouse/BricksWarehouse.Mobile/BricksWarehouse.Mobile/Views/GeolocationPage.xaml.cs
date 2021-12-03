@@ -17,7 +17,7 @@ namespace BricksWarehouse.Mobile.Views
             InitializeComponent();
         }
 
-        private async Task btnLocation_ClickedAsync(object sender, EventArgs e)
+        private async void btnLocation_Clicked(object sender, EventArgs e)
         {
             try
             {
