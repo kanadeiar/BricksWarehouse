@@ -17,6 +17,8 @@ namespace BricksWarehouse.Mobile.ViewModels.Trash
 
         private readonly ProductTypeClient _productTypeClient;
 
+        public event EventHandler<string> Message;
+
         #endregion
 
         #region Свойства
@@ -84,6 +86,11 @@ namespace BricksWarehouse.Mobile.ViewModels.Trash
         {
             if (p is ProductType productType)
             {
+                if (productType.Places.Count > 0)
+                {
+                    Message?.Invoke(this, $"Нельзя удалить вид товаров, пока этот вид товаров хранится на каком-либо месте хранения товаров.\nСейчас: {productType.Places.Count} мест хранений товаров");
+                    return;
+                }
                 await _productTypeClient.Delete(productType.Id);
                 ProductTypes.Remove(productType);
                 SelectedProductType = null;
