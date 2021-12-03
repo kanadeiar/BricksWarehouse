@@ -2,8 +2,10 @@
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    public async Task<IActionResult> Index([FromServices] FillingsInfoService fillingsInfoService, [FromServices] CountsInfoService countsInfoService)
     {
+        ViewBag.Fillings = await fillingsInfoService.GetFillings();
+        ViewBag.Counts = await countsInfoService.GetCounts();
         return View();
     }
 

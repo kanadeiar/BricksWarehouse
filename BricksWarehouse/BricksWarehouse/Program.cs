@@ -14,6 +14,8 @@ builder.Host.ConfigureServices(services =>
 
     services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
     services.AddScoped<IPlaceData, DatabasePlaceData>();
+    services.AddScoped<FillingsInfoService>();
+    services.AddScoped<CountsInfoService>();
 
     services.AddControllersWithViews().AddRazorRuntimeCompilation();
     services.AddRazorPages().AddRazorRuntimeCompilation();
