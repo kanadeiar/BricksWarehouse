@@ -1,4 +1,6 @@
 
+using Blazored.Toast;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureServices(services =>
@@ -15,6 +17,8 @@ builder.Host.ConfigureServices(services =>
 
     services.AddControllersWithViews().AddRazorRuntimeCompilation();
     services.AddRazorPages().AddRazorRuntimeCompilation();
+
+    services.AddBlazoredToast();
 });
 builder.Services.AddServerSideBlazor();
 

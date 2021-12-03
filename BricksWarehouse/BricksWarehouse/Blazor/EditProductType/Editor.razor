@@ -2,6 +2,7 @@
 @page "/online/producttype/create"
 @inherits OwningComponentBase<WarehouseContext>
 @inject NavigationManager NavManager
+@inject IToastService toastService
 
 <link href="~/css/BlazorValidation.css" rel="stylesheet" />
 
@@ -87,7 +88,14 @@ else
     public async Task HandleValidSubmit()
     {
         if (IsModeCreate)
+        {
             Context.Add(ProductTypeData!);
+            toastService.ShowSuccess("Успещно добавлен новый вид товаров в базу данных", "Замечательно");
+        }
+        else
+        {
+            toastService.ShowInfo("Этот вид товаров успешно отредактирован в базе данных", "Замечательно");
+        }
         await Context.SaveChangesAsync();
         NavManager.NavigateTo("online/producttype");
     }

@@ -2,6 +2,7 @@
 @page "/online/place/create"
 @inherits OwningComponentBase<WarehouseContext>
 @inject NavigationManager NavManager
+@inject IToastService toastService
 
 <link href="~/css/BlazorValidation.css" rel="stylesheet" />
 
@@ -117,7 +118,14 @@ else
         if (PlaceData.ProductTypeId == 0)
             PlaceData.ProductTypeId = null;
         if (IsModeCreate)
+        {
             Context.Add(PlaceData!);
+            toastService.ShowSuccess("Успещно добавлено новое место хранения товаров в базу данных", "Замечательно");
+        }
+        else
+        {
+            toastService.ShowInfo("Это место хранения товаров успешно отредактировано в базе данных", "Замечательно");
+        }
         await Context.SaveChangesAsync();
         NavManager.NavigateTo("online/place");
     }
