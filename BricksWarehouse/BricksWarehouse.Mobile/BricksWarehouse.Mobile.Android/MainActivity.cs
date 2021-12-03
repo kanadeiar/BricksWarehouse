@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using ZXing.Mobile;
 
 namespace BricksWarehouse.Mobile.Droid
 {
@@ -18,7 +19,8 @@ namespace BricksWarehouse.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
 
-
+            // Init of QR-scanner for android platform
+            MobileBarcodeScanner.Initialize(Application);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
