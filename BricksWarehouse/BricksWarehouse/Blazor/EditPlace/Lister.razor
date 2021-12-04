@@ -1,6 +1,7 @@
 ﻿@page "/online/place/{trash:bool}"
 @page "/online/place"
 @inherits OwningComponentBase<WarehouseContext>
+@inject IToastService toastService
 
 <h3 class="bg-danger text-center text-white p-2">@Mode</h3>
 
@@ -105,21 +106,29 @@
 
     public async Task HandleTrash(Place p)
     {
+        toastService.ShowInfo($"Место хранения товаров помещено в корзину удаленных мест хранений товаров", "Информация");
         p.IsDelete = true;
         await Context.SaveChangesAsync();
         await UpdateDataAsync();
     }
     public async Task HandleUndoTrash(Place p)
     {
+        toastService.ShowSuccess($"Место хранения товаров успешно возвращено из корзины удаленных мест хранений товаров", "Великолепно");
         p.IsDelete = false;
         await Context.SaveChangesAsync();
         await UpdateDataAsync();
     }
     public async Task HandleDelete(Place p)
     {
+        if (p.Count > 0 || p.ProductType is { })
+        {
+            toastService.ShowError($"Удаляемое место хранения товаров должны быть пустым и без выбранного вида товаров. Сейчас на этом месте {p.Count} шт. товаров и вид товара - {p.ProductType?.Name}", "Неудача");
+            return;
+        }
         Context.Remove<Place>(p);
         await Context.SaveChangesAsync();
         await UpdateDataAsync();
+        toastService.ShowWarning("Это место хранения товаров успешно удалено из базы данных", "Успешно");
     }
 
     public string Mode => Trash ? "Корзина удаленных мест хранений товаров" : "Редактирование мест хранений товаров";

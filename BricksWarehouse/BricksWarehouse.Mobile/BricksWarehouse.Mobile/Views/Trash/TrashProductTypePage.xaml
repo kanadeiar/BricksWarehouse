@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:BricksWarehouse.Domain.Models;assembly=BricksWarehouse.Domain"
+             x:Class="BricksWarehouse.Mobile.Views.Trash.TrashProductTypePage"
+             Title="{Binding Title}"
+             BindingContext="{Binding TrashProductTypeViewModel, Source={StaticResource Locator}}">
+
+    <StackLayout>
+        <Label Text="Корзина удаленных из базы видов товаров" HorizontalOptions="CenterAndExpand" />
+        <Grid Margin="10,10,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Восстановить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    Command="{Binding RevertProductTypeCommand}" CommandParameter="{Binding SelectedProductType}"/>
+            <Button Grid.Column="1" Text="Удалить окончательно" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    Command="{Binding DeleteProductTypeCommand}" CommandParameter="{Binding SelectedProductType}"/>
+        </Grid>
+        <ListView x:Name="ListViewProductTypes" HasUnevenRows="True" IsPullToRefreshEnabled="True"
+                  ItemsSource="{Binding ProductTypes}"
+                  SelectedItem="{Binding SelectedProductType}"
+                  RefreshCommand="{Binding UpdateProductTypesCommand}"
+                  IsRefreshing="{Binding RefreshingProductTypes}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="m:ProductType">
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Padding="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

@@ -1,4 +1,6 @@
 
+using Blazored.Toast;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureServices(services =>
@@ -12,9 +14,13 @@ builder.Host.ConfigureServices(services =>
 
     services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
     services.AddScoped<IPlaceData, DatabasePlaceData>();
+    services.AddScoped<FillingsInfoService>();
+    services.AddScoped<CountsInfoService>();
 
     services.AddControllersWithViews().AddRazorRuntimeCompilation();
     services.AddRazorPages().AddRazorRuntimeCompilation();
+
+    services.AddBlazoredToast();
 });
 builder.Services.AddServerSideBlazor();
 

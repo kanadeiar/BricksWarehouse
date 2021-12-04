@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BricksWarehouse.Mobile.Views.GeolocationPage"
+             Title="Геолокация">
+
+    <StackLayout Padding="10">
+        <Label Text="Получение информации о геолокации этого устройства" FontSize="Large" Margin="10" />
+        <Button x:Name="btnLocation" Text="Получить данные геолокации" BackgroundColor="#f31731" Margin="4" Padding="-20" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                Clicked="btnLocation_Clicked"/>
+        <Label HorizontalTextAlignment="Center" x:Name="LabelLatitude" FontSize="Large"></Label>
+        <Label HorizontalTextAlignment="Center" x:Name="LabelLongitude" FontSize="Large"></Label>
+        <Label Text="Список координат:"/>
+        <Label x:Name="LabelCoordinates" Text="" />
+        <Label Text="Функционал дальнейшей обработки данных геолокации не реализован" />
+    </StackLayout>
+</ContentPage>
