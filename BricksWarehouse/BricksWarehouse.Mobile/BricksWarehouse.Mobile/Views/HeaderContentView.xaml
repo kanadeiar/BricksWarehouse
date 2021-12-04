@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             HeightRequest="180"
+             x:Class="BricksWarehouse.Mobile.Views.HeaderContentView">
+
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#dc3545">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Source="favicon.png" Grid.Column="1" Grid.Row="1" HeightRequest="80" WidthRequest="80" HorizontalOptions="Start" VerticalOptions="End"/>
+
+        <StackLayout VerticalOptions="CenterAndExpand" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3" Orientation="Vertical">
+            <Label Text="Склад кирпичей" TextColor="White" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Label Text="kanadeiar@gmail.com" TextColor="White" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+        </StackLayout>
+
+        <Label Text="Мобильное приложение управления складом кирпичей" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" TextColor="White" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+    </Grid>
+</ContentView>

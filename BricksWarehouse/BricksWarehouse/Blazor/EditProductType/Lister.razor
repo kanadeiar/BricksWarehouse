@@ -1,6 +1,7 @@
 ﻿@page "/online/producttype/{trash:bool}"
 @page "/online/producttype"
 @inherits OwningComponentBase<WarehouseContext>
+@inject IToastService toastService
 
 <h3 class="bg-danger text-center text-white p-2">@Mode</h3>
 
@@ -102,21 +103,29 @@
 
     public async Task HandleTrash(ProductType pt)
     {
+        toastService.ShowInfo($"Вид товаров помещен в корзину удаленных видов товаров", "Информация");
         pt.IsDelete = true;
         await Context.SaveChangesAsync();
         await UpdateDataAsync();
     }
     public async Task HandleUndoTrash(ProductType pt)
     {
+        toastService.ShowSuccess($"Вид товаров успешно возвращен из корзины удаленных видов товаров", "Великолепно");
         pt.IsDelete = false;
         await Context.SaveChangesAsync();
         await UpdateDataAsync();
     }
     public async Task HandleDelete(ProductType pt)
     {
+        if (pt.Places.Count > 0)
+        {
+            toastService.ShowError($"Удаляемый вид товара не должен использоваться на местах хранения товаров. Сейчас выбран на {pt.Places.Count} местах.", "Неудача");
+            return;
+        }
         Context.Remove<ProductType>(pt);
         await Context.SaveChangesAsync();
         await UpdateDataAsync();
+        toastService.ShowWarning("Этот вид товаров успешно удален из базы данных", "Успешно");
     }
 
     public string Mode => Trash ? "Корзина удаленных видов товаров" : "Редактирование видов товаров";

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="clr-namespace:BricksWarehouse.Mobile.Views"
+             xmlns:ve="clr-namespace:BricksWarehouse.Mobile.Views.Edit"
+             xmlns:vt="clr-namespace:BricksWarehouse.Mobile.Views.Trash"
+             x:Class="BricksWarehouse.Mobile.Views.FlyoutPage"
+             FlyoutWidth="300"
+             Shell.BackgroundColor="#dc3545">
+    
+    <Shell.FlyoutHeader>
+        <v:HeaderContentView/>
+    </Shell.FlyoutHeader>
+    
+    <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent Title="Обзор склада" Icon="ic_action_home.png" IsTabStop="True" ContentTemplate="{DataTemplate v:MainPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem Shell.TabBarIsVisible="False" Title="Редактирование" FlyoutDisplayOptions="AsSingleItem" FlyoutIcon="ic_action_edit.png">
+        <Tab Title="Редактирование" Icon="ic_action_edit.png">
+            <ShellContent Title="Виды товаров" IsTabStop="True" ContentTemplate="{DataTemplate ve:ProductTypePage}" />
+            <ShellContent Title="Места хранений товаров" IsTabStop="True" ContentTemplate="{DataTemplate ve:PlacePage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Shell.TabBarIsVisible="False" Title="Корзина удаленных" FlyoutDisplayOptions="AsSingleItem" FlyoutIcon="ic_trash.png">
+        <Tab Title="Корзина удаленных" Icon="ic_trash.png">
+            <ShellContent Title="Виды товаров" IsTabStop="True" ContentTemplate="{DataTemplate vt:TrashProductTypePage}" />
+            <ShellContent Title="Места хранений товаров" IsTabStop="True" ContentTemplate="{DataTemplate vt:TrashPlacePage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent Title="Сканирование QR-кода" Icon="ic_action_photo_camera.png" IsTabStop="True" ContentTemplate="{DataTemplate v:QRScanPage}" />
+
+        <ShellContent Title="Геолокация" Icon="ic_action_gps_fixed.png" IsTabStop="True" ContentTemplate="{DataTemplate v:GeolocationPage}" />
+
+        <ShellContent Title="О приложении" Icon="ic_action_device_unknown.png" IsTabStop="True" ContentTemplate="{DataTemplate v:AboutPage}" />
+    </FlyoutItem>
+
+</Shell>

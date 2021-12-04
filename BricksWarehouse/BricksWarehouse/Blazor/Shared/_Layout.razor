@@ -1,13 +1,16 @@
-﻿@inherits LayoutComponentBase
+﻿
+@inherits LayoutComponentBase
 
 <PageTitle>Склад кирпичей - онлайн</PageTitle>
+
+<BlazoredToasts Position="ToastPosition.BottomRight" IconType="IconType.FontAwesome" SuccessIcon="fa fa-thumbs-up" ErrorIcon="fa fa-bug"/>
 
 <header class="sticky-top">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-danger border-bottom mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="favicon.png" alt="Бренд" width="30" height="30" class="d-inline-block align-text-top">
-                Склад кирпичей Онлайн
+                Склад кирпичей
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -17,12 +20,13 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <NavLink class="nav-link" href="online">
-                            Онлайн
+                            Склад
                         </NavLink>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a class="btn btn-warning me-1" href="/">Выход</a>
+                    <a class="btn btn-outline-success me-1 disabled" href="#">Выход</a>
+                    <a class="btn btn-warning me-1" href="/">Выход из онлайна</a>
                 </div>
             </div>
         </div>
@@ -36,7 +40,7 @@
                 <nav class="flex-column">
                     <div class="row m-0">
                         <NavLink class="btn btn-outline-danger my-1" href="online" Match="NavLinkMatch.All" ActiveClass="btn-danger text-white">
-                            <i class="fas fa-home"></i> Главная Онлайн
+                            <i class="fas fa-home"></i> Главная Склад
                         </NavLink>
                     </div>
                     <div class="row m-0">
@@ -47,6 +51,11 @@
                     <div class="row m-0">
                         <NavLink class="btn btn-outline-danger my-1" href="online/place" ActiveClass="btn-danger text-white">
                             <i class="fas fa-edit"></i> Редактирование мест хранений товаров
+                        </NavLink>
+                    </div>
+                    <div class="row m-0">
+                        <NavLink class="btn btn-outline-danger my-1" href="online/calc" ActiveClass="btn-danger text-white">
+                            <i class="fas fa-edit"></i> Калькулятор кирпичей
                         </NavLink>
                     </div>
                 </nav>

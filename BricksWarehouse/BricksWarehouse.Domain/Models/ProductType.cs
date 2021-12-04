@@ -30,5 +30,10 @@ namespace BricksWarehouse.Domain.Models
 
         /// <summary> Места размещения этого вида товаров </summary>
         public ICollection<Place> Places { get; set; } = new List<Place>();
+
+        public override string ToString()
+        {
+            return $"[{FormatNumber}] {Name}";
+        }
     }
 }

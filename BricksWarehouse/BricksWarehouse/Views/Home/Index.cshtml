@@ -4,15 +4,92 @@
 
 <div class="container-md">
 
-    <partial name="Partial/SliderPartial"/>
+    <partial name="Partial/SliderPartial" />
 
     <div class="row">
         <div class="col-sm-3">
             <partial name="Partial/_LeftSidebarPartial" />
         </div>
         <div class="col-sm-9">
-            <h1>@ViewBag.Title</h1>
+            <h1 class="mb-4 text-center">@ViewBag.Title</h1>
 
+            <div class="p-2 mb-4 shadow border rounded">
+                <h2 class="text-center">Наличие товаров на складе</h2>
+
+                @foreach (var count in ViewBag.Counts)
+                {
+                    <dl class="row">
+                        <dt class="col-sm-6">Название товара: @count.Name </dt>
+                        <dt class="col-sm-6">Номер формата: @count.NumberFormat </dt>
+                        <dd class="col-sm-6">
+                            Количество - @count.Count пачек ( @count.CountPercent% )
+                            <div class="progress">
+                                @if (count.CountPercent >= 90)
+                                {
+                                    <div class="progress-bar bg-success progress-bar-striped" style="width: @count.CountPercent%; height: 20px"></div>
+                                }
+                                else if (count.CountPercent <= 10)
+                                {
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: @count.CountPercent%; height: 20px"></div>
+                                }
+                                else
+                                {
+                                    <div class="progress-bar bg-secondary progress-bar-striped" style="width: @count.CountPercent%; height: 20px"></div>
+                                }
+                            </div>
+                        </dd>
+                        <dd class="col-sm-6">Объем товара: @count.Volume м3</dd>
+                        <dd class="col-sm-6">Количество едениц: @count.CountUnits м3</dd>
+                        <dd class="col-sm-6">
+                            <p>Статус этого товара на складе: <strong>@count.Status</strong></p>
+                        </dd>
+                    </dl>
+                }
+            </div>
+
+            <div class="p-2 mb-4 shadow border rounded">
+                <h2 class="text-center">Заполненность склада</h2>
+
+                @foreach (var filling in ViewBag.Fillings)
+                {
+                    <dl class="row">
+                        <dt class="col-sm-6">Название места: @filling.Name </dt>
+                        <dt class="col-sm-6">Номер места: @filling.Number</dt>
+                        <dt class="col-sm-6">Состояние: @filling.Sost</dt>
+                        <dt class="col-sm-6">Статус: @filling.Status</dt>
+                        <dd class="col-sm-6">
+                            Заполнение - @filling.Occupied / @filling.Size мест ( @filling.Filling% )
+                            <div class="progress">
+                                @if (filling.Filling < 100)
+                                {
+                                    <div class="progress-bar bg-success progress-bar-striped" style="width: @filling.Filling%; height: 20px"></div>
+                                }
+                                else
+                                {
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: @filling.Filling%; height: 20px"></div>
+                                }
+                            </div>
+                        </dd>
+                        <dd class="col-sm-6">
+                            Свободно - @filling.Free мест ( @filling.Freeing% )
+                            <div class="progress">
+                                @if (filling.Freeing >= 50)
+                                {
+                                    <div class="progress-bar bg-success progress-bar-striped" style="width: @filling.Freeing%; height: 20px"></div>
+                                }
+                                else if (filling.Freeing >= 10)
+                                {
+                                    <div class="progress-bar bg-warning progress-bar-striped" style="width: @filling.Freeing%; height: 20px"></div>
+                                }
+                                else
+                                {
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: @filling.Freeing%; height: 20px"></div>
+                                }
+                            </div>
+                        </dd>
+                    </dl>
+                }
+            </div>
 
         </div>
     </div>
