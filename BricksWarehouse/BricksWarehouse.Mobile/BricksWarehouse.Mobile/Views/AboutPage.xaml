@@ -5,14 +5,14 @@
              Title="О приложении">
 
     <StackLayout>
-        <Frame BackgroundColor="#f31731" Padding="20" CornerRadius="0">
-            <Label Text="Склад кирпичей" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        <Frame BackgroundColor="#dc3545" Padding="20" CornerRadius="0">
+            <Label Text="NOVOBLOCK PLUS" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
         <StackLayout>
-            <Label Text="Склад кирпичей" FontSize="Default" Margin="10" />
+            <Label Text="Склад Силикат" FontSize="Default" Margin="10" />
             <Label Text="Ранняя версия (MVP) мобильного приложения." FontSize="Default" Margin="10" />
             <Label Text="Данная часть мобильного приложения предназначена для оперативного управления работой склада в полевых условиях. Веб-часть мобильного приложения вместе с базой данных находиться в облаке, ссылка на этот сайт ниже в этой странице." FontSize="Default" Margin="10" />
-            <Button Text="Открыть веб-сайт в облаке" BackgroundColor="#f31731" FontSize="Subtitle" HeightRequest="60" TextColor="White" Margin="10"
+            <Button Text="Открыть веб-сайт в облаке" BackgroundColor="#dc3545" FontSize="Subtitle" HeightRequest="60" TextColor="White" Margin="10"
                 Clicked="ButtonToSite_Clicked" />
         </StackLayout>
     </StackLayout>

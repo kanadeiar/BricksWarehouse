@@ -31,7 +31,7 @@ namespace BricksWarehouse.Mobile.ViewModels
             set => Set(ref _refreshingProductTypes, value);
         }
 
-        private string _Title = "Склад кирпичей";
+        private string _Title = "Обзор склада";
 
 
         /// <summary> Название приложения </summary>
