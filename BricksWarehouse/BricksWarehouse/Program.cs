@@ -11,9 +11,12 @@ builder.Host.ConfigureServices(services =>
     services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
     services.AddScoped<IMapper<Place, PlaceDto>, DtoMapperService>();
     services.AddScoped<IMapper<PlaceDto, Place>, DtoMapperService>();
+    services.AddScoped<IMapper<OutTask, OutTaskDto>, DtoMapperService>();
+    services.AddScoped<IMapper<OutTaskDto, OutTask>, DtoMapperService>();
 
     services.AddScoped<IProductTypeData, DatabaseProductTypeData>();
     services.AddScoped<IPlaceData, DatabasePlaceData>();
+    services.AddScoped<IOutTaskData, DatabaseOutTaskData>();
     services.AddScoped<FillingsInfoService>();
     services.AddScoped<CountsInfoService>();
 

@@ -18,7 +18,19 @@ public class ApiTest
     {
         Console.WriteLine("******* Задания *********");
 
+        TaskClient client = new TaskClient(new HttpClient { BaseAddress = new Uri(__WebAPI) }, new DtoMapperService(), new DtoMapperService());
 
+        Console.WriteLine("Все элементы:");
+        var count = 0;
+        foreach (var item in (await client.GetAll()))
+        {
+            Console.WriteLine($"{item.Name} {item.Number} рег.номер: {item.TruckNumber} {item.Loaded}/{item.Count}");
+            count++;
+        }
+        Console.WriteLine($"Количество: {count}");
+
+        var it = await client.GetById(1);
+        Console.WriteLine($"\nОдин элемент: {it.Name} Формат: {it.Number} рег.номер: {it.TruckNumber} {it.Loaded}/{it.Count}\n");
 
 
     }
