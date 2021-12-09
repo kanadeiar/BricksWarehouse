@@ -12,7 +12,7 @@ namespace BricksWarehouseConsole;
 public class ApiTest
 {
     private static string __WebAPI = "https://localhost:7178";
-    //private static string __WebAPI = "http://brickswarehouse.azurewebsites.net";
+    //private static string __WebAPI = "https://brickswarehouse.azurewebsites.net";
 
     public static async void TestMobileApi()
     {
@@ -32,6 +32,61 @@ public class ApiTest
         var it = await client.GetById(1);
         Console.WriteLine($"\nОдин элемент: {it.Name} Формат: {it.Number} рег.номер: {it.TruckNumber} {it.Loaded}/{it.Count}\n");
 
+        Console.WriteLine("Тестирование автоматизации");
+                
+        int numberTask = 0;
+        while (true)
+        {
+            Console.WriteLine("Введите сканированный QR код задания :>");
+            var code = Console.ReadLine();
+            var datas = code.Split("|");
+            if (datas[0] == "СНПЗаданиеО")
+            {
+                if (int.TryParse(datas[1], out int result))
+                {
+                    numberTask = result;
+                    break;
+                }
+                Console.WriteLine("Не удалось распознать номер задания");
+                continue;
+            }
+            else if (datas[0] == "СНПВид")
+                Console.WriteLine("Вы отскарировали упаковку с товаром, а нужно выбрать или отсканировать код задания");
+            else if (datas[0] == "СНПМесто")
+                Console.WriteLine("Вы отсканировали место хранения товаров, а нужно выбрать или отсканировать код задания");
+            else
+                Console.WriteLine("Код не распознан");
+        }
+
+        if (numberTask == 1)
+        {
+            Console.WriteLine("*** Выполнение задания \"Загрузка товара на склад\" ***");
+
+            Console.WriteLine("Введите сканированный QR код на упаковке товара :>");
+            var code = Console.ReadLine();
+            var datas = code.Split("|");
+            if (datas[0] == "СНПВид")
+            {
+                if (int.TryParse(datas[1], out int result))
+                {
+                    var format = result;
+
+                }
+                Console.WriteLine("Не удалось распознать код на упаковке товара");
+            }
+            else if (datas[0] == "СНПЗаданиеО")
+                Console.WriteLine("Вы отсканировали задание, но нужно сканировать или выбрать упаковку с товаром, который загружается на склад");
+            else if (datas[0] == "СНПМесто")
+                Console.WriteLine("Вы отсканировали место хранения товаров, а нужно выбрать или отсканировать упаковку с товаром, который загружается на склад");
+        }
+        else
+        {
+
+        }
+
+
+
+
 
     }
 
@@ -50,8 +105,6 @@ public class ApiTest
             count++;
         }
         Console.WriteLine($"Количество: {count}");
-
-        return;
 
         var it = await client.GetById(1);
         Console.WriteLine($"\nОдин элемент: {it.Name} Формат: {it.FormatNumber} {it.Units} {it.Volume} [ {it.Places?.Count} ],\n");
