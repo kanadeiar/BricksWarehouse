@@ -27,7 +27,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var tasks = (await _outTaskData.GetAllAsync(true)).OrderBy(ot => ot.CreatedDateTime);
+        var tasks = (await _outTaskData.GetAllAsync(true)).Where(ot => !ot.IsCompleted).OrderBy(ot => ot.CreatedDateTime);
         return Ok(tasks.Select(t => _mapperTo.Map(t)));
     }
 
@@ -78,6 +78,39 @@ public class MobileTaskController : ControllerBase
         {
             place.Count += count;
             place.LastDateTime = DateTime.Now;
+            return Ok(_mapperPlaceTo.Map(place));
+        }
+        return NotFound();
+    }
+
+    [HttpGet("producttypeshipment/{productTypeId:int}")]
+    public async Task<IActionResult> GetRecommendedShipmentPlaces(int productTypeId)
+    {
+        var query = _context.Places.Include(p => p.ProductType).Where(p => p.ProductTypeId == productTypeId && p.Count > 0);
+        var places = await query.OrderBy(p => p.LastDateTime).ToArrayAsync();
+        return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
+    }
+
+    [HttpGet("shipment/{placeId:int}/{taskId:int}/{count:int}")]
+    public async Task<IActionResult> ShipmentProductToPlace(int placeId, int taskId, int count)
+    {
+        var task = await _context.OutTasks.FirstOrDefaultAsync(t => t.Id == taskId);
+        var place = await _context.Places.FirstOrDefaultAsync(p => p.Id == placeId);
+        if (task is null || place is null || task.ProductTypeId is null || place.ProductTypeId is null)
+            return NotFound();
+        if (count > place.Count || count > task.Count - task.Loaded)
+            return NotFound();
+        if (task.ProductTypeId == place.ProductTypeId)
+        {
+            place.Count -= count;
+            task.Loaded += count;
+            if (place.Count <= 0)
+            {
+                place.ProductTypeId = null;
+            }
+            if (task.Loaded >= task.Count)
+                task.IsCompleted = true;
+            await _context.SaveChangesAsync();
             return Ok(_mapperPlaceTo.Map(place));
         }
         return NotFound();

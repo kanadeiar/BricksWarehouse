@@ -34,7 +34,8 @@ public class ApiTest
 
         Console.WriteLine("Тестирование автоматизации");
                 
-        int numberTask = 1;
+        int numberTask = 99;
+        var task = (await client.GetAll()).FirstOrDefault(t => t.Number == numberTask);
         //while (true)
         //{
         //    Console.WriteLine("Введите сканированный QR код задания :>");
@@ -139,14 +140,86 @@ public class ApiTest
             }
         }
         else
-        {
+        {            
+            Console.WriteLine("*** Выполнение задания \"Выгрузка товара со склада\" ***");
+            Console.WriteLine($"Задание: [{task.Number}] {task.Name} рег.номер: {task.TruckNumber} {task.Loaded}/{task.Count}");
+            
+            Console.WriteLine("Возможные места с таким товаром:");
+            var productTypeId = task.ProductTypeId ?? 0;
+            foreach (var item in (await client.GetRecommendedShipmentPlaces(productTypeId)))
+            {
+                Console.WriteLine($"{item.Name} {item.Number} {item.ProductType?.Name} {item.Count}/{item.Size}");
+            }
+            Place place;
+            while (true)
+            {
+                Console.WriteLine("Введите сканированный QR код на месте хранения товаров :>");
+                var code = Console.ReadLine();
+                var datas = code.Split("|");
+                if (datas[0] == "SNPPlace")
+                {
+                    if (int.TryParse(datas[1], out int result))
+                    {
+                        if (await client.GetPlaceByNumber(result) is { } p)
+                        {
+                            if (p.ProductTypeId != productTypeId)
+                            {
+                                Console.WriteLine("Это место хранения товаров содержит товары другого вида, нужно другое место");
+                                continue;
+                            }
+                            else if (p.Count == 0)
+                            {
+                                Console.WriteLine("Это место хранения товаров пустое, не содержит товары");
+                                continue;
+                            }
+                            place = p;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Такой код места хранения товаров отсутствует: {result}");
+                        }
+                    }
+                    Console.WriteLine("Не удалось распознать код места хранения товаров");
+                }
+                else if (datas[0] == "SNPTaskO")
+                    Console.WriteLine("Вы отсканировали задание, но нужно сканировать или выбрать место хранения товаров");
+                else if (datas[0] == "SNPUnit")
+                {
+                    if (int.TryParse(datas[1], out int result))
+                    {
+                        if (await client.GetProductTypeByFormat(result) is { } pt)
+                        {
+                            if (pt.Id == productTypeId)
+                            {
+                                Console.WriteLine("Вы правильно выбрали товар, нужно загружать. Вы отсканировали упаковку с товаром, а нужно сканировать место хранения товаров");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Это не тот товар, не этот нужно загружать. Вы отсканировали упаковку с товаром, а нужно сканировать место хранения товаров");
+                            }
+                        }
+                    }
+                }
+            }
 
+            Console.WriteLine($"Выполнение задания по перевозке товара: [{task.ProductType?.FormatNumber}] {task.ProductType?.Name}");
+            Console.WriteLine("Нажмите кнопку после загрузки товара на транспортер");
+            Console.ReadKey();
+
+            Console.WriteLine($"Выполнение задания по перевозке товара [{task.ProductType?.FormatNumber}] {task.ProductType?.Name} c места хранения товара [{place.Number}] {place.Name} [{place.Count}/{place.Size}] на грузовик {task.TruckNumber} {task.Loaded}/{task.Count}");
+            Console.WriteLine("Нажмите кнопку после загрузки товара на грузовик с транспортера");
+
+            if (await client.ShipmentProductToPlace(place.Id, task.Id, 1) is { } newp)
+            {
+                var newtask = await client.GetById(task.Id);
+                Console.WriteLine($"Успешно изменено количестово товара на месте хранения товаров [{newp.Number}] {newp.Name} [{newp.Count}/{newp.Size}], загружено в грузовик {newtask.TruckNumber} [{newtask.Loaded}/{newtask.Count}]");
+            }
+            else
+            {
+                Console.WriteLine("Не удалось добавить число товаров к месту хранения товаров");
+            }
         }
-
-
-
-
-
     }
 
 

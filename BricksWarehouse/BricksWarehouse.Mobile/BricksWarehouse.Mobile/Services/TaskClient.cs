@@ -62,5 +62,17 @@ namespace BricksWarehouse.Mobile.Services
             var dto = await GetAsync<PlaceDto>($"{Address}/load/{productTypeId}/{placeId}/{count}").ConfigureAwait(false);
             return _mapperPlaceFrom.Map(dto);
         }
+
+        public async Task<IEnumerable<Place>> GetRecommendedShipmentPlaces(int productTypeId)
+        {
+            var dtos = await GetAsync<IEnumerable<PlaceDto>>($"{Address}/producttypeshipment/{productTypeId}").ConfigureAwait(false);
+            return dtos.Select(d => _mapperPlaceFrom.Map(d));
+        }
+
+        public async Task<Place> ShipmentProductToPlace(int placeId, int taskId, int count)
+        {
+            var dto = await GetAsync<PlaceDto>($"{Address}/shipment/{placeId}/{taskId}/{count}").ConfigureAwait(false);
+            return _mapperPlaceFrom.Map(dto);
+        }
     }
 }
