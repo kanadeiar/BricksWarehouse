@@ -15,11 +15,16 @@ namespace BricksWarehouse.Mobile.Services
     {
         private readonly IMapper<OutTask, OutTaskDto> _mapperTo;
         private readonly IMapper<OutTaskDto, OutTask> _mapperFrom;
-        public TaskClient(HttpClient client, IMapper<OutTask, OutTaskDto> mapperTo, IMapper<OutTaskDto, OutTask> mapperFrom) 
+        private readonly IMapper<ProductTypeDto, ProductType> _mapperProductTypeFrom;
+        private readonly IMapper<PlaceDto, Place> _mapperPlaceFrom;
+        public TaskClient(HttpClient client, IMapper<OutTask, OutTaskDto> mapperTo, IMapper<OutTaskDto, OutTask> mapperFrom, 
+            IMapper<ProductTypeDto, ProductType> mapperProductTypeFrom, IMapper<PlaceDto, Place> mapperPlaceFrom) 
             : base(client, "/api/mobiletask")
         {
             _mapperTo = mapperTo;
             _mapperFrom = mapperFrom;
+            _mapperProductTypeFrom = mapperProductTypeFrom;
+            _mapperPlaceFrom = mapperPlaceFrom;
         }
 
         public async Task<IEnumerable<OutTask>> GetAll()
@@ -34,6 +39,28 @@ namespace BricksWarehouse.Mobile.Services
             return _mapperFrom.Map(dto);
         }
 
+        public async Task<ProductType> GetProductTypeByFormat(int format)
+        {
+            var dto = await GetAsync<ProductTypeDto>($"{Address}/producttype/{format}").ConfigureAwait(false);
+            return _mapperProductTypeFrom.Map(dto);
+        }
 
+        public async Task<IEnumerable<Place>> GetRecommendedLoadPlaces(int productTypeId)
+        {
+            var dtos = await GetAsync<IEnumerable<PlaceDto>>($"{Address}/producttypeplaces/{productTypeId}").ConfigureAwait(false);
+            return dtos.Select(d => _mapperPlaceFrom.Map(d));
+        }
+
+        public async Task<Place> GetPlaceByNumber(int number)
+        {
+            var dto = await GetAsync<PlaceDto>($"{Address}/place/{number}").ConfigureAwait(false);
+            return _mapperPlaceFrom.Map(dto);
+        }
+
+        public async Task<Place> LoadProductToPlace(int productTypeId, int placeId, int count)
+        {
+            var dto = await GetAsync<PlaceDto>($"{Address}/load/{productTypeId}/{placeId}/{count}").ConfigureAwait(false);
+            return _mapperPlaceFrom.Map(dto);
+        }
     }
 }

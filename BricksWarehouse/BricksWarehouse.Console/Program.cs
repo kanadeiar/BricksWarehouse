@@ -10,7 +10,7 @@ Console.WriteLine("------- Тестирование ---------");
 
 //await ApiTest.TestOfTypeProducts();
 
-ApiTest.TestMobileApi();
+await ApiTest.TestMobileApi();
 
 Console.WriteLine("\nДля завершения нажмите любую кнопку ...");
 Console.ReadLine();
