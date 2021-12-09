@@ -1,7 +1,13 @@
 ﻿<div class="my-2 py-2">
-    <button class="btn btn-danger mb-1" @onclick="@( () => Counter-- )">Уменьшить</button>
+    <button class="btn btn-danger mb-1" @onclick="@( () => Counter-- )">
+        <i class="fas fa-plus"></i>
+        Уменьшить
+    </button>
     <span class="p-2 mb-1">Значение счетчика: @Counter</span>
-    <button class="btn btn-danger mb-1" @onclick="@( () => Counter++ )">Увеличить</button>
+    <button class="btn btn-danger mb-1" @onclick="@( () => Counter++ )">
+        <i class="fas fa-minus"></i>
+        Увеличить
+    </button>
 </div>
 
 @code {

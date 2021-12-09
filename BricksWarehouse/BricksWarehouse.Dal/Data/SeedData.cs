@@ -46,6 +46,13 @@ public static class SeedData
             context.Places.AddRange(p1, p2, p3, p4, p5, p6, p7, p8);
             await context.SaveChangesAsync();
 
+            OutTask ot1 = new OutTask { Name = "Тестовое задание №1", Number = 99, ProductType = pt1, Count = 20, TruckNumber = "aa100a", CreatedDateTime = DateTime.Today.AddHours(8), IsCompleted = false };
+            OutTask ot2 = new OutTask { Name = "Тестовое задание №2", Number = 100, ProductType = pt2, Count = 30, TruckNumber = "aa200a", CreatedDateTime = DateTime.Today.AddHours(9), IsCompleted = false };
+            OutTask ot3 = new OutTask { Name = "Тестовое задание №3", Number = 101, ProductType = pt3, Count = 15, TruckNumber = "aa133a", CreatedDateTime = DateTime.Today.AddHours(7), IsCompleted = false };
+            OutTask ot4 = new OutTask { Name = "Тестовое задание №4", Number = 102, ProductType = pt4, Count = 25, TruckNumber = "aa155a", CreatedDateTime = DateTime.Today.AddHours(10), IsCompleted = false };
+            context.OutTasks.AddRange(ot1, ot2, ot3);
+            await context.SaveChangesAsync();
+
             logger.LogInformation("Complete writing data to database ...");
         }
     }
