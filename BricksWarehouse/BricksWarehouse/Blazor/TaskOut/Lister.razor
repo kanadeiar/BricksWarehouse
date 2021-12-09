@@ -21,6 +21,7 @@
                 <th>Загружено</th>
                 <th>Время создания задания</th>
                 <th>Статус</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +42,12 @@
                         <td>@task.Loaded</td>
                         <td>@task.CreatedDateTime.ToString("dd MMMM yyyy HH:mm")</td>
                         <td>@( task.IsCompleted ? "Выполнено" : "В очереди" )</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger mb-1" @onclick="@( () => HandleDelete(task) )">
+                                <i class="fas fa-times"></i>
+                                Удалить
+                            </button>
+                        </td>
                     </tr>
                 }
             }
@@ -54,6 +61,18 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await UpdateDataAsync();
+    }
+    private async Task UpdateDataAsync()
+    {
         OutTasks = await Context.OutTasks.Include(ot => ot.ProductType).ToArrayAsync();
+    }
+
+    public async Task HandleDelete(OutTask p)
+    {
+        Context.Remove<OutTask>(p);
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+        toastService.ShowWarning("Это задание успешно удалено из базы данных", "Успешно");
     }
 }
