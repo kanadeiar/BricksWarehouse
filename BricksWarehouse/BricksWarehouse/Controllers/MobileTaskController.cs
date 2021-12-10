@@ -6,6 +6,7 @@ namespace BricksWarehouse.Controllers;
 [Route("api/[controller]"), ApiController]
 public class MobileTaskController : ControllerBase
 {
+    private readonly GetTaskDataService _getTaskDataService;
     private readonly IOutTaskData _outTaskData;
     private readonly IProductTypeData _productTypeData;
     private readonly IPlaceData _placeData;
@@ -13,9 +14,10 @@ public class MobileTaskController : ControllerBase
     private readonly IMapper<ProductType, ProductTypeDto> _mapperProductTypeTo;
     private readonly IMapper<Place, PlaceDto> _mapperPlaceTo;
 
-    public MobileTaskController(IOutTaskData outTaskData, IProductTypeData productTypeData, IPlaceData placeData, IMapper<OutTask, OutTaskDto> mapperTo, 
+    public MobileTaskController(GetTaskDataService getTaskDataService, IOutTaskData outTaskData, IProductTypeData productTypeData, IPlaceData placeData, IMapper<OutTask, OutTaskDto> mapperTo, 
         IMapper<ProductType, ProductTypeDto> mapperProductTypeTo, IMapper<Place, PlaceDto> mapperPlaceTo)
     {
+        _getTaskDataService = getTaskDataService;
         _outTaskData = outTaskData;
         _productTypeData = productTypeData;
         _placeData = placeData;
@@ -49,12 +51,10 @@ public class MobileTaskController : ControllerBase
         return Ok(_mapperProductTypeTo.Map(productType));
     }
 
-    [HttpGet("producttypeplaces/{productTypeId:int}")]
+    [HttpGet("producttypesload/{productTypeId:int}")]
     public async Task<IActionResult> GetRecommendedLoadPlaces(int productTypeId)
     {
-        var places = (await _placeData.GetAllAsync())
-            .Where(p => p.ProductTypeId == null || (p.ProductTypeId == productTypeId && p.Count < p.Size) )
-            .OrderByDescending(p => p.Count);
+        var places = await _getTaskDataService.GetRecommendedLoadPlaces(productTypeId);
         return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
     }
 
@@ -70,15 +70,9 @@ public class MobileTaskController : ControllerBase
     [HttpGet("load/{productTypeId:int}/{placeId:int}/{count:int}")]
     public async Task<IActionResult> LoadProductToPlace(int productTypeId, int placeId, int count)
     {
-        var place = await _placeData.GetAsync(placeId);
-        if (place is null)
-            return NotFound();
-        if (place.ProductTypeId is null)
-            place.ProductTypeId = productTypeId;
-        if (place.ProductTypeId == productTypeId)
+        var place = await _getTaskDataService.LoadProductToPlace(productTypeId, placeId, count);
+        if (place is not null)
         {
-            place.Count += count;
-            place.LastDateTime = DateTime.Now;
             return Ok(_mapperPlaceTo.Map(place));
         }
         return NotFound();
@@ -87,9 +81,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet("producttypeshipment/{productTypeId:int}")]
     public async Task<IActionResult> GetRecommendedShipmentPlaces(int productTypeId)
     {
-        var places = (await _placeData.GetAllAsync())
-            .Where(p => p.ProductTypeId == productTypeId && p.Count > 0)
-            .OrderBy(p => p.LastDateTime);
+        var places = await _getTaskDataService.GetRecommendedShipmentPlaces(productTypeId);
         return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
     }
 

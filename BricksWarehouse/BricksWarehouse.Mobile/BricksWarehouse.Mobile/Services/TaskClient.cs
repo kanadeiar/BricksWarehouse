@@ -47,7 +47,7 @@ namespace BricksWarehouse.Mobile.Services
 
         public async Task<IEnumerable<Place>> GetRecommendedLoadPlaces(int productTypeId)
         {
-            var dtos = await GetAsync<IEnumerable<PlaceDto>>($"{Address}/producttypeplaces/{productTypeId}").ConfigureAwait(false);
+            var dtos = await GetAsync<IEnumerable<PlaceDto>>($"{Address}/producttypesload/{productTypeId}").ConfigureAwait(false);
             return dtos.Select(d => _mapperPlaceFrom.Map(d));
         }
 
