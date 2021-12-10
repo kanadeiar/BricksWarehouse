@@ -78,5 +78,11 @@ public class DatabasePlaceData : IPlaceData
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<Place> GetByNumberAsync(int number)
+    {
+        var result = await _context.Places.Include(p => p.ProductType).SingleOrDefaultAsync(p => p.Number == number).ConfigureAwait(false);
+        return result;
+    }
 }
 

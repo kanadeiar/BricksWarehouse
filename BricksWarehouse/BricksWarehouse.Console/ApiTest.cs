@@ -20,44 +20,44 @@ public class ApiTest
 
         TaskClient client = new TaskClient(new HttpClient { BaseAddress = new Uri(__WebAPI) }, new DtoMapperService(), new DtoMapperService(), new DtoMapperService(), new DtoMapperService());
 
-        //Console.WriteLine("Все элементы:");
-        //var count = 0;
-        //foreach (var item in (await client.GetAll()))
-        //{
-        //    Console.WriteLine($"{item.Name} {item.Number} рег.номер: {item.TruckNumber} {item.Loaded}/{item.Count}");
-        //    count++;
-        //}
-        //Console.WriteLine($"Количество: {count}");
+        Console.WriteLine("Все задания:");
+        var count = 0;
+        foreach (var item in (await client.GetAll()))
+        {
+            Console.WriteLine($"{item.Name} {item.Number} рег.номер: {item.TruckNumber} {item.Loaded}/{item.Count}");
+            count++;
+        }
+        Console.WriteLine($"Количество: {count}");
 
-        //var it = await client.GetById(1);
-        //Console.WriteLine($"\nОдин элемент: {it.Name} Формат: {it.Number} рег.номер: {it.TruckNumber} {it.Loaded}/{it.Count}\n");
+        var it = await client.GetById(1);
+        Console.WriteLine($"\nОдин элемент: {it.Name} Формат: {it.Number} рег.номер: {it.TruckNumber} {it.Loaded}/{it.Count}\n");
 
         Console.WriteLine("Тестирование автоматизации");
                 
         int numberTask = 99;
         var task = (await client.GetAll()).FirstOrDefault(t => t.Number == numberTask);
-        //while (true)
-        //{
-        //    Console.WriteLine("Введите сканированный QR код задания :>");
-        //    var code = Console.ReadLine();
-        //    var datas = code.Split("|");
-        //    if (datas[0] == "SNPTaskO")
-        //    {
-        //        if (int.TryParse(datas[1], out int result))
-        //        {
-        //            numberTask = result;
-        //            break;
-        //        }
-        //        Console.WriteLine("Не удалось распознать номер задания");
-        //        continue;
-        //    }
-        //    else if (datas[0] == "SNPUnit")
-        //        Console.WriteLine("Вы отскарировали упаковку с товаром, а нужно выбрать или отсканировать код задания");
-        //    else if (datas[0] == "SNPPlace")
-        //        Console.WriteLine("Вы отсканировали место хранения товаров, а нужно выбрать или отсканировать код задания");
-        //    else
-        //        Console.WriteLine("Код не распознан");
-        //}
+        while (true)
+        {
+            Console.WriteLine("Введите сканированный QR код задания :>");
+            var code = Console.ReadLine();
+            var datas = code.Split("|");
+            if (datas[0] == "SNPTaskO")
+            {
+                if (int.TryParse(datas[1], out int result))
+                {
+                    numberTask = result;
+                    break;
+                }
+                Console.WriteLine("Не удалось распознать номер задания");
+                continue;
+            }
+            else if (datas[0] == "SNPUnit")
+                Console.WriteLine("Вы отскарировали упаковку с товаром, а нужно выбрать или отсканировать код задания");
+            else if (datas[0] == "SNPPlace")
+                Console.WriteLine("Вы отсканировали место хранения товаров, а нужно выбрать или отсканировать код задания");
+            else
+                Console.WriteLine("Код не распознан");
+        }
         if (numberTask == 1)
         {
             ProductType productType;

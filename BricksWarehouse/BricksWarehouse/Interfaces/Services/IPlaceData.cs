@@ -15,5 +15,8 @@ public interface IPlaceData
     Task<bool> TrashAsync(int id, bool undo = false);
     /// <summary> Удалить </summary>
     Task<bool> DeleteAsync(int id);
+
+    /// <summary> Данные одного по номеру </summary>
+    Task<Place> GetByNumberAsync(int number);
 }
 

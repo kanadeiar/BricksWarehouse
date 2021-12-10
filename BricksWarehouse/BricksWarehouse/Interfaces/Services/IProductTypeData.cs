@@ -15,5 +15,8 @@ public interface IProductTypeData
     Task<bool> TrashAsync(int id, bool undo = false);
     /// <summary> Удалить </summary>
     Task<bool> DeleteAsync(int id);
+
+    /// <summary> Данные одного по формату </summary>
+    Task<ProductType> GetByFormatAsync(int format);
 }
 

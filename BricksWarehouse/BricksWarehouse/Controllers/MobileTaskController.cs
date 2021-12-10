@@ -6,20 +6,20 @@ namespace BricksWarehouse.Controllers;
 [Route("api/[controller]"), ApiController]
 public class MobileTaskController : ControllerBase
 {
-    private readonly WarehouseContext _context;
     private readonly IOutTaskData _outTaskData;
+    private readonly IProductTypeData _productTypeData;
+    private readonly IPlaceData _placeData;
     private readonly IMapper<OutTask, OutTaskDto> _mapperTo;
-    private readonly IMapper<OutTaskDto, OutTask> _mapperFrom;
     private readonly IMapper<ProductType, ProductTypeDto> _mapperProductTypeTo;
     private readonly IMapper<Place, PlaceDto> _mapperPlaceTo;
 
-    public MobileTaskController(WarehouseContext context, IOutTaskData outTaskData, IMapper<OutTask, OutTaskDto> mapperTo, IMapper<OutTaskDto, OutTask> mapperFrom, 
+    public MobileTaskController(IOutTaskData outTaskData, IProductTypeData productTypeData, IPlaceData placeData, IMapper<OutTask, OutTaskDto> mapperTo, 
         IMapper<ProductType, ProductTypeDto> mapperProductTypeTo, IMapper<Place, PlaceDto> mapperPlaceTo)
     {
-        _context = context;
         _outTaskData = outTaskData;
+        _productTypeData = productTypeData;
+        _placeData = placeData;
         _mapperTo = mapperTo;
-        _mapperFrom = mapperFrom;
         _mapperProductTypeTo = mapperProductTypeTo;
         _mapperPlaceTo = mapperPlaceTo;
     }
@@ -43,7 +43,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet("producttype/{format:int}")]
     public async Task<IActionResult> FindProductTypeByFormat(int format)
     {
-        var productType = await _context.ProductTypes.FirstOrDefaultAsync(pt => pt.FormatNumber == format);
+        var productType = await _productTypeData.GetByFormatAsync(format);
         if (productType is null)
             return NotFound();
         return Ok(_mapperProductTypeTo.Map(productType));
@@ -52,15 +52,16 @@ public class MobileTaskController : ControllerBase
     [HttpGet("producttypeplaces/{productTypeId:int}")]
     public async Task<IActionResult> GetRecommendedLoadPlaces(int productTypeId)
     {
-        var query = _context.Places.Include(p => p.ProductType).Where(p => p.ProductTypeId == null || (p.ProductTypeId == productTypeId && p.Count < p.Size) );
-        var places = await query.OrderByDescending(p => p.Count).ToArrayAsync();
+        var places = (await _placeData.GetAllAsync())
+            .Where(p => p.ProductTypeId == null || (p.ProductTypeId == productTypeId && p.Count < p.Size) )
+            .OrderByDescending(p => p.Count);
         return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
     }
 
     [HttpGet("place/{number:int}")]
     public async Task<IActionResult> FindPlaceByNumber(int number)
     {
-        var place = await _context.Places.FirstOrDefaultAsync(p => p.Number == number);
+        var place = await _placeData.GetByNumberAsync(number);
         if (place is null)
             return NotFound();
         return Ok(_mapperPlaceTo.Map(place));
@@ -69,7 +70,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet("load/{productTypeId:int}/{placeId:int}/{count:int}")]
     public async Task<IActionResult> LoadProductToPlace(int productTypeId, int placeId, int count)
     {
-        var place = await _context.Places.FirstOrDefaultAsync(p => p.Id == placeId);
+        var place = await _placeData.GetAsync(placeId);
         if (place is null)
             return NotFound();
         if (place.ProductTypeId is null)
@@ -86,16 +87,17 @@ public class MobileTaskController : ControllerBase
     [HttpGet("producttypeshipment/{productTypeId:int}")]
     public async Task<IActionResult> GetRecommendedShipmentPlaces(int productTypeId)
     {
-        var query = _context.Places.Include(p => p.ProductType).Where(p => p.ProductTypeId == productTypeId && p.Count > 0);
-        var places = await query.OrderBy(p => p.LastDateTime).ToArrayAsync();
+        var places = (await _placeData.GetAllAsync())
+            .Where(p => p.ProductTypeId == productTypeId && p.Count > 0)
+            .OrderBy(p => p.LastDateTime);
         return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
     }
 
     [HttpGet("shipment/{placeId:int}/{taskId:int}/{count:int}")]
-    public async Task<IActionResult> ShipmentProductToPlace(int placeId, int taskId, int count)
+    public async Task<IActionResult> ShipmentProductFromPlace(int placeId, int taskId, int count)
     {
-        var task = await _context.OutTasks.FirstOrDefaultAsync(t => t.Id == taskId);
-        var place = await _context.Places.FirstOrDefaultAsync(p => p.Id == placeId);
+        var task = await _outTaskData.GetAsync(taskId);
+        var place = await _placeData.GetAsync(placeId);
         if (task is null || place is null || task.ProductTypeId is null || place.ProductTypeId is null)
             return NotFound();
         if (count > place.Count || count > task.Count - task.Loaded)
@@ -103,14 +105,15 @@ public class MobileTaskController : ControllerBase
         if (task.ProductTypeId == place.ProductTypeId)
         {
             place.Count -= count;
-            task.Loaded += count;
             if (place.Count <= 0)
             {
                 place.ProductTypeId = null;
             }
+            await _placeData.UpdateAsync(place);
+            task.Loaded += count;
             if (task.Loaded >= task.Count)
                 task.IsCompleted = true;
-            await _context.SaveChangesAsync();
+            await _outTaskData.UpdateAsync(task);
             return Ok(_mapperPlaceTo.Map(place));
         }
         return NotFound();

@@ -75,5 +75,12 @@ public class DatabaseProductTypeData : IProductTypeData
         await _context.SaveChangesAsync();
         return true;
     }
+
+
+    public async Task<ProductType> GetByFormatAsync(int format)
+    {
+        var result = await _context.ProductTypes.Include(pt => pt.Places).SingleOrDefaultAsync(pt => pt.FormatNumber == format).ConfigureAwait(false);
+        return result;
+    }
 }
 
