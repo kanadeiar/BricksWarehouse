@@ -88,24 +88,9 @@ public class MobileTaskController : ControllerBase
     [HttpGet("shipment/{placeId:int}/{taskId:int}/{count:int}")]
     public async Task<IActionResult> ShipmentProductFromPlace(int placeId, int taskId, int count)
     {
-        var task = await _outTaskData.GetAsync(taskId);
-        var place = await _placeData.GetAsync(placeId);
-        if (task is null || place is null || task.ProductTypeId is null || place.ProductTypeId is null)
-            return NotFound();
-        if (count > place.Count || count > task.Count - task.Loaded)
-            return NotFound();
-        if (task.ProductTypeId == place.ProductTypeId)
+        var place = await _getTaskDataService.ShipmentProductFromPlace(placeId, taskId, count);
+        if (place is not null)
         {
-            place.Count -= count;
-            if (place.Count <= 0)
-            {
-                place.ProductTypeId = null;
-            }
-            await _placeData.UpdateAsync(place);
-            task.Loaded += count;
-            if (task.Loaded >= task.Count)
-                task.IsCompleted = true;
-            await _outTaskData.UpdateAsync(task);
             return Ok(_mapperPlaceTo.Map(place));
         }
         return NotFound();
