@@ -30,7 +30,7 @@ public class ApiTest
         }
 
         Console.WriteLine("Незавершенные задания:");
-        foreach (var item in (await service.GetNonCompletedAllOutTasks()))
+        foreach (var item in await service.GetAllOutTasks(true))
         {
             Console.WriteLine($"[{item.Id}] {item.Name} {item.Number} рег.номер: {item.TruckNumber} {item.Loaded}/{item.Count}");
         }
@@ -42,43 +42,43 @@ public class ApiTest
         Console.WriteLine("Нажмите любую кнопку ...");
         Console.ReadKey();
                 
-        service.OutTask = await service.GetTaskByNumber(1);
-        while (true)
+        await service.SetTaskWithNumber(99);
+        //while (true)
+        //{
+        //    Console.WriteLine("Введите сканированный QR код задания :>");
+        //    var code = Console.ReadLine();
+        //    var (errorQr, datas) = qrService.Get(TypeQrCode.OutTask, code);
+        //    if (string.IsNullOrEmpty(errorQr))
+        //    {
+        //        await service.SetTaskWithNumber(int.Parse(datas[1]));
+        //        break;
+        //    }
+        //    Console.WriteLine(errorQr);
+        //}
+        if (service.OutTask.Number == 0)
         {
-            Console.WriteLine("Введите сканированный QR код задания :>");
-            var code = Console.ReadLine();
-            var (errorQr, datas) = qrService.GetDataFromQrCode(TypeQrCode.OutTask, code);
-            if (string.IsNullOrEmpty(errorQr))
-            {
-                service.OutTask = await service.GetTaskByNumber(int.Parse(datas[1]));
-                break;
-            }
-            Console.WriteLine(errorQr);
-        }
-        if (service.OutTask.Number == 1)
-        {
-            Console.WriteLine("*** Выполнение задания \"Загрузка товара на склад\" ***");
+            Console.WriteLine("*** Выполнение задания \"Прием товара на склад\" ***");
             while (true)
             {
                 Console.WriteLine("Введите сканированный QR код на упаковке товара :>");
                 var code = Console.ReadLine();
-                var(errorQr, datas) = qrService.GetDataFromQrCode(TypeQrCode.ProductType, code);
+                var(errorQr, datas) = qrService.Get(TypeQrCode.ProductType, code);
                 if (string.IsNullOrEmpty(errorQr))
                 {
                     if (await service.GetProductTypeByNumber(int.Parse(datas[1])) is { } pt)
                     {
-                        service.ProductType = pt;
+                        service.StartLoadTask(pt);
                         break;
                     }
                     Console.WriteLine($"Такой код товара в базе данных отсутствует: {datas[1]}");
                 }
                 Console.WriteLine(errorQr);
             }
-            Console.WriteLine($"Выполнение задания по перевозке товара: [{service.ProductType.FormatNumber}] {service.ProductType.Name}");
+            Console.WriteLine($"\nВыполнение задания по приему товара на склад: [{service.ProductType.FormatNumber}] {service.ProductType.Name}");
             Console.WriteLine("Нажмите кнопку после загрузки товара на транспортер");
             Console.ReadKey();
 
-            Console.WriteLine("Возможные места хранения для перевозимого товара:");
+            Console.WriteLine("Возможные места хранения для этого перевозимого товара на транспортере:");
             var places = await service.GetRecommendedLoadPlaces(service.ProductType.Id);
             foreach (var item in places)
             {
@@ -87,48 +87,45 @@ public class ApiTest
             
             while (true)
             {
-                Console.WriteLine("Введите сканированный QR код на месте хранения товаров :>");
+                Console.WriteLine("\nВведите сканированный QR код на месте хранения товаров :>");
                 var code = Console.ReadLine();
-                var(errorQr, datas) = qrService.GetDataFromQrCode(TypeQrCode.Place, code);
+                var(errorQr, datas) = qrService.Get(TypeQrCode.Place, code);
                 if (string.IsNullOrEmpty(errorQr))
                 {
                     if (await service.GetPlaceByNumber(int.Parse(datas[1])) is { } p)
                     {
-                        service.Place = p;
+                        service.BeginLoadTask(p);
                         break;
                     }
                     Console.WriteLine($"Такой код места хранения товаров отсутствует в базе данных: {datas[1]}");
                 }
                 Console.WriteLine(errorQr);
             }
-            Console.WriteLine($"Выполнение задания по перевозке товара [{service.ProductType.FormatNumber}] {service.ProductType.Name} на место хранения товара [{service.Place.Number}] {service.Place.Name} [{service.Place.Count}/{service.Place.Size}]");
+            Console.WriteLine($"\nВыполнение задания по перевозке товара [{service.ProductType.FormatNumber}] {service.ProductType.Name} на место хранения товара [{service.Place.Number}] {service.Place.Name} [{service.Place.Count}/{service.Place.Size}]");
             Console.WriteLine("Нажмите кнопку после выгрузки товара с транспортера на место хранения товара");
             Console.ReadKey();
-            if (await service.LoadProductToPlace(service.ProductType.Id, service.Place.Id, 1) is { } newp)
-            {
+            if (await service.EndLoadTask(1) is { } newp)
                 Console.WriteLine($"Успешно изменено количестово товара на месте хранения товаров [{newp.Number}] {newp.Name} - {newp.ProductType?.Name} [{newp.Count}/{newp.Size}]");
-            }
             else
-            {
                 Console.WriteLine("Не удалось добавить число товаров к месту хранения товаров");
-            }
         }
         else
         {            
             Console.WriteLine("*** Выполнение задания \"Отгрузка товара со склада на грузовик\" ***");
-            Console.WriteLine($"Задание: [{service.OutTask.Number}] {service.OutTask.Name} рег.номер: {service.OutTask.TruckNumber} {service.OutTask.Loaded}/{service.OutTask.Count}");
-            
-            Console.WriteLine("Возможные места с таким товаром:");
+            Console.WriteLine($"Задание: [{service.OutTask.Number}] {service.OutTask.Name} рег.номер грузовика: {service.OutTask.TruckNumber} вид товара: {service.OutTask.ProductType?.Name} загружено: {service.OutTask.Loaded}/{service.OutTask.Count}");
+            service.StartShippingTask(service.OutTask);
+
+            Console.WriteLine("Возможные доступные места хранения с таким товаром:");
             service.ProductType = service.OutTask.ProductType;
-            foreach (var item in (await service.GetRecommendedShipmentPlaces(service.ProductType.Id)))
+            foreach (var item in (await service.GetRecommendedShipmentPlaces(service.ProductType!.Id)))
             {
-                Console.WriteLine($"{item.Name} {item.Number} уже хранящийся вид товаров: {item.ProductType?.Name} занято: [{item.Count}/{item.Size}]");
+                Console.WriteLine($"{item.Name} [{item.Number}], хранящийся вид товаров: {item.ProductType?.Name} занято: [{item.Count}/{item.Size}]");
             }
             while (true)
             {
                 Console.WriteLine($"Введите сканированный QR код на месте хранения товаров с товаром [{service.OutTask.ProductType?.FormatNumber}] {service.OutTask.ProductType?.Name} :>");
                 var code = Console.ReadLine();
-                var (errorQr, datas) = qrService.GetDataFromQrCode(TypeQrCode.Place, code);
+                var (errorQr, datas) = qrService.Get(TypeQrCode.Place, code);
                 if (string.IsNullOrEmpty(errorQr))
                 {
                     if (await service.GetPlaceByNumber(int.Parse(datas[1])) is { } p)
@@ -143,7 +140,7 @@ public class ApiTest
                             Console.WriteLine("Это место хранения товаровe уже пустое, оно не содержит каких-либо товаров.");
                             continue;
                         }
-                        service.Place = p;
+                        service.BeginShippingTask(p);
                         break;
                     }
                     Console.WriteLine($"Такой код места хранения товаров отсутствует в базе данных: {datas[1]}");
@@ -171,7 +168,7 @@ public class ApiTest
             Console.WriteLine($"Выполнение задания по перевозке товара [{service.OutTask.ProductType?.FormatNumber}] {service.OutTask.ProductType?.Name} c места хранения товара [{service.Place.Number}] {service.Place.Name} [{service.Place.Count}/{service.Place.Size}] на грузовик {service.OutTask.TruckNumber} {service.OutTask.Loaded}/{service.OutTask.Count}");
             Console.WriteLine("Нажмите кнопку после выгрузки товара с транспортера на грузовик");
 
-            if (await service.ShipmenetProductToPlace(service.Place.Id, service.OutTask.Id, 1) is { } newp)
+            if (await service.EndShippingTask(1) is { } newp)
             {
                 var newtask = await service.GetOneOutTask(service.OutTask.Id);
                 Console.WriteLine($"Успешно изменено количестово товара на месте хранения товаров [{newp.Number}] {newp.Name} [{newp.Count}/{newp.Size}], загружено в грузовик {newtask.TruckNumber} [{newtask.Loaded}/{newtask.Count}]");

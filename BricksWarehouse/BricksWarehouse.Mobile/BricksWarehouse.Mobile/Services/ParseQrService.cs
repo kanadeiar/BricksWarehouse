@@ -16,7 +16,7 @@ namespace BricksWarehouse.Mobile.Services
         /// <param name="needCode">Нужный тип кода</param>
         /// <param name="code">Код</param>
         /// <returns>Текст ошибки и результат распарсивания</returns>
-        public (string errorQr, string[] datas) GetDataFromQrCode(TypeQrCode needCode, string code)
+        public (string errorQr, string[] datas) Get(TypeQrCode needCode, string code)
         {
             var datas = code.Split("|");
             if (needCode == TypeQrCode.OutTask)

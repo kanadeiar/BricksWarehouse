@@ -69,16 +69,16 @@
                 return null;
             if (task.ProductTypeId == place.ProductTypeId)
             {
+                task.Loaded += count;
+                if (task.Loaded >= task.Count)
+                    task.IsCompleted = true;
+                await _outTaskData.UpdateAsync(task);
                 place.Count -= count;
                 if (place.Count <= 0)
                 {
                     place.ProductTypeId = null;
                 }
                 await _placeData.UpdateAsync(place);
-                task.Loaded += count;
-                if (task.Loaded >= task.Count)
-                    task.IsCompleted = true;
-                await _outTaskData.UpdateAsync(task);
                 return place;
             }
             return null;

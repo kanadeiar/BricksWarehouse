@@ -1,5 +1,5 @@
 ﻿id: -
-SNPTaskO|1
+SNPTaskO|0
 id: 1
 SNPTaskO|99
 

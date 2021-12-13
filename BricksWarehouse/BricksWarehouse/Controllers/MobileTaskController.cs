@@ -29,7 +29,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var tasks = (await _outTaskData.GetAllAsync(true)).Where(ot => !ot.IsCompleted).OrderBy(ot => ot.CreatedDateTime);
+        var tasks = (await _outTaskData.GetAllAsync(true)).OrderBy(ot => ot.CreatedDateTime);
         return Ok(tasks.Select(t => _mapperTo.Map(t)));
     }
 
