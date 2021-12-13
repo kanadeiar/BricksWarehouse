@@ -6,7 +6,7 @@ namespace BricksWarehouse.Controllers;
 [Route("api/[controller]"), ApiController]
 public class MobileTaskController : ControllerBase
 {
-    private readonly GetTaskDataService _getTaskDataService;
+    private readonly TaskDataService _taskDataService;
     private readonly IOutTaskData _outTaskData;
     private readonly IProductTypeData _productTypeData;
     private readonly IPlaceData _placeData;
@@ -14,10 +14,10 @@ public class MobileTaskController : ControllerBase
     private readonly IMapper<ProductType, ProductTypeDto> _mapperProductTypeTo;
     private readonly IMapper<Place, PlaceDto> _mapperPlaceTo;
 
-    public MobileTaskController(GetTaskDataService getTaskDataService, IOutTaskData outTaskData, IProductTypeData productTypeData, IPlaceData placeData, IMapper<OutTask, OutTaskDto> mapperTo, 
+    public MobileTaskController(TaskDataService taskDataService, IOutTaskData outTaskData, IProductTypeData productTypeData, IPlaceData placeData, IMapper<OutTask, OutTaskDto> mapperTo, 
         IMapper<ProductType, ProductTypeDto> mapperProductTypeTo, IMapper<Place, PlaceDto> mapperPlaceTo)
     {
-        _getTaskDataService = getTaskDataService;
+        _taskDataService = taskDataService;
         _outTaskData = outTaskData;
         _productTypeData = productTypeData;
         _placeData = placeData;
@@ -54,7 +54,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet("producttypesload/{productTypeId:int}")]
     public async Task<IActionResult> GetRecommendedLoadPlaces(int productTypeId)
     {
-        var places = await _getTaskDataService.GetRecommendedLoadPlaces(productTypeId);
+        var places = await _taskDataService.GetRecommendedLoadPlaces(productTypeId);
         return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
     }
 
@@ -70,7 +70,7 @@ public class MobileTaskController : ControllerBase
     [HttpGet("load/{productTypeId:int}/{placeId:int}/{count:int}")]
     public async Task<IActionResult> LoadProductToPlace(int productTypeId, int placeId, int count)
     {
-        var place = await _getTaskDataService.LoadProductToPlace(productTypeId, placeId, count);
+        var place = await _taskDataService.LoadProductToPlace(productTypeId, placeId, count);
         if (place is not null)
         {
             return Ok(_mapperPlaceTo.Map(place));
@@ -81,14 +81,14 @@ public class MobileTaskController : ControllerBase
     [HttpGet("producttypeshipment/{productTypeId:int}")]
     public async Task<IActionResult> GetRecommendedShipmentPlaces(int productTypeId)
     {
-        var places = await _getTaskDataService.GetRecommendedShipmentPlaces(productTypeId);
+        var places = await _taskDataService.GetRecommendedShipmentPlaces(productTypeId);
         return Ok(places.Select(p => _mapperPlaceTo.Map(p)));
     }
 
     [HttpGet("shipment/{placeId:int}/{taskId:int}/{count:int}")]
     public async Task<IActionResult> ShipmentProductFromPlace(int placeId, int taskId, int count)
     {
-        var place = await _getTaskDataService.ShipmentProductFromPlace(placeId, taskId, count);
+        var place = await _taskDataService.ShipmentProductFromPlace(placeId, taskId, count);
         if (place is not null)
         {
             return Ok(_mapperPlaceTo.Map(place));

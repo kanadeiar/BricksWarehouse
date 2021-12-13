@@ -1,10 +1,10 @@
 ﻿namespace BricksWarehouse.Services
 {
-    public class GetTaskDataService
+    public class TaskDataService
     {
         private readonly IPlaceData _placeData;
         private readonly IOutTaskData _outTaskData;
-        public GetTaskDataService(IPlaceData placeData, IOutTaskData outTaskData)
+        public TaskDataService(IPlaceData placeData, IOutTaskData outTaskData)
         {
             _placeData = placeData;
             _outTaskData = outTaskData;
@@ -47,6 +47,8 @@
             if (place.ProductTypeId == productTypeId)
             {
                 place.Count += count;
+                if (place.Count > place.Size)
+                    place.Count = place.Size;
                 place.LastDateTime = DateTime.Now;
                 await _placeData.UpdateAsync(place);
                 return place;
