@@ -6,7 +6,7 @@
     
     <StackLayout Padding="10">
         <Label Text="Получение информации склада по QR коду" FontSize="Large" Margin="10"/>
-        <Button Text="Сканировать QR код" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+        <Button Text="Сканировать QR код" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                 Clicked="ButtonScan_ClickedAsync"/>
         <Label Text="Функционал дальнейшей обработки разпознанных кодов не реализован" />
     </StackLayout>

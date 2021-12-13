@@ -6,7 +6,7 @@
 
     <StackLayout Padding="10">
         <Label Text="Получение информации о геолокации этого устройства" FontSize="Large" Margin="10" />
-        <Button x:Name="btnLocation" Text="Получить данные геолокации" BackgroundColor="#f31731" Margin="4" Padding="-20" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+        <Button x:Name="btnLocation" Text="Получить данные геолокации" BackgroundColor="#dc3545" Margin="4" Padding="-20" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                 Clicked="btnLocation_Clicked"/>
         <Label HorizontalTextAlignment="Center" x:Name="LabelLatitude" FontSize="Large"></Label>
         <Label HorizontalTextAlignment="Center" x:Name="LabelLongitude" FontSize="Large"></Label>

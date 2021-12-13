@@ -13,11 +13,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Создать" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+            <Button Grid.Column="0" Text="Создать" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Command="{Binding AddProductTypeCommand}"/>
-            <Button Grid.Column="1" Text="Изменить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+            <Button Grid.Column="1" Text="Изменить" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Command="{Binding EditProductTypeCommand}" CommandParameter="{Binding SelectedProductType}"/>
-            <Button Grid.Column="2" Text="Удалить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+            <Button Grid.Column="2" Text="Удалить" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Command="{Binding DeleteProductTypeCommand}" CommandParameter="{Binding SelectedProductType}"/>
         </Grid>
         <ListView x:Name="ListViewProductTypes" HasUnevenRows="True" IsPullToRefreshEnabled="True"
