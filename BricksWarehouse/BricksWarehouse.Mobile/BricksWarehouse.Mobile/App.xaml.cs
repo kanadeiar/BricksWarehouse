@@ -36,6 +36,8 @@ namespace BricksWarehouse.Mobile
             services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
             services.AddScoped<IMapper<Place, PlaceDto>, DtoMapperService>();
             services.AddScoped<IMapper<PlaceDto, Place>, DtoMapperService>();
+            services.AddScoped<IMapper<OutTask, OutTaskDto>, DtoMapperService>();
+            services.AddScoped<IMapper<OutTaskDto, OutTask>, DtoMapperService>();
 
             services.AddSingleton<MobileTaskService>();
             services.AddSingleton<ParseQrService>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
 
 namespace BricksWarehouse.Mobile.ViewModels.Control
@@ -9,7 +10,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
     {
         #region Данные
 
-
+        private readonly MobileTaskService _mobileTaskService;
 
         #endregion
 
@@ -26,9 +27,9 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #endregion
 
-        public TaskListViewModel()
+        public TaskListViewModel(MobileTaskService mobileTaskService)
         {
-            
+            _mobileTaskService = mobileTaskService;
         }
 
         #region Команды
@@ -43,4 +44,18 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #endregion
     }
+
+    #region Вспомогательные вьюмодели
+
+    public class OutTaskView
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Number { get; set; }
+        public string ProductTypeName { get; set; }
+        public string TruckNumber { get; set; }
+        public string CountString { get; set; }
+    }
+
+    #endregion
 }

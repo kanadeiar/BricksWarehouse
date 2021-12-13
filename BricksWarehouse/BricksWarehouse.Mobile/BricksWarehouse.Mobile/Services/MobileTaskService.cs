@@ -14,8 +14,10 @@ namespace BricksWarehouse.Mobile.Services
 
         /// <summary> Выполняемое задание </summary>
         public OutTask OutTask { get; set; }
+
         /// <summary> Вид товаров </summary>
         public ProductType ProductType { get; set; }
+
         /// <summary> Место хранений товаров </summary>
         public Place Place { get; set; }
 
@@ -24,6 +26,9 @@ namespace BricksWarehouse.Mobile.Services
             _taskClient = taskClient;
         }
 
+        /// <summary> Получить все задания для оператора склада </summary>
+        /// <param name="onlynoncompleted">Только незавершенные задания</param>
+        /// <returns>Список заданий</returns>
         public async Task<IEnumerable<OutTask>> GetAllOutTasks(bool onlynoncompleted = false)
         {
             var tasks = (onlynoncompleted) 
@@ -32,12 +37,18 @@ namespace BricksWarehouse.Mobile.Services
             return tasks;
         }
 
+        /// <summary> Получить одно задание для оператора </summary>
+        /// <param name="id">Идентификатор задания</param>
+        /// <returns>Задание</returns>
         public async Task<OutTask> GetOneOutTask(int id)
         {
             var task = await _taskClient.GetById(id);
             return task;
         }
 
+        /// <summary> Установить задание по его номеру </summary>
+        /// <param name="numberTask">Номер задания</param>
+        /// <returns>Это задание</returns>
         public async Task SetTaskWithNumber(int numberTask)
         {
             if (numberTask == 0)
@@ -52,6 +63,9 @@ namespace BricksWarehouse.Mobile.Services
             }
         }
 
+        /// <summary> Получить вид товара по номеру </summary>
+        /// <param name="formatNumber">Номер товара</param>
+        /// <returns>Вид товара</returns>
         public async Task<ProductType> GetProductTypeByNumber(int formatNumber)
         {
             var productType = await _taskClient.GetProductTypeByFormat(formatNumber);
@@ -65,12 +79,18 @@ namespace BricksWarehouse.Mobile.Services
             ProductType = productType;
         }
 
+        /// <summary> Получить список рекомендукмых мест при загрузке товара на склад </summary>
+        /// <param name="produtctTypeId">Идентификатор вида товара</param>
+        /// <returns>Рекомендукмый список, вверху - наиболее подходящее</returns>
         public async Task<IEnumerable<Place>> GetRecommendedLoadPlaces(int produtctTypeId)
         {
             var places = await _taskClient.GetRecommendedLoadPlaces(produtctTypeId);
             return places;
         }
 
+        /// <summary> Получить место хранения товаров по номеру </summary>
+        /// <param name="placeNumber">Номер места</param>
+        /// <returns>Место</returns>
         public async Task<Place> GetPlaceByNumber(int placeNumber)
         {
             var place = await _taskClient.GetPlaceByNumber(placeNumber);
@@ -93,6 +113,9 @@ namespace BricksWarehouse.Mobile.Services
             return place;
         }
 
+        /// <summary> Получить список рекомендуемых мест для отгрузки товара </summary>
+        /// <param name="productTypeId">Вид товара</param>
+        /// <returns>Список рекомендуемых, вверху - наиболее подходящее</returns>
         public async Task<IEnumerable<Place>> GetRecommendedShipmentPlaces(int productTypeId)
         {
             var places = await _taskClient.GetRecommendedShipmentPlaces(productTypeId);

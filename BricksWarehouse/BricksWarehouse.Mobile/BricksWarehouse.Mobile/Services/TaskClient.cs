@@ -8,20 +8,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using BricksWarehouse.Domain.Mappers;
 
 namespace BricksWarehouse.Mobile.Services
 {
     public class TaskClient : BaseClient
     {
-        private readonly IMapper<OutTask, OutTaskDto> _mapperTo;
         private readonly IMapper<OutTaskDto, OutTask> _mapperFrom;
         private readonly IMapper<ProductTypeDto, ProductType> _mapperProductTypeFrom;
         private readonly IMapper<PlaceDto, Place> _mapperPlaceFrom;
-        public TaskClient(HttpClient client, IMapper<OutTask, OutTaskDto> mapperTo, IMapper<OutTaskDto, OutTask> mapperFrom, 
+
+        public TaskClient(HttpClient client, IMapper<OutTaskDto, OutTask> mapperFrom, 
             IMapper<ProductTypeDto, ProductType> mapperProductTypeFrom, IMapper<PlaceDto, Place> mapperPlaceFrom) 
             : base(client, "/api/mobiletask")
         {
-            _mapperTo = mapperTo;
             _mapperFrom = mapperFrom;
             _mapperProductTypeFrom = mapperProductTypeFrom;
             _mapperPlaceFrom = mapperPlaceFrom;

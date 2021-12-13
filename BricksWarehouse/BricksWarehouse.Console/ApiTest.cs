@@ -18,7 +18,7 @@ public class ApiTest
     {
         Console.WriteLine("******* Задания *********");
 
-        TaskClient client = new TaskClient(new HttpClient { BaseAddress = new Uri(__WebAPI) }, new DtoMapperService(), new DtoMapperService(), new DtoMapperService(), new DtoMapperService());
+        TaskClient client = new TaskClient(new HttpClient { BaseAddress = new Uri(__WebAPI) }, new DtoMapperService(), new DtoMapperService(), new DtoMapperService());
 
         MobileTaskService service = new MobileTaskService(client);
         ParseQrService qrService = new ParseQrService();
