@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BricksWarehouse.Mobile.ViewModels"
+             x:Class="BricksWarehouse.Mobile.Views.Control.TaskListPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding TaskListViewModel, Source={StaticResource Locator}}">
+
+        <StackLayout>
+            <Frame BackgroundColor="#dc3545" Padding="6" CornerRadius="0">
+                <Label Text="Список заданий:" HorizontalTextAlignment="Center" TextColor="White" FontSize="Title"/>
+            </Frame>
+            <Label Text="Welcome to Xamarin.Forms!"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="Просмотр" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    />
+                <Button Grid.Column="1" Text="Исполнять" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                    />
+            </Grid>
+    </StackLayout>
+</ContentPage>

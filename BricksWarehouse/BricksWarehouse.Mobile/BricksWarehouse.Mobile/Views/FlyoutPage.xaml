@@ -4,6 +4,7 @@
              xmlns:v="clr-namespace:BricksWarehouse.Mobile.Views"
              xmlns:ve="clr-namespace:BricksWarehouse.Mobile.Views.Edit"
              xmlns:vt="clr-namespace:BricksWarehouse.Mobile.Views.Trash"
+             xmlns:vc="clr-namespace:BricksWarehouse.Mobile.Views.Control"
              x:Class="BricksWarehouse.Mobile.Views.FlyoutPage"
              FlyoutWidth="300"
              Shell.BackgroundColor="#dc3545">
@@ -15,6 +16,7 @@
     <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Обзор склада" Icon="ic_action_home.png" IsTabStop="True" ContentTemplate="{DataTemplate v:MainPage}" />
 
+        <ShellContent Title="Управление складом" Icon="ic_action_photo_camera.png" IsTabStop="True" ContentTemplate="{DataTemplate vc:TaskListPage}" />
     </FlyoutItem>
 
     <FlyoutItem Shell.TabBarIsVisible="False" Title="Редактирование" FlyoutDisplayOptions="AsSingleItem" FlyoutIcon="ic_action_edit.png">

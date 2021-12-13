@@ -67,8 +67,10 @@
             var place = await _placeData.GetAsync(placeId);
             if (task is null || place is null || task.ProductTypeId is null || place.ProductTypeId is null)
                 return null;
-            if (count > place.Count || count > task.Count - task.Loaded)
-                return null;
+            if (count > task.Count - task.Loaded)
+                count = task.Count - task.Loaded;
+            if (count > place.Count)
+                count = place.Count;
             if (task.ProductTypeId == place.ProductTypeId)
             {
                 task.Loaded += count;
