@@ -15,7 +15,7 @@
         /// <returns>Список рекомендаций, в самом верху - самый рекомендуемый</returns>
         public async Task<IEnumerable<Place>> GetRecommendedLoadPlaces(int productTypeId) 
         {
-            var places = (await _placeData.GetAllAsync())
+            var places = (await _placeData.GetAllAsync(true))
                 .Where(p => p.ProductTypeId == null || (p.ProductTypeId == productTypeId && p.Count < p.Size))
                 .OrderByDescending(p => p.Count);
             return places;
@@ -26,7 +26,7 @@
         /// <returns>Список рекомендаций, в самом верху - самый рекомендуемый</returns>
         public async Task<IEnumerable<Place>> GetRecommendedShipmentPlaces(int productTypeId)
         {
-            var places = (await _placeData.GetAllAsync())
+            var places = (await _placeData.GetAllAsync(true))
                 .Where(p => p.ProductTypeId == productTypeId && p.Count > 0)
                 .OrderBy(p => p.LastDateTime);
             return places;
@@ -48,6 +48,7 @@
             {
                 place.Count += count;
                 place.LastDateTime = DateTime.Now;
+                await _placeData.UpdateAsync(place);
                 return place;
             }
             return null;

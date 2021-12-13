@@ -19,6 +19,7 @@ builder.Host.ConfigureServices(services =>
     services.AddScoped<IOutTaskData, DatabaseOutTaskData>();
     services.AddScoped<FillingsInfoService>();
     services.AddScoped<CountsInfoService>();
+    services.AddScoped<GetTaskDataService>();
 
     services.AddControllersWithViews().AddRazorRuntimeCompilation();
     services.AddRazorPages().AddRazorRuntimeCompilation();

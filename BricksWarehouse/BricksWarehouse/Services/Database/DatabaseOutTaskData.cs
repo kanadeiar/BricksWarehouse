@@ -53,7 +53,7 @@ public class DatabaseOutTaskData : IOutTaskData
         }
         else
             _context.Update(outTask);
-
+        await _context.SaveChangesAsync().ConfigureAwait(false);
     }
 
     public async Task<bool> DeleteAsync(int id)

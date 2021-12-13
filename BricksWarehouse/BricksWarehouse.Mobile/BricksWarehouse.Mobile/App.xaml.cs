@@ -29,6 +29,7 @@ namespace BricksWarehouse.Mobile
 
             services.AddScoped<ProductTypeClient>();
             services.AddScoped<PlaceClient>();
+            services.AddScoped<TaskClient>();
 
             services.AddScoped<IMapper<ProductType, ProductTypeDto>, DtoMapperService>();
             services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
