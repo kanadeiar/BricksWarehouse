@@ -10,6 +10,7 @@ using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
 using BricksWarehouse.Mobile.Views.Control;
 using Xamarin.Forms;
+using ZXing.Mobile;
 
 namespace BricksWarehouse.Mobile.ViewModels.Control
 {
@@ -19,6 +20,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         private readonly MobileTaskService _MobileTaskService;
         private readonly ParseQrService _ParseQrService;
+        private IEnumerable<OutTask> _Tasks { get; set; }
 
         #endregion
 
@@ -66,8 +68,40 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #region Команды
 
-        private ICommand _ShowDetailsOutTaskCommand;
+        private ICommand _ScanQrCodeCommand;
+        /// <summary> Сканировать QR код </summary>
+        public ICommand ScanQrCodeCommand => _ScanQrCodeCommand ??=
+            new Command(OnScanQrCodeCommandExecuted);
+        private async void OnScanQrCodeCommandExecuted()
+        {
+            var scanner = new MobileBarcodeScanner();
+            scanner.UseCustomOverlay = false;
+            scanner.TopText = "Поместите QR-код в видоискатель камеры для его сканирования.";
+            scanner.BottomText = "QR-код сканируется автоматически. Постарайтесь избегать теней и бликов. И старайтесь соблюдать расстояние между устройством и кодом в 15 см.";
+            var result = await scanner.Scan(new MobileBarcodeScanningOptions { AutoRotate = false });
+            if (result != null && !string.IsNullOrEmpty(result.Text))
+            {
+                var (errorQr, datas) = _ParseQrService.Get(TypeQrCode.OutTask, result.Text);
+                if (string.IsNullOrEmpty(errorQr))
+                {
+                    var number = int.Parse(datas[1]);
+                    OutTask selected;
+                    if (number != 0)
+                        selected = _Tasks.FirstOrDefault(ot => ot.Number == number);
+                    else
+                        selected = new OutTask { Id = 0 };
+                    await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
+                }
+                else
+                    await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Сканирование отменено", "Сканирование отменено", "OK");
+            }
+        }
 
+        private ICommand _ShowDetailsOutTaskCommand;
         /// <summary> Просмотр детальной информации по заданию </summary>
         public ICommand ShowDetailsOutTaskCommand => _ShowDetailsOutTaskCommand ??=
             new Command(OnShowDetailsOutTaskCommandExecuted, CanShowDetailsOutTaskCommandExecute);
@@ -77,7 +111,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             var model = p as OutTaskView;
             OutTask selected;
             if (model.Id != 0)
-                selected = await _MobileTaskService.GetOneOutTask(model!.Id);
+                selected = _Tasks.FirstOrDefault(ot => ot.Id == model.Id);
             else
                 selected = new OutTask { Id = 0 };
             await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
@@ -99,7 +133,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         public async Task UpdateDataAsync()
         {
-            var tasks = (await _MobileTaskService.GetAllOutTasks(true));
+            _Tasks = (await _MobileTaskService.GetAllOutTasks(true));
             OutTasks.Clear();
             OutTasks.Add(new OutTaskView
             {
@@ -109,7 +143,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 ProductTypeName = (_MobileTaskService.ProductType is { }) ? $"Поледний отгруженный вид товара:" : "Работа по заполнению склада товаром",
                 TruckNumber = (_MobileTaskService.ProductType is { } productType) ? $"[{productType?.FormatNumber}] {productType?.Name}" : "",
             });
-            foreach (var task in tasks)
+            foreach (var task in _Tasks)
                 OutTasks.Add(new OutTaskView
                 {
                     Id = task.Id,

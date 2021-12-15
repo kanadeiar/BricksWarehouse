@@ -9,7 +9,6 @@ using ZXing.Mobile;
 
 namespace BricksWarehouse.Mobile.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QRScanPage : ContentPage
     {
         public QRScanPage()

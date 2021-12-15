@@ -124,12 +124,12 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             }
             else
             {
-                Name = "Заполнение склада";
+                Name = "Заполнение склада товарами";
                 Number = 0;
-                ProductTypeName = "Тот который на приеме на склад";
+                ProductTypeName = "Тот, который принимается на склад";
                 LoadedString = "Выполняется постоянно";
                 CreatedDateTime = "Выполняется постоянно";
-                IsCompletedString = "В процессе выполнения";
+                IsCompletedString = "Постоянно в процессе выполнения";
             }
         }
 
