@@ -18,7 +18,7 @@ public class DatabaseOutTaskData : IOutTaskData
         return await query.ToArrayAsync().ConfigureAwait(false);
     }
 
-    public async Task<OutTask> GetAsync(int id)
+    public async Task<OutTask?> GetAsync(int id)
     {
         var outtask = await _context.OutTasks.Include(ot => ot.ProductType).SingleOrDefaultAsync(ot => ot.Id == id).ConfigureAwait(false);
         return outtask;

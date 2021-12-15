@@ -21,7 +21,7 @@ public class DatabaseProductTypeData : IProductTypeData
         return await query.ToArrayAsync().ConfigureAwait(false);
     }
 
-    public async Task<ProductType> GetAsync(int id)
+    public async Task<ProductType?> GetAsync(int id)
     {
         var result = await _context.ProductTypes.Include(pt => pt.Places).SingleOrDefaultAsync(pt => pt.Id == id).ConfigureAwait(false);
         return result;

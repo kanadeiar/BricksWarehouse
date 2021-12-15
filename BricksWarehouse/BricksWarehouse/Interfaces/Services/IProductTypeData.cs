@@ -6,7 +6,7 @@ public interface IProductTypeData
     /// <summary> Получить все </summary>
     Task<IEnumerable<ProductType>> GetAllAsync(bool includes = false, bool trashed = false);
     /// <summary> Данные одного </summary>
-    Task<ProductType> GetAsync(int id);
+    Task<ProductType?> GetAsync(int id);
     /// <summary> Добавить </summary>
     Task<int> AddAsync(ProductType productType);
     /// <summary> Обновить </summary>

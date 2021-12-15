@@ -6,7 +6,7 @@
         /// <summary> Получить все </summary>
         Task<IEnumerable<OutTask>> GetAllAsync(bool includes = false);
         /// <summary> Данные одного </summary>
-        Task<OutTask> GetAsync(int id);
+        Task<OutTask?> GetAsync(int id);
         /// <summary> Добавить </summary>
         Task<int> AddAsync(OutTask productType);
         /// <summary> Обновить </summary>
