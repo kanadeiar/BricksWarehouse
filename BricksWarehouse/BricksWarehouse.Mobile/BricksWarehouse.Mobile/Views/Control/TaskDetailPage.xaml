@@ -34,7 +34,7 @@
                     <Button Grid.Column="0" Text="Назад" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
                         Clicked="ButtonCancel_Clicked"/>
                     <Button Grid.Column="1" Text="Исполнять" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
-                        />
+                        Command="{Binding StartWorkTaskCommand}"/>
                 </Grid>
             </StackLayout>
         </StackLayout>

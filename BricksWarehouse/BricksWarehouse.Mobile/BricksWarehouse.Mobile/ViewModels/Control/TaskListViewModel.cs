@@ -117,6 +117,23 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
         }
 
+        private ICommand _StartWorkTaskCommand;
+        /// <summary> Начало выполнения задания </summary>
+        public ICommand StartWorkTaskCommand => _StartWorkTaskCommand ??=
+            new Command(OnStartWorkTaskCommandExecuted, CanStartWorkTaskCommandExecute);
+        private bool CanStartWorkTaskCommandExecute(object p) => p is OutTaskView;
+        private async void OnStartWorkTaskCommandExecuted(object p)
+        {
+            var model = p as OutTaskView;
+            await _MobileTaskService.SetTaskWithNumber(model!.Number);
+            if (model!.Number == 0)
+                await Application.Current.MainPage.Navigation.PushAsync(new StartLoadTaskPage());
+            else
+            {
+                
+            }
+        }
+
         private ICommand _UpdateOutTasksCommand;
         /// <summary> Обновить </summary>
         public ICommand UpdateOutTasksCommand => _UpdateOutTasksCommand ??= new Command(OnUpdateOutTasksCommandExecuted);
@@ -135,6 +152,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
         {
             _Tasks = (await _MobileTaskService.GetAllOutTasks(true));
             OutTasks.Clear();
+            SelectedOutTask = null;
             OutTasks.Add(new OutTaskView
             {
                 Id = 0,

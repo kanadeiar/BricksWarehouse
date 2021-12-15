@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using BricksWarehouse.Domain.Models;
 using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
+using BricksWarehouse.Mobile.Views.Control;
 using Xamarin.Forms;
 
 namespace BricksWarehouse.Mobile.ViewModels.Control
@@ -102,7 +104,20 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #region Команды
 
+        private ICommand _StartWorkTaskCommand;
+        /// <summary> Начало выполнения задания </summary>
+        public ICommand StartWorkTaskCommand => _StartWorkTaskCommand ??=
+            new Command(OnStartWorkTaskCommandExecuted);
+        private async void OnStartWorkTaskCommandExecuted()
+        {
+            await _MobileTaskService.SetTaskWithNumber(Number);
+            if (Number == 0)
+                await Application.Current.MainPage.Navigation.PushAsync(new StartLoadTaskPage());
+            else
+            {
 
+            }
+        }
 
         #endregion
 
