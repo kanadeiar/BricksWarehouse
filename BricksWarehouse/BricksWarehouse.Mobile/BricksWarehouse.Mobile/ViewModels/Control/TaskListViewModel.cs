@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BricksWarehouse.Domain.Models;
 using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
+using BricksWarehouse.Mobile.Views.Control;
 using Xamarin.Forms;
 
 namespace BricksWarehouse.Mobile.ViewModels.Control
@@ -15,7 +17,8 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
     {
         #region Данные
 
-        private readonly MobileTaskService _mobileTaskService;
+        private readonly MobileTaskService _MobileTaskService;
+        private readonly ParseQrService _ParseQrService;
 
         #endregion
 
@@ -49,9 +52,10 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #endregion
 
-        public TaskListViewModel(MobileTaskService mobileTaskService)
+        public TaskListViewModel(MobileTaskService mobileTaskService, ParseQrService parseQrService)
         {
-            _mobileTaskService = mobileTaskService;
+            _MobileTaskService = mobileTaskService;
+            _ParseQrService = parseQrService;
 
             Task.Run(async () =>
             {
@@ -61,6 +65,23 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
         }
 
         #region Команды
+
+        private ICommand _ShowDetailsOutTaskCommand;
+
+        /// <summary> Просмотр детальной информации по заданию </summary>
+        public ICommand ShowDetailsOutTaskCommand => _ShowDetailsOutTaskCommand ??=
+            new Command(OnShowDetailsOutTaskCommandExecuted, CanShowDetailsOutTaskCommandExecute);
+        private bool CanShowDetailsOutTaskCommandExecute(object p) => p is OutTaskView;
+        private async void OnShowDetailsOutTaskCommandExecuted(object p)
+        {
+            var model = p as OutTaskView;
+            OutTask selected;
+            if (model.Id != 0)
+                selected = await _MobileTaskService.GetOneOutTask(model!.Id);
+            else
+                selected = new OutTask { Id = 0 };
+            await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
+        }
 
         private ICommand _UpdateOutTasksCommand;
         /// <summary> Обновить </summary>
@@ -78,15 +99,15 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         public async Task UpdateDataAsync()
         {
-            var tasks = (await _mobileTaskService.GetAllOutTasks(true));
+            var tasks = (await _MobileTaskService.GetAllOutTasks(true));
             OutTasks.Clear();
             OutTasks.Add(new OutTaskView
             {
                 Id = 0,
                 Name = "Заполнение склада",
                 Number = 0,
-                ProductTypeName = (_mobileTaskService.ProductType is { }) ? $"Поледний отгруженный вид товара:" : "Работа по заполнению склада товаром",
-                TruckNumber = (_mobileTaskService.ProductType is { } productType) ? $"[{productType?.FormatNumber}] {productType?.Name}" : "",
+                ProductTypeName = (_MobileTaskService.ProductType is { }) ? $"Поледний отгруженный вид товара:" : "Работа по заполнению склада товаром",
+                TruckNumber = (_MobileTaskService.ProductType is { } productType) ? $"[{productType?.FormatNumber}] {productType?.Name}" : "",
             });
             foreach (var task in tasks)
                 OutTasks.Add(new OutTaskView

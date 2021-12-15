@@ -52,6 +52,7 @@ namespace BricksWarehouse.Mobile
             services.AddSingleton<TrashPlaceViewModel>();
 
             services.AddSingleton<TaskListViewModel>();
+            services.AddSingleton<TaskDetailViewModel>();
         }
 
         public App()

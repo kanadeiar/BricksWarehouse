@@ -10,7 +10,7 @@
         <StackLayout>
             <Button Margin="10, 10, 10, 0" Text="Скан QR-код задания" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                 />
-            <Label Text="Выбор задания:" HorizontalTextAlignment="Center" FontSize="Title"/>
+            <Label Text="Задания:" HorizontalTextAlignment="Center" FontSize="Title"/>
             <StackLayout>
                 <ListView x:Name="ListViewTasksList" HasUnevenRows="True" IsPullToRefreshEnabled="True"
                           ItemsSource="{Binding OutTasks}"
@@ -45,12 +45,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Text="Просмотр" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="100" TextColor="White"
-                        />
+                        Command="{Binding ShowDetailsOutTaskCommand}" CommandParameter="{Binding SelectedOutTask}"/>
                     <Button Grid.Column="1" Text="Исполнять" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="100" TextColor="White"
                         />
                 </Grid>
             </StackLayout>
-
-
-    </StackLayout>
+        </StackLayout>
 </ContentPage>

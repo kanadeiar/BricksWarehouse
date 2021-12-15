@@ -25,5 +25,7 @@ namespace BricksWarehouse.Mobile.ViewModels
 
         public TaskListViewModel TaskListViewModel => App.Services
             .GetRequiredService<TaskListViewModel>();
+        public TaskDetailViewModel TaskDetailViewModel => App.Services
+            .GetRequiredService<TaskDetailViewModel>();
     }
 }

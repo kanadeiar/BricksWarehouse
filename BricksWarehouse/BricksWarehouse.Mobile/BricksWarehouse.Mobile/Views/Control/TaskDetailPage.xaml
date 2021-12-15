@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vmc="clr-namespace:BricksWarehouse.Mobile.ViewModels.Control"
+             x:Class="BricksWarehouse.Mobile.Views.Control.TaskDetailPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding TaskDetailViewModel, Source={StaticResource Locator}}">
+
+    <ScrollView>
+        <StackLayout Padding="10">
+            <Button Margin="10, 10, 10, 0" Text="Скан QR-код задания" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                />
+            <Label Text="Задание:" HorizontalTextAlignment="Center" FontSize="Title"/>
+            <StackLayout Padding="10">
+                <Label Text="Номер задания:" />
+                <Entry Text="{Binding Number}" IsReadOnly="True" />
+                <Label Text="Название задания:" />
+                <Entry Text="{Binding Name}" IsReadOnly="True" />
+                <Label Text="Название вида товаров:" />
+                <Entry Text="{Binding ProductTypeName}" IsReadOnly="True" />
+                <Label Text="Рег. номер грузовика:" />
+                <Entry Text="{Binding TruckNumber}" IsReadOnly="True" />
+                <Label Text="Выполнено, загружено:" />
+                <Entry Text="{Binding LoadedString}" IsReadOnly="True" />
+                <Label Text="Дата и время создания задания:" />
+                <Entry Text="{Binding CreatedDateTime}" IsReadOnly="True" />
+                <Label Text="Статус выполения задания:" />
+                <Entry Text="{Binding IsCompletedString}" IsReadOnly="True" />
+                <Label Text="Комментарий:" />
+                <Entry Text="{Binding Comment}" IsReadOnly="True" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Назад" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="100" TextColor="White"
+                        Clicked="ButtonCancel_Clicked"/>
+                    <Button Grid.Column="1" Text="Исполнять" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="100" TextColor="White"
+                        />
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
