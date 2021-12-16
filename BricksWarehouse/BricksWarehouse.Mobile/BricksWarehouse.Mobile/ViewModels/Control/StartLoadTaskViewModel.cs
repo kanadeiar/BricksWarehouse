@@ -103,9 +103,11 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
         public ICommand GoBeginLoadTaskCommand => _GoBeginLoadTaskCommand ??=
             new Command(OnGoBeginLoadTaskCommandExecuted, CanGoBeginLoadTaskCommandExecute);
         private bool CanGoBeginLoadTaskCommandExecute(object p) => p is ProductType;
-        private void OnGoBeginLoadTaskCommandExecuted(object p)
+        private async void OnGoBeginLoadTaskCommandExecuted(object p)
         {
-
+            var productType = p as ProductType;
+            _MobileTaskService.StartLoadTask(productType);
+            await Application.Current.MainPage.Navigation.PushAsync(new BeginLoadTaskPage());
         }
 
         private ICommand _UpdateProductTypesCommand;

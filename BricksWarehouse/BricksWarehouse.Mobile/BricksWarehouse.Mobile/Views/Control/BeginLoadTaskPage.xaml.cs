@@ -9,9 +9,9 @@ using Xamarin.Forms.Xaml;
 
 namespace BricksWarehouse.Mobile.Views.Control
 {
-    public partial class StartLoadTaskPage : ContentPage
+    public partial class BeginLoadTaskPage : ContentPage
     {
-        public StartLoadTaskPage()
+        public BeginLoadTaskPage()
         {
             InitializeComponent();
         }
