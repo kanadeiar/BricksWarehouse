@@ -7,7 +7,6 @@ namespace BricksWarehouse.Mobile.Views
     public partial class MainPage : ContentPage
     {
         public MainPageViewModel ViewModel { get; set; }
-
         public MainPage()
         {
             InitializeComponent();

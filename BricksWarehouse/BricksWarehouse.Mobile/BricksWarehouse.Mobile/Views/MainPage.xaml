@@ -24,6 +24,7 @@
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Padding="10,0,10,10">
+                                        <Label Text="{Binding FormatNumber, StringFormat='Номер формата: {0}'}" FontSize="Body" />
                                         <Label Text="{Binding Name}" FontSize="Subtitle" FontAttributes="Bold" />
                                         <Label Text="{Binding PlacesCount, StringFormat='Количество пачек: {0} шт.'}" FontSize="Body" />
                                         <Label Text="{Binding CountUnits, StringFormat='Количество кирпичей: {0} шт.'}" FontSize="Body" />

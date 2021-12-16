@@ -34,7 +34,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid Margin="10, 0, 10, 10">
-                <Button Grid.Column="0" Text="Загружено на транспортер" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="200" TextColor="White"
+                <Button Grid.Column="0" Text="Загружено на транспортер" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="140" TextColor="White"
                         Command="{Binding GoBeginLoadTaskCommand}" CommandParameter="{Binding SelectedProductType}"/>
             </Grid>
         </StackLayout>

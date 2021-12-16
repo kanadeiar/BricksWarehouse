@@ -79,6 +79,7 @@ namespace BricksWarehouse.Mobile.ViewModels
             foreach (var productType in productTypes)
                 ProductTypes.Add( new ProductTypeView
                 {
+                    FormatNumber = productType.FormatNumber,
                     Name = productType.Name,
                     PlacesCount = productType.Places.Count,
                     CountUnits = productType.Places.Count * productType.Units,
@@ -92,6 +93,7 @@ namespace BricksWarehouse.Mobile.ViewModels
 
     public class ProductTypeView
     {
+        public int FormatNumber { get; set; }
         public string Name { get; set; }
         public int PlacesCount { get; set; }
         public int CountUnits { get; set; }
