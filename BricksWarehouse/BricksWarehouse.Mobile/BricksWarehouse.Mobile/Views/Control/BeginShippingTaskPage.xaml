@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BricksWarehouse.Mobile.Views.Control.BeginShippingTaskPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding BeginShippingTaskViewModel, Source={StaticResource Locator}}">
+
+    <StackLayout>
+        <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код проверка" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                />
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Задание: " />
+                <Label Text="" FontAttributes="Bold" />
+                <Label Text=" / " FontAttributes="Bold" />
+                <Label Text="" FontAttributes="Bold" />
+            </StackLayout>
+            <StackLayout>
+                <Label Text="" />
+                <Label Text="" />
+            </StackLayout>
+            <StackLayout>
+                <Label Text="" />
+            </StackLayout>
+            <Label Text="После загрузки товара с транспортера на грузовик нажмите на кнопку ниже." Margin="10, 0"/>
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

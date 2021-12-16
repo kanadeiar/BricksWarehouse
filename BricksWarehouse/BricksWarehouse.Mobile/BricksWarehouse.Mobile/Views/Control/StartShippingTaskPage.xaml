@@ -20,7 +20,10 @@
                 <Label Text="{Binding Number, StringFormat='[{0}]'}" />
                 <Label Text="{Binding Name}" />
             </StackLayout>
-            <Label Text="Выберите место среди доступных с необходимым товаром и нажмите на кнопку после загрузки товара на транспортер. В самом верху - рекомендуемое место с товарами." Margin="10, 0"/>
+            <StackLayout>
+                <Label Text="{Binding TruckNumber, StringFormat='Рег. номер грузовика: {0}'}" />
+            </StackLayout>
+            <Label Text="Выберите место среди доступных с необходимым товаром и после загрузки товара на транспортер нажмите на кнопку. В самом верху - рекомендуемое место." Margin="10, 0"/>
             <ListView x:Name="ListViewPlaces" HasUnevenRows="True" IsPullToRefreshEnabled="True"
                       ItemsSource="{Binding RecommendedPlaces}"
                       SelectedItem="{Binding SelectedRecommendedPlace}"

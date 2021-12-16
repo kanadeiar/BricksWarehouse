@@ -56,6 +56,14 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             set => Set(ref _Count, value);
         }
 
+        private string _TruckNumber;
+        /// <summary> Гос номер грузовика </summary>
+        public string TruckNumber
+        {
+            get => _TruckNumber;
+            set => Set(ref _TruckNumber, value);
+        }
+
         public ObservableCollection<Place> RecommendedPlaces { get; set; } = new ObservableCollection<Place>();
 
         private Place _SelectedRecommendedPlace;
@@ -163,6 +171,9 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 RecommendedPlaces.Add(p);
             Number = _MobileTaskService.OutTask.Number;
             Name = _MobileTaskService.OutTask.Name;
+            Loaded = _MobileTaskService.OutTask.Loaded;
+            Count = _MobileTaskService.OutTask.Count;
+            TruckNumber = _MobileTaskService.OutTask.TruckNumber;
         }
 
         #endregion

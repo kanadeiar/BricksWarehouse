@@ -56,6 +56,7 @@ namespace BricksWarehouse.Mobile
             services.AddSingleton<StartLoadTaskViewModel>();
             services.AddSingleton<BeginLoadTaskViewModel>();
             services.AddSingleton<StartShippingTaskViewModel>();
+            services.AddSingleton<BeginShippingTaskViewModel>();
         }
 
         public App()
