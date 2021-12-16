@@ -8,6 +8,7 @@ using System.Windows.Input;
 using BricksWarehouse.Domain.Models;
 using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
+using BricksWarehouse.Mobile.Views.Control;
 using Xamarin.Forms;
 using ZXing.Mobile;
 
@@ -146,6 +147,18 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             {
                 await Application.Current.MainPage.DisplayAlert("Сканирование отменено", "Сканирование отменено", "OK");
             }
+        }
+
+        private ICommand _BeginShippingTaskCommand;
+        /// <summary> Продолжение выполнения задания по отгрузке товара с места хранения в грузовик </summary>
+        public ICommand BeginShippingTaskCommand => _BeginShippingTaskCommand ??=
+            new Command(OnBeginShippingTaskCommandExecuted, CanBeginShippingTaskCommandExecute);
+        private bool CanBeginShippingTaskCommandExecute(object p) => p is Place;
+        private async void OnBeginShippingTaskCommandExecuted(object p)
+        {
+            var selected = p as Place;
+            _MobileTaskService.BeginShippingTask(selected);
+            await Application.Current.MainPage.Navigation.PushAsync(new BeginShippingTaskPage());
         }
 
         private ICommand _UpdateRecommendedPlacesCommand;
