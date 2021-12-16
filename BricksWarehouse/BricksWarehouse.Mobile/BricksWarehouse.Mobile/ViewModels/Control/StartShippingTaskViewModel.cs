@@ -8,13 +8,12 @@ using System.Windows.Input;
 using BricksWarehouse.Domain.Models;
 using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
-using BricksWarehouse.Mobile.Views.Control;
 using Xamarin.Forms;
 using ZXing.Mobile;
 
 namespace BricksWarehouse.Mobile.ViewModels.Control
 {
-    public class BeginLoadTaskViewModel : ViewModel
+    public class StartShippingTaskViewModel : ViewModel
     {
         #region Данные
 
@@ -24,6 +23,38 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
         #endregion
 
         #region Свойства
+
+        private int _Number;
+        /// <summary> Номер задания </summary>
+        public int Number
+        {
+            get => _Number;
+            set => Set(ref _Number, value);
+        }
+
+        private string _Name;
+        /// <summary> Название задания </summary>
+        public string Name
+        {
+            get => _Name;
+            set => Set(ref _Name, value);
+        }
+
+        private int _Loaded;
+        /// <summary> Загружено </summary>
+        public int Loaded
+        {
+            get => _Loaded;
+            set => Set(ref _Loaded, value);
+        }
+
+        private int _Count;
+        /// <summary> Количество </summary>
+        public int Count
+        {
+            get => _Count;
+            set => Set(ref _Count, value);
+        }
 
         public ObservableCollection<Place> RecommendedPlaces { get; set; } = new ObservableCollection<Place>();
 
@@ -43,7 +74,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             set => Set(ref _refreshingRecommendedPlaces, value);
         }
 
-        private string _title = "Заполнение склада";
+        private string _title = "Отгрузка со склада";
         /// <summary> Заголовок </summary>
         public string Title
         {
@@ -53,7 +84,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #endregion
 
-        public BeginLoadTaskViewModel(MobileTaskService mobileTaskService, ParseQrService parseQrService)
+        public StartShippingTaskViewModel(MobileTaskService mobileTaskService, ParseQrService parseQrService)
         {
             _MobileTaskService = mobileTaskService;
             _ParseQrService = parseQrService;
@@ -87,33 +118,25 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                     var place = RecommendedPlaces.FirstOrDefault(p => p.Number == number);
                     SelectedRecommendedPlace = place;
                 }
+                else if (datas[0] == "SNPUnit")
+                {
+                    if (int.TryParse(datas[1], out int res))
+                    {
+                        if (await _MobileTaskService.GetProductTypeByNumber(res) is { } pt)
+                        {
+                            if (pt.Id == _MobileTaskService.ProductType.Id)
+                                await Application.Current.MainPage.DisplayAlert("Правильно!", "Вы выбрали товар верно, его можно загружать. Но вы отсканировали упаковку с товаром, а нужно сканировать место хранения товаров.", "OK");
+                            else
+                                await Application.Current.MainPage.DisplayAlert("Неправильно!", "Это не тот товар, его НЕ НУЖНО загружать. Вы отсканировали упаковку с товаром, а нужно сканировать место хранения товаров.", "OK");
+                        }
+                    }
+                }
                 else
                     await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");
             }
             else
             {
                 await Application.Current.MainPage.DisplayAlert("Сканирование отменено", "Сканирование отменено", "OK");
-            }
-        }
-
-        private ICommand _GoEndLoadTaskCommand;
-        /// <summary> Завершение приема товара после того, как он выгружен с транспортера </summary>
-        public ICommand GoEndLoadTaskCommand => _GoEndLoadTaskCommand ??=
-            new Command(OnGoEndLoadTaskCommandExecuted, CanGoEndLoadTaskCommandExecute);
-        private bool CanGoEndLoadTaskCommandExecute(object p) => p is Place;
-        private async void OnGoEndLoadTaskCommandExecuted(object p)
-        {
-            var place = p as Place;
-            _MobileTaskService.BeginLoadTask(place);
-            var newplace = await _MobileTaskService.EndLoadTask(1);
-            if (newplace != null)
-            {
-                await Application.Current.MainPage.DisplayAlert("Великолепно", $"Товар [{newplace.ProductType?.FormatNumber}] {newplace.ProductType?.Name} успешно загружен на место хранения товаров [{newplace.Number}] {newplace.Name}, заполнение: {newplace.Count} / {newplace.Size}", "OK");
-                await Application.Current.MainPage.Navigation.PopAsync();
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Плохо", "Не удалось загрузить товар на место хранения товаров", "OK");
             }
         }
 
@@ -129,15 +152,17 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
 
         #endregion
 
-        #region Вспомогательное
+        #region Всмомогательное
 
         public async Task UpdateDataAsync()
         {
-            var places = (await _MobileTaskService.GetRecommendedLoadPlaces(_MobileTaskService.ProductType.Id));
+            var places = await _MobileTaskService.GetRecommendedShipmentPlaces(_MobileTaskService.ProductType.Id);
             RecommendedPlaces.Clear();
             SelectedRecommendedPlace = null;
             foreach (var p in places)
                 RecommendedPlaces.Add(p);
+            Number = _MobileTaskService.OutTask.Number;
+            Name = _MobileTaskService.OutTask.Name;
         }
 
         #endregion

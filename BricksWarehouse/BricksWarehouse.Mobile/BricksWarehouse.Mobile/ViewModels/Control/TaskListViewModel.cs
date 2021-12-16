@@ -130,7 +130,8 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 await Application.Current.MainPage.Navigation.PushAsync(new StartLoadTaskPage());
             else
             {
-                
+                _MobileTaskService.StartShippingTask(_MobileTaskService.OutTask);
+                await Application.Current.MainPage.Navigation.PushAsync(new StartShippingTaskPage());
             }
         }
 

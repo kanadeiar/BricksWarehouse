@@ -127,6 +127,7 @@ namespace BricksWarehouse.Mobile.Services
         public void StartShippingTask(OutTask task)
         {
             OutTask = task;
+            ProductType = task.ProductType;
         }
 
         /// <summary> Продолжение выполнения задания по отгрузке товара со склада </summary>
