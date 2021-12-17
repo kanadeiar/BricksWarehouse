@@ -26,11 +26,11 @@
                                         <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding ProductType?.FormatNumber, StringFormat='Вид: [{0}]'}" FontSize="Body" />
-                                        <Label Text="{Binding ProductType?.Name}" />
+                                        <Label Text="{Binding ProductType.FormatNumber, StringFormat='Вид: [{0}]'}" FontSize="Body" />
+                                        <Label Text="{Binding ProductType.Name}" />
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="Заполнение места: " />
+                                        <Label Text="Заполнение: " />
                                         <Label Text="{Binding Count}" />
                                         <Label Text=" / " />
                                         <Label Text="{Binding Size}" />

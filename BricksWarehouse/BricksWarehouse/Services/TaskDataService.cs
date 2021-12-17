@@ -1,5 +1,6 @@
 ﻿namespace BricksWarehouse.Services
 {
+    /// <summary> Сервис заданий для управления складом </summary>
     public class TaskDataService
     {
         private readonly IPlaceData _placeData;
@@ -67,12 +68,12 @@
             var place = await _placeData.GetAsync(placeId);
             if (task is null || place is null || task.ProductTypeId is null || place.ProductTypeId is null)
                 return null;
-            if (count > task.Count - task.Loaded)
-                count = task.Count - task.Loaded;
-            if (count > place.Count)
-                count = place.Count;
             if (task.ProductTypeId == place.ProductTypeId)
             {
+                if (count > task.Count - task.Loaded)
+                    count = task.Count - task.Loaded;
+                if (count > place.Count)
+                    count = place.Count;
                 task.Loaded += count;
                 if (task.Loaded >= task.Count)
                     task.IsCompleted = true;

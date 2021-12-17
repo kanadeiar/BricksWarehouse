@@ -7,7 +7,7 @@
              BindingContext="{Binding StartShippingTaskViewModel, Source={StaticResource Locator}}">
 
     <StackLayout>
-        <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код товара" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+        <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код места" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
                 Command="{Binding ScanQrCodeCommand}"/>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
@@ -39,8 +39,8 @@
                                         <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding ProductType?.FormatNumber, StringFormat='Вид: [{0}]'}" FontSize="Body" />
-                                        <Label Text="{Binding ProductType?.Name}" />
+                                        <Label Text="{Binding ProductType.FormatNumber, StringFormat='Вид: [{0}]'}" FontSize="Body" />
+                                        <Label Text="{Binding ProductType.Name}" />
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="Заполнение места: " />

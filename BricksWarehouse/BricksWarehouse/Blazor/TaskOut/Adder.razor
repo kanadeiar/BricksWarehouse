@@ -81,6 +81,8 @@
     protected async override Task OnInitializedAsync()
     {
         TaskOutData = new OutTask();
+        DateTime newest = DateTime.Now;
+        TaskOutData.CreatedDateTime = new DateTime(newest.Year, newest.Month, newest.Day, newest.Hour, newest.Minute, 0);
         ProductTypes = await Context.ProductTypes.Where(pt => !pt.IsDelete).ToDictionaryAsync(d => d.Id, d => d.Name);
     }
 

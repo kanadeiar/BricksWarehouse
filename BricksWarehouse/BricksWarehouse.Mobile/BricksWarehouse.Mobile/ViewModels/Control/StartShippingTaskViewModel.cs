@@ -97,12 +97,6 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
         {
             _MobileTaskService = mobileTaskService;
             _ParseQrService = parseQrService;
-
-            Task.Run(async () =>
-            {
-                await UpdateDataAsync();
-                RefreshingRecommendedPlaces = false;
-            });
         }
 
         #region Команды

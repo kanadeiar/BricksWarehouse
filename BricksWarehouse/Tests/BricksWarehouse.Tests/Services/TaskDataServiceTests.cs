@@ -572,6 +572,23 @@ namespace BricksWarehouse.Tests.Services
             Assert
                 .IsNull(result);
         }
+        [TestMethod]
+        public void ShipmentProductFromPlace_CallWithMoreTaskEmpty_ShouldCorrectedValue()
+        {
+            const int expectedPlaceId = 1;
+            const int expectedTaskId = 1;
+            var outTaskDataMock = new Mock<IOutTaskData>();
+            outTaskDataMock
+                .Setup(_ => _.GetAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult<OutTask?>(new OutTask { ProductTypeId = 1, Loaded = 0, Count = 10 }));
+            var placeDataMock = new Mock<IPlaceData>();
+            placeDataMock
+                .Setup(_ => _.GetAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult<Place?>(new Place { ProductTypeId = 1, Count = 5, Size = 10 }));
+            var taskDataService = new TaskDataService(placeDataMock.Object, outTaskDataMock.Object);
+
+            var result = taskDataService.ShipmentProductFromPlace(expectedPlaceId, expectedTaskId, 1).Result;
+        }
 
     }
 }

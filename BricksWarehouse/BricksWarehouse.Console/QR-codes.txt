@@ -16,3 +16,5 @@ id: 1
 SNPPlace|1
 id: 2
 SNPPlace|2
+id: 3
+SNPPlace|3

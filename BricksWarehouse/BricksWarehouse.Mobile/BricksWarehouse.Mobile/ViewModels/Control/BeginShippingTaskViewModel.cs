@@ -78,14 +78,6 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             set => Set(ref _ProductTypeName, value);
         }
 
-        private string _title = "Отгрузка со склада";
-        /// <summary> Заголовок </summary>
-        public string Title
-        {
-            get => _title;
-            set => Set(ref _title, value);
-        }
-
         private int _PlaceNumber;
         /// <summary> Номер места </summary>
         public int PlaceNumber
@@ -102,14 +94,20 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             set => Set(ref _PlaceName, value);
         }
 
+        private string _title = "Отгрузка со склада";
+        /// <summary> Заголовок </summary>
+        public string Title
+        {
+            get => _title;
+            set => Set(ref _title, value);
+        }
+
         #endregion
 
         public BeginShippingTaskViewModel(MobileTaskService mobileTaskService, ParseQrService parseQrService)
         {
             _MobileTaskService = mobileTaskService;
             _ParseQrService = parseQrService;
-
-            Task.Run(UpdateData);
         }
 
         #region Команды
@@ -202,6 +200,10 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             Loaded = _MobileTaskService.OutTask.Loaded;
             Count = _MobileTaskService.OutTask.Count;
             TruckNumber = _MobileTaskService.OutTask.TruckNumber;
+            ProductTypeNumber = _MobileTaskService.ProductType?.FormatNumber ?? 0;
+            ProductTypeName = _MobileTaskService.ProductType?.Name;
+            PlaceNumber = _MobileTaskService.Place.Number;
+            PlaceName = _MobileTaskService.Place.Name;
         }
 
         #endregion

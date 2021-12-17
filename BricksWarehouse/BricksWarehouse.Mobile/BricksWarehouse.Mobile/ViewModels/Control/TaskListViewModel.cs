@@ -159,8 +159,8 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 Id = 0,
                 Name = "Заполнение склада",
                 Number = 0,
-                ProductTypeName = (_MobileTaskService.ProductType is { }) ? $"Поледний отгруженный вид товара:" : "Работа по заполнению склада товаром",
-                TruckNumber = (_MobileTaskService.ProductType is { } productType) ? $"[{productType?.FormatNumber}] {productType?.Name}" : "",
+                ProductTypeName = "Работа по заполнению склада товаром",
+                TruckNumber = "",
             });
             foreach (var task in _Tasks)
                 OutTasks.Add(new OutTaskView
