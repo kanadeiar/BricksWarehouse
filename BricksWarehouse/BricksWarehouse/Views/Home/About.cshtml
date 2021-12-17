@@ -92,12 +92,12 @@
             <div class="p-2 mb-4 shadow border rounded">
                 <p>Можно загрузить мобильное приложение управления складом. Мобильное приложение доступно только на платформу Android</p>
 
-                <img src="~/images/qr-code.png" class="img-fluid" alt="qr код" />
+                <img src="~/images/qr-code.png" alt="qr код" height="300" />
 
                 <div class="mb-3 mt-3">
-                    <a class="btn btn-outline-success" target="_blank" href="https://drive.google.com/file/d/1e7MWlFGmKVRoO0VtIVq6GYtKvzRmkIe5/view?usp=sharing">
-                        <i class="fab fa-android" aria-hidden="true"></i>
-                        Загрузить
+                    <a asp-controller="Home" asp-action="GetAndroidAppFile" class="btn btn-outline-success">
+                        <i class="fab fa-android"></i>
+                        Загрузить apk
                     </a>
                 </div>
 

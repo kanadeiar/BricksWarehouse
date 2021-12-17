@@ -20,6 +20,10 @@
     <ProjectReference Include="..\BricksWarehouse.Dal\BricksWarehouse.Dal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\files\BricksWarehouseMin.apk" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
