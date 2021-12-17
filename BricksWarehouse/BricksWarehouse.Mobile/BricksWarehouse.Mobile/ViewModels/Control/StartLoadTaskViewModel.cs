@@ -59,12 +59,6 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             _MobileTaskService = mobileTaskService;
             _ProductTypeClient = productTypeClient;
             _ParseQrService = parseQrService;
-
-            Task.Run(async () =>
-            {
-                await UpdateDataAsync();
-                RefreshingProductTypes = false;
-            });
         }
 
         #region Команды

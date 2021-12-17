@@ -57,12 +57,6 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
         {
             _MobileTaskService = mobileTaskService;
             _ParseQrService = parseQrService;
-
-            Task.Run(async () =>
-            {
-                await UpdateDataAsync();
-                RefreshingRecommendedPlaces = false;
-            });
         }
 
         #region Команды
@@ -85,7 +79,10 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 {
                     var number = int.Parse(datas[1]);
                     var place = RecommendedPlaces.FirstOrDefault(p => p.Number == number);
-                    SelectedRecommendedPlace = place;
+                    if (place != null)
+                        SelectedRecommendedPlace = place;
+                    else
+                        await Application.Current.MainPage.DisplayAlert("Неправильно!", "Это не то место хранения товаров, на которое нужно выгрузить товар с транспортера.", "OK");
                 }
                 else
                     await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");
@@ -108,7 +105,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             var newplace = await _MobileTaskService.EndLoadTask(1);
             if (newplace != null)
             {
-                await Application.Current.MainPage.DisplayAlert("Великолепно", $"Товар [{newplace.ProductType?.FormatNumber}] {newplace.ProductType?.Name} успешно загружен на место хранения товаров [{newplace.Number}] {newplace.Name}, заполнение: {newplace.Count} / {newplace.Size}", "OK");
+                await Application.Current.MainPage.DisplayAlert("Великолепно", $"Товар \"{newplace.ProductType?.Name}\" успешно загружен на место хранения товаров \"{newplace.Name}\", заполнение места: {newplace.Count} / {newplace.Size}", "OK");
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
             else

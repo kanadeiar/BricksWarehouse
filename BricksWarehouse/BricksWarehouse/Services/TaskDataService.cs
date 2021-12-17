@@ -52,7 +52,7 @@
                     place.Count = place.Size;
                 place.LastDateTime = DateTime.Now;
                 await _placeData.UpdateAsync(place);
-                return place;
+                return await _placeData.GetAsync(placeId);
             }
             return null;
         }
@@ -84,7 +84,7 @@
                     place.ProductTypeId = null;
                 }
                 await _placeData.UpdateAsync(place);
-                return place;
+                return await _placeData.GetAsync(placeId);
             }
             return null;
         }
