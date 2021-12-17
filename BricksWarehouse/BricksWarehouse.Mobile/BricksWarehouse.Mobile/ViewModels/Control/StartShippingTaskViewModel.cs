@@ -119,7 +119,15 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 {
                     var number = int.Parse(datas[1]);
                     var place = RecommendedPlaces.FirstOrDefault(p => p.Number == number);
-                    SelectedRecommendedPlace = place;
+                    if (place != null)
+                    {
+                        SelectedRecommendedPlace = place;
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", "Вы неправвильно выбрали место хранения товаров, нужно другое, которое есть в списке рекомендуемых мест хранений товаров", "OK");
+                        SelectedRecommendedPlace = null;
+                    }
                 }
                 else if (datas[0] == "SNPUnit")
                 {

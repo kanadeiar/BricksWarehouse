@@ -81,7 +81,15 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                 {
                     var number = int.Parse(datas[1]);
                     var pt = ProductTypes.FirstOrDefault(pt => pt.FormatNumber == number);
-                    SelectedProductType = pt;
+                    if (pt != null)
+                    {
+                        SelectedProductType = pt;
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", "Такого вида товаров не существует в базе данных", "OK");
+                        SelectedProductType = null;
+                    }
                 }
                 else
                     await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");

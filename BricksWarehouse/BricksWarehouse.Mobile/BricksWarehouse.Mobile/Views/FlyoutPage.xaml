@@ -34,8 +34,6 @@
     </FlyoutItem>
 
     <FlyoutItem Shell.TabBarIsVisible="False" FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Сканирование QR-кода" Icon="ic_action_photo_camera.png" IsTabStop="True" ContentTemplate="{DataTemplate v:QRScanPage}" />
-
         <ShellContent Title="Геолокация" Icon="ic_action_gps_fixed.png" IsTabStop="True" ContentTemplate="{DataTemplate v:GeolocationPage}" />
 
         <ShellContent Title="О приложении" Icon="ic_action_device_unknown.png" IsTabStop="True" ContentTemplate="{DataTemplate v:AboutPage}" />

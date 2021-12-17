@@ -9,55 +9,57 @@
     <StackLayout>
         <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код места" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
                 Command="{Binding ScanQrCodeCommand}"/>
-        <StackLayout>
+        <StackLayout Margin="10,0, 10, 0">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Задание:"></Label>
+                <Label Text="{Binding Number, StringFormat='[{0}]'}" FontSize="Subtitle" />
+                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Subtitle" />
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Задание: " />
+                <Label Text="Погружено товаров: " />
                 <Label Text="{Binding Loaded}" FontAttributes="Bold" />
                 <Label Text=" / " FontAttributes="Bold" />
                 <Label Text="{Binding Count}" FontAttributes="Bold" />
             </StackLayout>
-            <StackLayout>
-                <Label Text="{Binding Number, StringFormat='[{0}]'}" />
-                <Label Text="{Binding Name}" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Рег. номер грузовика:" />
+                <Label Text="{Binding TruckNumber}" FontAttributes="Bold" />
             </StackLayout>
-            <StackLayout>
-                <Label Text="{Binding TruckNumber, StringFormat='Рег. номер грузовика: {0}'}" />
-            </StackLayout>
-            <Label Text="Выберите место среди доступных с необходимым товаром и после загрузки товара на транспортер нажмите на кнопку. В самом верху - рекомендуемое место." Margin="10, 0"/>
-            <ListView x:Name="ListViewPlaces" HasUnevenRows="True" IsPullToRefreshEnabled="True"
+            <Label Text="Выберите место среди доступных с необходимым товаром и после загрузки товара на транспортер нажмите на кнопку. В самом верху - рекомендуемое место." />
+        </StackLayout>
+        <ListView x:Name="ListViewPlaces" HasUnevenRows="True" IsPullToRefreshEnabled="True"
                       ItemsSource="{Binding RecommendedPlaces}"
-                      SelectedItem="{Binding SelectedRecommendedPlace}"
+                      SelectedItem="{Binding SelectedRecommendedPlace, Mode=TwoWay}"
                       RefreshCommand="{Binding UpdateRecommendedPlacesCommand}"
                       IsRefreshing="{Binding RefreshingRecommendedPlaces}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="m:Place">
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Padding="10">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Number, StringFormat='Номер: {0}'}" FontSize="Body" />
-                                        <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding ProductType.FormatNumber, StringFormat='Вид: [{0}]'}" FontSize="Body" />
-                                        <Label Text="{Binding ProductType.Name}" />
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="Заполнение места: " />
-                                        <Label Text="{Binding Count}" />
-                                        <Label Text=" / " />
-                                        <Label Text="{Binding Size}" />
-                                    </StackLayout>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="m:Place">
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Padding="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Number, StringFormat='Номер: {0}'}" FontSize="Body" />
+                                    <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
                                 </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Grid Margin="10, 0, 10, 10">
-                <Button Grid.Column="0" Text="Загружено на транспортер" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="200" TextColor="White"
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding ProductType.FormatNumber, StringFormat='Вид: [{0}]'}" FontSize="Body" />
+                                    <Label Text="{Binding ProductType.Name}" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Заполнение места: " />
+                                    <Label Text="{Binding Count}" />
+                                    <Label Text=" / " />
+                                    <Label Text="{Binding Size}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Margin="10, 0, 10, 10">
+            <Button Grid.Column="0" Text="Загружено на транспортер" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="200" TextColor="White"
                         Command="{Binding BeginShippingTaskCommand}" CommandParameter="{Binding SelectedRecommendedPlace}"/>
-            </Grid>
-        </StackLayout>
+        </Grid>
     </StackLayout>
 </ContentPage>

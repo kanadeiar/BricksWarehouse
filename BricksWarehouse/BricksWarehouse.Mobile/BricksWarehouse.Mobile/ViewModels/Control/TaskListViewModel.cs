@@ -90,7 +90,11 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                         selected = _Tasks.FirstOrDefault(ot => ot.Number == number);
                     else
                         selected = new OutTask { Id = 0 };
-                    await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
+                    if (selected != null)
+                    {
+                        await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
+                    }
+                    await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", "Такого задания не существует в базе данных", "OK");
                 }
                 else
                     await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");
