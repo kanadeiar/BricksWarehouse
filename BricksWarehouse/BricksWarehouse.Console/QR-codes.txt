@@ -1,0 +1,20 @@
+﻿id: -
+SNPTaskO|0
+id: 1
+SNPTaskO|99
+
+
+
+id: 1
+SNPUnit|400|Кирпич полуторный 250x120x65|10.12.2021 12:00|1
+id: 2
+SNPUnit|1|Кирпич пустотелый 250x120x65|11.12.2021 12:00|1
+
+
+
+id: 1
+SNPPlace|1
+id: 2
+SNPPlace|2
+id: 3
+SNPPlace|3

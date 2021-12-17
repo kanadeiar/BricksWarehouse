@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BricksWarehouse.Mobile.ViewModels"
+             xmlns:vmc="clr-namespace:BricksWarehouse.Mobile.ViewModels.Control"
+             x:Class="BricksWarehouse.Mobile.Views.Control.TaskListPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding TaskListViewModel, Source={StaticResource Locator}}">
+
+        <StackLayout>
+            <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код задания" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                Command="{Binding ScanQrCodeCommand}"/>
+            <Label Text="Задания:" HorizontalTextAlignment="Center" FontSize="Title"/>
+            <StackLayout>
+                <ListView x:Name="ListViewTasksList" HasUnevenRows="True" IsPullToRefreshEnabled="True"
+                          ItemsSource="{Binding OutTasks}"
+                          SelectedItem="{Binding SelectedOutTask}"
+                          RefreshCommand="{Binding UpdateOutTasksCommand}"
+                          IsRefreshing="{Binding RefreshingOutTasks}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="vmc:OutTaskView">
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Padding="10">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Number, StringFormat='[{0}]'}" FontSize="Body" />
+                                            <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding ProductTypeName}" FontSize="Body" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding TruckNumber}" FontSize="Body" />
+                                            <Label Text="{Binding CountString}" FontSize="Body" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Просмотр" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="120" TextColor="White"
+                        Command="{Binding ShowDetailsOutTaskCommand}" CommandParameter="{Binding SelectedOutTask}"/>
+                    <Button Grid.Column="1" Text="Исполнять" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="120" TextColor="White"
+                        Command="{Binding StartWorkTaskCommand}" CommandParameter="{Binding SelectedOutTask}"/>
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+</ContentPage>

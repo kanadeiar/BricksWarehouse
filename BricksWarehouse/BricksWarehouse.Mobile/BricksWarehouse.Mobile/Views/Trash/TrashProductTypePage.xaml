@@ -13,9 +13,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Восстановить" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+            <Button Grid.Column="0" Text="Восстановить" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Command="{Binding RevertProductTypeCommand}" CommandParameter="{Binding SelectedProductType}"/>
-            <Button Grid.Column="1" Text="Удалить окончательно" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+            <Button Grid.Column="1" Text="Удалить окончательно" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Command="{Binding DeleteProductTypeCommand}" CommandParameter="{Binding SelectedProductType}"/>
         </Grid>
         <ListView x:Name="ListViewProductTypes" HasUnevenRows="True" IsPullToRefreshEnabled="True"

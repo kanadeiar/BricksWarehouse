@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:BricksWarehouse.Domain.Models;assembly=BricksWarehouse.Domain"
+             x:Class="BricksWarehouse.Mobile.Views.Control.BeginLoadTaskPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding BeginLoadTaskViewModel, Source={StaticResource Locator}}">
+
+    <StackLayout>
+        <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код места" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                Command="{Binding ScanQrCodeCommand}"/>
+        <StackLayout>
+            <Label Text="Выберите место, куда будет выгружен товар и нажмите на кнопку после выгрузки товара с транспортера. В самом верху - рекомендуемое место." Margin="10, 0"/>
+            <ListView x:Name="ListViewPlaces" HasUnevenRows="True" IsPullToRefreshEnabled="True"
+                      ItemsSource="{Binding RecommendedPlaces}"
+                      SelectedItem="{Binding SelectedRecommendedPlace, Mode=TwoWay}"
+                      RefreshCommand="{Binding UpdateRecommendedPlacesCommand}"
+                      IsRefreshing="{Binding RefreshingRecommendedPlaces}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="m:Place">
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Padding="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Number, StringFormat='Номер: {0}'}" FontSize="Body" />
+                                        <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding ProductType.FormatNumber, StringFormat='Вид: [{0}]'}" />
+                                        <Label Text="{Binding ProductType.Name}" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Заполнение: " />
+                                        <Label Text="{Binding Count}" />
+                                        <Label Text=" / " />
+                                        <Label Text="{Binding Size}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Margin="10, 0, 10, 10">
+                <Button Grid.Column="0" Text="Выгружено с транспортера" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="140" TextColor="White"
+                        Command="{Binding GoEndLoadTaskCommand}" CommandParameter="{Binding SelectedRecommendedPlace}"/>
+            </Grid>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

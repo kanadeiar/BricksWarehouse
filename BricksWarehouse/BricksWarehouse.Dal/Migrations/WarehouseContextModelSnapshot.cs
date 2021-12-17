@@ -17,6 +17,56 @@ namespace BricksWarehouse.Dal.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
+            modelBuilder.Entity("BricksWarehouse.Domain.Models.OutTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Loaded")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ProductTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("TruckNumber")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductTypeId");
+
+                    b.ToTable("OutTasks");
+                });
+
             modelBuilder.Entity("BricksWarehouse.Domain.Models.Place", b =>
                 {
                     b.Property<int>("Id")
@@ -105,6 +155,15 @@ namespace BricksWarehouse.Dal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductTypes");
+                });
+
+            modelBuilder.Entity("BricksWarehouse.Domain.Models.OutTask", b =>
+                {
+                    b.HasOne("BricksWarehouse.Domain.Models.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("BricksWarehouse.Domain.Models.Place", b =>

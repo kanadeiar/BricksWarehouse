@@ -1,4 +1,6 @@
-﻿global using System;
+﻿// dotnet ef --startup-project ../../UI/Corporation.Web/ migrations add init --context CorporationContext
+
+global using System;
 global using System.Collections.Generic;
 global using System.IO;
 global using System.Linq;

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BricksWarehouse.Mobile.Views.Control.BeginShippingTaskPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding BeginShippingTaskViewModel, Source={StaticResource Locator}}">
+
+    <ScrollView>
+        <StackLayout>
+            <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код проверка" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                Command="{Binding ScanQrCodeCommand}"/>
+            <StackLayout>
+                <StackLayout Margin="10, 0">
+                    <Label Text="Задание: " />
+                    <StackLayout>
+                        <Label Text="{Binding Number, StringFormat='[{0}] '}" />
+                        <Label Text="{Binding Name}" />
+                    </StackLayout>
+                    <Label Text="После загрузки товара с транспортера на грузовик нажмите на кнопку ниже."/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Выполнение: "/>
+                        <Label Text="{Binding Loaded}" FontAttributes="Bold" />
+                        <Label Text=" / " FontAttributes="Bold" />
+                        <Label Text="{Binding Count}" FontAttributes="Bold" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="{Binding TruckNumber, StringFormat='Рег. номер грузовика: {0}'}" />
+                    </StackLayout>
+                    <Label Text="Вид товара:" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding ProductTypeNumber, StringFormat='[{0}] '}" />
+                        <Label Text="{Binding ProductTypeName}" />
+                    </StackLayout>
+                    <Label Text="Место с товаром, с котого отгружается товар:" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding PlaceNumber, StringFormat='[{0}]'}" />
+                        <Label Text="{Binding PlaceName}" />
+                    </StackLayout>
+                </StackLayout>
+                <Grid Margin="10, 0, 10, 10">
+                    <Button Grid.Column="0" Text="Погружено на грузовик" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                            Command="{Binding GoEndShippingTaskCommand}"/>
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

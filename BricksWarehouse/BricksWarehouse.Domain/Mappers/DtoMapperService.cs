@@ -8,7 +8,8 @@ using System.Text;
 
 namespace BricksWarehouse.Domain.Mappers
 {
-    public class DtoMapperService : IMapper<ProductType, ProductTypeDto>, IMapper<ProductTypeDto, ProductType>, IMapper<Place, PlaceDto>, IMapper<PlaceDto, Place>
+    public class DtoMapperService : IMapper<ProductType, ProductTypeDto>, IMapper<ProductTypeDto, ProductType>, IMapper<Place, PlaceDto>, IMapper<PlaceDto, Place>,
+        IMapper<OutTask, OutTaskDto>, IMapper<OutTaskDto, OutTask>
     {
         ProductTypeDto IMapper<ProductType, ProductTypeDto>.Map(ProductType source)
         {
@@ -48,7 +49,7 @@ namespace BricksWarehouse.Domain.Mappers
         PlaceDto IMapper<Place, PlaceDto>.Map(Place source)
         {
             var data = source;
-            IMapper<ProductType, ProductTypeDto> mapperTo = new DtoMapperService();
+            IMapper<ProductType, ProductTypeDto> mapperTo = this;
             var dto = new PlaceDto
             {
                 Id = data.Id,
@@ -56,7 +57,7 @@ namespace BricksWarehouse.Domain.Mappers
                 Order = data.Order,
                 Number = data.Number,
                 ProductTypeId = data.ProductTypeId ?? 0,
-                ProductType = (data.ProductType is { }) ? mapperTo.Map(data.ProductType) : null,
+                ProductType = (data.ProductType is { } productType) ? mapperTo.Map(productType) : null,
                 Count = data.Count,
                 Size = data.Size,
                 LastDateTime = data.LastDateTime,
@@ -70,7 +71,7 @@ namespace BricksWarehouse.Domain.Mappers
         Place IMapper<PlaceDto, Place>.Map(PlaceDto source)
         {
             var dto = source;
-            IMapper<ProductTypeDto, ProductType> mapperFrom = new DtoMapperService();
+            IMapper<ProductTypeDto, ProductType> mapperFrom = this;
             int? productTypeId = dto.ProductTypeId;
             if (productTypeId == 0) productTypeId = null;
             var place = new Place
@@ -80,7 +81,7 @@ namespace BricksWarehouse.Domain.Mappers
                 Order = dto.Order,
                 Number = dto.Number,
                 ProductTypeId = productTypeId,
-                ProductType = (dto.ProductType is { }) ? mapperFrom.Map(dto.ProductType) : null,
+                ProductType = (dto.ProductType is { } productType) ? mapperFrom.Map(productType) : null,
                 Count = dto.Count,
                 Size = dto.Size,
                 LastDateTime = dto.LastDateTime,
@@ -89,6 +90,50 @@ namespace BricksWarehouse.Domain.Mappers
                 IsDelete = dto.IsDelete,
             };
             return place;
+        }
+
+        OutTaskDto IMapper<OutTask, OutTaskDto>.Map(OutTask source)
+        {
+            var data = source;
+            IMapper<ProductType, ProductTypeDto> mapperTo = this;
+            var dto = new OutTaskDto
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Number = data.Number,
+                ProductTypeId = data.ProductTypeId ?? 0,
+                ProductType = (data.ProductType is { } productType) ? mapperTo.Map(productType) : null,
+                Count = data.Count,
+                TruckNumber = data.TruckNumber,
+                Loaded = data.Loaded,
+                CreatedDateTime = data.CreatedDateTime,
+                Comment = data.Comment,
+                IsCompleted = data.IsCompleted,
+            };
+            return dto;
+        }
+
+        OutTask IMapper<OutTaskDto, OutTask>.Map(OutTaskDto source)
+        {
+            var dto = source;
+            IMapper<ProductTypeDto, ProductType> mapperFrom = this;
+            int? productTypeId = dto.ProductTypeId;
+            if (productTypeId == 0) productTypeId = null;
+            var outTask = new OutTask
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Number = dto.Number,
+                ProductTypeId = productTypeId,
+                ProductType = (dto.ProductType is { } productType) ? mapperFrom.Map(productType) : null,
+                Count = dto.Count,
+                TruckNumber = dto.TruckNumber,
+                Loaded = dto.Loaded,
+                CreatedDateTime = dto.CreatedDateTime,
+                Comment = dto.Comment,
+                IsCompleted = dto.IsCompleted,
+            };
+            return outTask;
         }
     }
 }

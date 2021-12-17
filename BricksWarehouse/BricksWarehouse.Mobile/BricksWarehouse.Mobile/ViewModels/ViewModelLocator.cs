@@ -1,4 +1,5 @@
-﻿using BricksWarehouse.Mobile.ViewModels.Edit;
+﻿using BricksWarehouse.Mobile.ViewModels.Control;
+using BricksWarehouse.Mobile.ViewModels.Edit;
 using BricksWarehouse.Mobile.ViewModels.Trash;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,17 @@ namespace BricksWarehouse.Mobile.ViewModels
         public TrashPlaceViewModel TrashPlaceViewModel => App.Services
             .GetRequiredService<TrashPlaceViewModel>();
 
-
+        public TaskListViewModel TaskListViewModel => App.Services
+            .GetRequiredService<TaskListViewModel>();
+        public TaskDetailViewModel TaskDetailViewModel => App.Services
+            .GetRequiredService<TaskDetailViewModel>();
+        public StartLoadTaskViewModel StartLoadTaskViewModel => App.Services
+            .GetRequiredService<StartLoadTaskViewModel>();
+        public BeginLoadTaskViewModel BeginLoadTaskViewModel => App.Services
+            .GetRequiredService<BeginLoadTaskViewModel>();
+        public StartShippingTaskViewModel StartShippingTaskViewModel => App.Services
+            .GetRequiredService<StartShippingTaskViewModel>();
+        public BeginShippingTaskViewModel BeginShippingTaskViewModel => App.Services
+            .GetRequiredService<BeginShippingTaskViewModel>();
     }
 }

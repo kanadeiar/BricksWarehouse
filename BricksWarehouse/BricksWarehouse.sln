@@ -11,7 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse.Dal", "Bric
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Mobile.Android", "BricksWarehouse.Mobile\BricksWarehouse.Mobile.Android\BricksWarehouse.Mobile.Android.csproj", "{CE37416A-FF65-4E5C-8C72-97FFA0C739A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Mobile", "BricksWarehouse.Mobile\BricksWarehouse.Mobile\BricksWarehouse.Mobile.csproj", "{8CECEBEB-4FDD-496A-AA02-D3C0D281C105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse.Mobile", "BricksWarehouse.Mobile\BricksWarehouse.Mobile\BricksWarehouse.Mobile.csproj", "{8CECEBEB-4FDD-496A-AA02-D3C0D281C105}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouseConsole", "BricksWarehouse.Console\BricksWarehouseConsole.csproj", "{5DDE45BB-BC4F-42F5-BD3B-E5EE5F79571E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7946BAAE-BBB8-4D0E-9889-C366B7C75A99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BricksWarehouse.Tests", "Tests\BricksWarehouse.Tests\BricksWarehouse.Tests.csproj", "{8668C55A-EF19-4754-AFAA-E852733FE6DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricksWarehouse.Mobile.Tests", "Tests\BricksWarehouse.Mobile.Tests\BricksWarehouse.Mobile.Tests.csproj", "{DED40BEF-C9A7-419A-BE30-34E312CDFA46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,9 +49,25 @@ Global
 		{8CECEBEB-4FDD-496A-AA02-D3C0D281C105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CECEBEB-4FDD-496A-AA02-D3C0D281C105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CECEBEB-4FDD-496A-AA02-D3C0D281C105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DDE45BB-BC4F-42F5-BD3B-E5EE5F79571E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DDE45BB-BC4F-42F5-BD3B-E5EE5F79571E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DDE45BB-BC4F-42F5-BD3B-E5EE5F79571E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DDE45BB-BC4F-42F5-BD3B-E5EE5F79571E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8668C55A-EF19-4754-AFAA-E852733FE6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8668C55A-EF19-4754-AFAA-E852733FE6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8668C55A-EF19-4754-AFAA-E852733FE6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8668C55A-EF19-4754-AFAA-E852733FE6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED40BEF-C9A7-419A-BE30-34E312CDFA46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED40BEF-C9A7-419A-BE30-34E312CDFA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED40BEF-C9A7-419A-BE30-34E312CDFA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED40BEF-C9A7-419A-BE30-34E312CDFA46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8668C55A-EF19-4754-AFAA-E852733FE6DE} = {7946BAAE-BBB8-4D0E-9889-C366B7C75A99}
+		{DED40BEF-C9A7-419A-BE30-34E312CDFA46} = {7946BAAE-BBB8-4D0E-9889-C366B7C75A99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CE2B0FF9-7425-449B-99E5-5FC369BB746B}

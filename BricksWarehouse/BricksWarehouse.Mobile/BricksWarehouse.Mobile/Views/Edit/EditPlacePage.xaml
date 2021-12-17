@@ -39,9 +39,9 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Text="OK" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                <Button Grid.Column="0" Text="OK" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Command="{Binding OKPlaceCommand}"/>
-                <Button Grid.Column="1" Text="Отмена" BackgroundColor="#f31731" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
+                <Button Grid.Column="1" Text="Отмена" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="60" TextColor="White"
                     Clicked="ButtonCancel_Clicked"/>
             </Grid>
         </StackLayout>

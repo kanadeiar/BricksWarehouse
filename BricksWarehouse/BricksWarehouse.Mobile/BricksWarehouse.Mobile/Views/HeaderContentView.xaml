@@ -21,8 +21,8 @@
         <Image Source="favicon.png" Grid.Column="1" Grid.Row="1" HeightRequest="80" WidthRequest="80" HorizontalOptions="Start" VerticalOptions="End"/>
 
         <StackLayout VerticalOptions="CenterAndExpand" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3" Orientation="Vertical">
-            <Label Text="Склад кирпичей" TextColor="White" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
-            <Label Text="kanadeiar@gmail.com" TextColor="White" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Label Text="NOVOBLOCK PLUS" TextColor="White" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Label Text="Склад Силикат" TextColor="White" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
         </StackLayout>
 
         <Label Text="Мобильное приложение управления складом кирпичей" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" TextColor="White" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />

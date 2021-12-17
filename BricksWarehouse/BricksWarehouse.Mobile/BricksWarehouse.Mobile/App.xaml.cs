@@ -8,6 +8,7 @@ using BricksWarehouse.Domain.Dto;
 using BricksWarehouse.Domain.Interfaces;
 using BricksWarehouse.Domain.Mappers;
 using BricksWarehouse.Mobile.Services;
+using BricksWarehouse.Mobile.ViewModels.Control;
 using BricksWarehouse.Mobile.ViewModels.Edit;
 using BricksWarehouse.Mobile.ViewModels.Trash;
 
@@ -29,11 +30,17 @@ namespace BricksWarehouse.Mobile
 
             services.AddScoped<ProductTypeClient>();
             services.AddScoped<PlaceClient>();
+            services.AddScoped<TaskClient>();
 
             services.AddScoped<IMapper<ProductType, ProductTypeDto>, DtoMapperService>();
             services.AddScoped<IMapper<ProductTypeDto, ProductType>, DtoMapperService>();
             services.AddScoped<IMapper<Place, PlaceDto>, DtoMapperService>();
             services.AddScoped<IMapper<PlaceDto, Place>, DtoMapperService>();
+            services.AddScoped<IMapper<OutTask, OutTaskDto>, DtoMapperService>();
+            services.AddScoped<IMapper<OutTaskDto, OutTask>, DtoMapperService>();
+
+            services.AddSingleton<MobileTaskService>();
+            services.AddSingleton<ParseQrService>();
 
             services.AddSingleton<MainPageViewModel>();
 
@@ -44,6 +51,12 @@ namespace BricksWarehouse.Mobile
             services.AddSingleton<TrashProductTypeViewModel>();
             services.AddSingleton<TrashPlaceViewModel>();
 
+            services.AddSingleton<TaskListViewModel>();
+            services.AddSingleton<TaskDetailViewModel>();
+            services.AddSingleton<StartLoadTaskViewModel>();
+            services.AddSingleton<BeginLoadTaskViewModel>();
+            services.AddSingleton<StartShippingTaskViewModel>();
+            services.AddSingleton<BeginShippingTaskViewModel>();
         }
 
         public App()

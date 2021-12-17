@@ -21,7 +21,7 @@ public class DatabasePlaceData : IPlaceData
         return await query.ToArrayAsync().ConfigureAwait(false);
     }
 
-    public async Task<Place> GetAsync(int id)
+    public async Task<Place?> GetAsync(int id)
     {
         var result = await _context.Places.Include(p => p.ProductType).SingleOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
         return result;
@@ -77,6 +77,12 @@ public class DatabasePlaceData : IPlaceData
             return false;
         await _context.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<Place> GetByNumberAsync(int number)
+    {
+        var result = await _context.Places.Include(p => p.ProductType).SingleOrDefaultAsync(p => p.Number == number).ConfigureAwait(false);
+        return result;
     }
 }
 

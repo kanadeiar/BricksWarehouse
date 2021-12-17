@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:BricksWarehouse.Domain.Models;assembly=BricksWarehouse.Domain"
+             x:Class="BricksWarehouse.Mobile.Views.Control.StartLoadTaskPage"
+             Title="{Binding Title}"
+             BindingContext="{Binding StartLoadTaskViewModel, Source={StaticResource Locator}}">
+
+    <StackLayout>
+        <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код товара" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                Command="{Binding ScanQrCodeCommand}"/>
+        <StackLayout>
+            <Label Text="Выберите вид загружаемых на склад товаров и нажмите на кнопку после загрузки товара на транспортер." Margin="10, 0"/>
+            <ListView x:Name="ListViewProductTypes" HasUnevenRows="True" IsPullToRefreshEnabled="True"
+                      ItemsSource="{Binding ProductTypes}"
+                      SelectedItem="{Binding SelectedProductType, Mode=TwoWay}"
+                      RefreshCommand="{Binding UpdateProductTypesCommand}"
+                      IsRefreshing="{Binding RefreshingProductTypes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ProductType">
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Padding="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding FormatNumber, StringFormat='Номер формата: {0}'}" FontSize="Body" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Name}" FontSize="Body" FontAttributes="Bold" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Margin="10, 0, 10, 10">
+                <Button Grid.Column="0" Text="Загружено на транспортер" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="140" TextColor="White"
+                        Command="{Binding GoBeginLoadTaskCommand}" CommandParameter="{Binding SelectedProductType}"/>
+            </Grid>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

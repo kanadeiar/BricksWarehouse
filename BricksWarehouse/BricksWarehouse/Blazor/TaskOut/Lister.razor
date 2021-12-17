@@ -1,0 +1,79 @@
+﻿@page "/online/taskout"
+@inherits OwningComponentBase<WarehouseContext>
+@inject IToastService toastService
+
+<h3 class="bg-danger text-center text-white p-2">Задания на отгрузку товаров со склада</h3>
+
+<NavLink class="btn btn-success mb-1" href="online/taskout/create"> 
+    <i class="fas fa-plus"></i>
+    Создать новое задание на отгрузку товаров со склада
+</NavLink>
+
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Номер</th>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Загружено</th>
+                <th>Время создания задания</th>
+                <th>Статус</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (OutTasks is null)
+            {
+                <tr><td colspan="6" class="p-4 text-center">Загрузка данных ...</td></tr>
+            }
+            else
+            {
+                @foreach (var task in OutTasks)
+                {
+                    <tr>
+                        <td>@task.Id</td>
+                        <td>@task.Name</td>
+                        <td>@task.Number</td>
+                        <td>@task.ProductType?.Name</td>
+                        <td>@task.Count</td>
+                        <td>@task.Loaded</td>
+                        <td>@task.CreatedDateTime.ToString("dd MMMM yyyy HH:mm")</td>
+                        <td>@( task.IsCompleted ? "Выполнено" : "В очереди" )</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-success disabled mb-1">Печать</a>
+                            <button class="btn btn-sm btn-danger mb-1" @onclick="@(() => HandleDelete(task))">
+                                <i class="fas fa-times"></i>
+                                Удалить
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    WarehouseContext Context => Service;
+    public IEnumerable<OutTask> OutTasks { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await UpdateDataAsync();
+    }
+    private async Task UpdateDataAsync()
+    {
+        OutTasks = await Context.OutTasks.Include(ot => ot.ProductType).ToArrayAsync();
+    }
+
+    public async Task HandleDelete(OutTask p)
+    {
+        Context.Remove<OutTask>(p);
+        await Context.SaveChangesAsync();
+        await UpdateDataAsync();
+        toastService.ShowWarning("Это задание успешно удалено из базы данных", "Успешно");
+    }
+}

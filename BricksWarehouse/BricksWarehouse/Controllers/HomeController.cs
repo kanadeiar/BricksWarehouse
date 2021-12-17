@@ -9,6 +9,11 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult FirstStart()
+    {
+        return View();
+    }
+
     public IActionResult About()
     {
         return View();
