@@ -19,6 +19,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public VirtualFileResult DownloadDemoFile()
+    {
+        var filepath = Path.Combine("~/files", "demo.pdf");
+        return File(filepath, "application/pdf", "demo.pdf");
+    }
+
     public IActionResult About()
     {
         return View();
