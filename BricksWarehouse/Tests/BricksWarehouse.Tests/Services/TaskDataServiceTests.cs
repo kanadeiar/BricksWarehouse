@@ -313,7 +313,7 @@ namespace BricksWarehouse.Tests.Services
             Assert
                 .AreEqual(expectedCount, result.Count);
             placeDataMock
-                .Verify(_ => _.GetAsync(1), Times.Once);
+                .Verify(_ => _.GetAsync(1), Times.AtLeast(2));
             placeDataMock
                 .Verify(_ => _.UpdateAsync(It.IsAny<Place>()), Times.Once);
             placeDataMock
@@ -387,7 +387,7 @@ namespace BricksWarehouse.Tests.Services
             Assert
                 .AreEqual(expected, result.Count);
             placeDataMock
-                .Verify(_ => _.GetAsync(placeId), Times.Once);
+                .Verify(_ => _.GetAsync(placeId), Times.AtLeast(2));
             placeDataMock
                 .Verify(_ => _.UpdateAsync(It.IsAny<Place>()), Times.Once);
             placeDataMock
