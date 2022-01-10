@@ -2,6 +2,11 @@
 
 public class HomeController : Controller
 {
+    private readonly IWebHostEnvironment _AppEnvironment;
+    public HomeController(IWebHostEnvironment appEnvironment)
+    {
+        _AppEnvironment = appEnvironment;
+    }
     public async Task<IActionResult> Index([FromServices] FillingsInfoService fillingsInfoService, [FromServices] CountsInfoService countsInfoService)
     {
         ViewBag.Fillings = await fillingsInfoService.GetFillings();
@@ -14,9 +19,21 @@ public class HomeController : Controller
         return View();
     }
 
+    public VirtualFileResult DownloadDemoFile()
+    {
+        var filepath = Path.Combine("~/files", "demo.pdf");
+        return File(filepath, "application/pdf", "demo.pdf");
+    }
+
     public IActionResult About()
     {
         return View();
+    }
+
+    public VirtualFileResult GetAndroidAppFile()
+    {
+        var filepath = Path.Combine("~/files", "BricksWarehouseMin.apk");
+        return File(filepath, "application/vnd.android.package-archive", "BricksWarehouse.apk");
     }
 
     public IActionResult Error(string id)

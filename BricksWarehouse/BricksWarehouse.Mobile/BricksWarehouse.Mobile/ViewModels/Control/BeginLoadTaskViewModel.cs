@@ -80,9 +80,14 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                     var number = int.Parse(datas[1]);
                     var place = RecommendedPlaces.FirstOrDefault(p => p.Number == number);
                     if (place != null)
+                    {
                         SelectedRecommendedPlace = place;
+                    }
                     else
-                        await Application.Current.MainPage.DisplayAlert("Неправильно!", "Это не то место хранения товаров, на которое нужно выгрузить товар с транспортера.", "OK");
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Неправильно!", "Это место хранения товаров с другим видом товаров, нужно место из списка рекомендуемых мест.", "OK");
+                        SelectedRecommendedPlace = null;
+                    }
                 }
                 else
                     await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");
@@ -105,7 +110,6 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             var newplace = await _MobileTaskService.EndLoadTask(1);
             if (newplace != null)
             {
-                await Application.Current.MainPage.DisplayAlert("Великолепно", $"Товар \"{newplace.ProductType?.Name}\" успешно загружен на место хранения товаров \"{newplace.Name}\", заполнение места: {newplace.Count} / {newplace.Size}", "OK");
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
             else

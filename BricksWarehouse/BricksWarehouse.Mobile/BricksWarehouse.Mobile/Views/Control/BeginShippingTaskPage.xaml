@@ -10,35 +10,42 @@
             <Button Margin="10, 10, 10, 0" Text="Сканировать QR-код проверка" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
                 Command="{Binding ScanQrCodeCommand}"/>
             <StackLayout>
-                <StackLayout Margin="10, 0">
-                    <Label Text="Задание: " />
-                    <StackLayout>
-                        <Label Text="{Binding Number, StringFormat='[{0}] '}" />
-                        <Label Text="{Binding Name}" />
+                <StackLayout Margin="10, 0, 10, 60">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="Задание:"></Label>
+                        <Label Text="{Binding Number, StringFormat='[{0}]'}" FontSize="Subtitle" />
+                        <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Subtitle" />
                     </StackLayout>
-                    <Label Text="После загрузки товара с транспортера на грузовик нажмите на кнопку ниже."/>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Выполнение: "/>
+                        <Label Text="Погружено товаров: " />
                         <Label Text="{Binding Loaded}" FontAttributes="Bold" />
                         <Label Text=" / " FontAttributes="Bold" />
                         <Label Text="{Binding Count}" FontAttributes="Bold" />
                     </StackLayout>
-                    <StackLayout>
-                        <Label Text="{Binding TruckNumber, StringFormat='Рег. номер грузовика: {0}'}" />
-                    </StackLayout>
-                    <Label Text="Вид товара:" />
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding ProductTypeNumber, StringFormat='[{0}] '}" />
-                        <Label Text="{Binding ProductTypeName}" />
+                        <Label Text="Рег. номер грузовика:" />
+                        <Label Text="{Binding TruckNumber}" FontAttributes="Bold" />
                     </StackLayout>
-                    <Label Text="Место с товаром, с котого отгружается товар:" />
+                    <Label Text="После загрузки товара с транспортера на грузовик нажмите на кнопку ниже. Товар в базе данных будет добавлен в задание и удален с места хранения товаров."/>
+                    <Label Text="Вид товара для погрузки на грузовик:" />
+                    <StackLayout Orientation="Horizontal" >
+                        <Label Text="{Binding ProductTypeNumber, StringFormat='[{0}]'}" FontSize="Subtitle" />
+                        <Label Text="{Binding ProductTypeName}" FontSize="Subtitle" />
+                    </StackLayout>
+                    <Label Text="Место с товаром, с которого отгружается товар:" />
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding PlaceNumber, StringFormat='[{0}]'}" />
-                        <Label Text="{Binding PlaceName}" />
+                        <Label Text="{Binding PlaceNumber, StringFormat='[{0}]'}" FontSize="Subtitle" />
+                        <Label Text="{Binding PlaceName}" FontSize="Subtitle" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Заполнение места: " />
+                        <Label Text="{Binding CountPlace}" />
+                        <Label Text=" / " />
+                        <Label Text="{Binding SizePlace}" />
                     </StackLayout>
                 </StackLayout>
                 <Grid Margin="10, 0, 10, 10">
-                    <Button Grid.Column="0" Text="Погружено на грузовик" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
+                    <Button Grid.Column="0" Text="Погружено с транспортера на грузовик" BackgroundColor="#dc3545" Padding="10" FontSize="Subtitle" HeightRequest="80" TextColor="White"
                             Command="{Binding GoEndShippingTaskCommand}"/>
                 </Grid>
             </StackLayout>

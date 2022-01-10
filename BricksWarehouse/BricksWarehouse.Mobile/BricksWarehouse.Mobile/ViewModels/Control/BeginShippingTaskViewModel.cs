@@ -6,6 +6,7 @@ using System.Windows.Input;
 using BricksWarehouse.Domain.Models;
 using BricksWarehouse.Mobile.Services;
 using BricksWarehouse.Mobile.ViewModels.Base;
+using Microsoft.Extensions.DependencyInjection;
 using Xamarin.Forms;
 using ZXing.Mobile;
 
@@ -94,6 +95,22 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             set => Set(ref _PlaceName, value);
         }
 
+        private int _CountPlace;
+        /// <summary> Количество товара на месте </summary>
+        public int CountPlace
+        {
+            get => _CountPlace;
+            set => Set(ref _CountPlace, value);
+        }
+
+        private int _SizePlace;
+        /// <summary> Вместимость места </summary>
+        public int SizePlace
+        {
+            get => _SizePlace;
+            set => Set(ref _SizePlace, value);
+        }
+
         private string _title = "Отгрузка со склада";
         /// <summary> Заголовок </summary>
         public string Title
@@ -180,8 +197,11 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             var newtask = await _MobileTaskService.GetOneOutTask(_MobileTaskService.OutTask.Id);
             if (newplace != null)
             {
-                await Application.Current.MainPage.DisplayAlert("Великолепно", $"Товар [{newtask.ProductType?.FormatNumber}] {newtask.ProductType?.Name} успешно отгружен с места хранения товаров [{newplace.Number}] {newplace.Name}, заполнение места: {newplace.Count} / {newplace.Size}. Статус выполнения задания по отгрузке товара в грузовик с номером {newtask.TruckNumber}: {newtask.Loaded}/{newtask.Count}", "OK");
+                _MobileTaskService.OutTask.Loaded = newtask.Loaded;
+                _MobileTaskService.Place.Count = newplace.Count;
                 await Application.Current.MainPage.Navigation.PopAsync();
+                var viewModel = App.Services.GetRequiredService<StartShippingTaskViewModel>();
+                await viewModel.UpdateDataAsync();
             }
             else
             {
@@ -204,6 +224,8 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
             ProductTypeName = _MobileTaskService.ProductType?.Name;
             PlaceNumber = _MobileTaskService.Place.Number;
             PlaceName = _MobileTaskService.Place.Name;
+            CountPlace = _MobileTaskService.Place.Count;
+            SizePlace = _MobileTaskService.Place.Size;
         }
 
         #endregion
