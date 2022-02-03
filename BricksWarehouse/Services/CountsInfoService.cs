@@ -22,7 +22,7 @@ namespace BricksWarehouse.Services
                 Volume = pt.Volume * pt.Places.Sum(p => p.Count),
                 CountUnits = pt.Units * pt.Places.Sum(p => p.Count),
             }).ToList();
-            var maxCount = results.Max(p => p.Count);
+            var maxCount = (results.Count > 0) ? results.Max(p => p.Count) : 0;
             foreach (var product in results)
             {
                 product.CountPercent = Convert.ToInt32(product.Count / (double)maxCount * 100.0);
