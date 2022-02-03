@@ -26,9 +26,9 @@ public partial class BricksCalcComponent
             _brickType = value;
         }
     }
-    public int BrickLength { get; set; } = 250;
-    public int BrickWidth { get; set; } = 120;
-    public int BrickHeight { get; set; } = 65;
+    public int BrickLength { get; set; } = 100;
+    public int BrickWidth { get; set; } = 80;
+    public int BrickHeight { get; set; } = 50;
 
     public int WallHeight { get; set; } = 200;
     public int WallLength { get; set; } = 500;
