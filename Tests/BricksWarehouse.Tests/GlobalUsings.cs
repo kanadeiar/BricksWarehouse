@@ -1,0 +1,10 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using BricksWarehouse.Interfaces.Services;
+global using BricksWarehouse.Services;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using Moq;
+global using BricksWarehouse.Domain.Models;
