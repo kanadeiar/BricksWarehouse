@@ -94,7 +94,7 @@ namespace BricksWarehouse.Mobile.ViewModels.Control
                     {
                         await Application.Current.MainPage.Navigation.PushAsync(new TaskDetailPage(selected));
                     }
-                    await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", "Такого задания не существует в базе данных", "OK");
+                    //await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", "Такого задания не существует в базе данных", "OK");
                 }
                 else
                     await Application.Current.MainPage.DisplayAlert("Сканирование не удалось", errorQr, "OK");
