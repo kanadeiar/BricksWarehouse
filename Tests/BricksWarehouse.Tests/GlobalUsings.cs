@@ -8,3 +8,4 @@ global using BricksWarehouse.Services;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using Moq;
 global using BricksWarehouse.Domain.Models;
+global using Bunit;

@@ -1,0 +1,63 @@
+﻿<h1 class="bg-danger text-center text-white p-2">Калькулятор кирпичей</h1>
+
+<p>Расчет количества необходимы кирпичей на строительство чего-нибудь.</p>
+
+<h6 class="text-center m-2">Параметры кирпича:</h6>
+
+<div class="form-group my-2">
+    <label>Вид кирпича:</label>
+    <select class="form-select" @bind="BrickType">
+        <option value="0" selected disabled>Не выбран</option>
+        <option value="1">Одинарный 250 x 120 x 56</option>
+        <option value="2">Полуторный 250 x 120 x 88</option>
+        <option value="3">Двойной 250 x 120 x 138</option>
+        <option value="4">Евро – 250 х 88 х 65</option>
+    </select>
+</div>
+
+<div class="form-group my-2">
+    <label>Длинна кирпича, мм:</label>
+    <input class="form-control" @bind-value="@BrickLength" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@BrickLength" @bind-value:event="oninput" min="50" max="500">
+    <label>Ширина кирпича, мм:</label>
+    <input class="form-control" @bind-value="@BrickWidth" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@BrickWidth" @bind-value:event="oninput" min="50" max="500">
+    <label>Высота кирпича, мм:</label>
+    <input class="form-control" @bind-value="@BrickHeight" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@BrickHeight" @bind-value:event="oninput" min="50" max="500">
+</div>
+
+<h6 class="text-center m-2">Параметры стен:</h6>
+
+<div class="form-group my-2">
+    <label>Средняя высота стены, см:</label>
+    <input class="form-control" @bind-value="@WallHeight" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@WallHeight" @bind-value:event="oninput" min="100" max="1000">
+    <label>Длинна всех стен (периметр), см:</label>
+    <input class="form-control" @bind-value="@WallLength" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@WallLength" @bind-value:event="oninput" min="100" max="10000">
+    <label>Толщина стен, см:</label>
+    <input class="form-control" @bind-value="@WallWidth" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@WallWidth" @bind-value:event="oninput" min="50" max="300">
+    <label>Площадь проемов, см2:</label>
+    <input class="form-control" @bind-value="@OpeningSpace" @bind-value:event="oninput" />
+    <input type="range" class="form-range" @bind-value="@OpeningSpace" @bind-value:event="oninput" min="0" max="10000">
+</div>
+
+<div class="form-check form-switch my-2">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @bind="@IsPlusFivePerc">
+  <label class="form-check-label" for="flexSwitchCheckDefault">Учитывать запас 5%</label>
+</div>
+
+<button class="btn btn-success" @onclick="@( () => CalculateBricks() )">
+    Рассчитать количество кирпичей
+</button>
+
+<h6 class="text-center m-2">Результаты расчетов:</h6>
+
+<div class="form-group my-2">
+    <label>Необходимый объем кирпичей, м3:</label>
+    <input class="form-control" @bind="@VolumeBricks" disabled/>
+    <label>Количество кирпичей, шт:</label>
+    <input class="form-control" @bind="@CountBricks" disabled/>
+</div>
